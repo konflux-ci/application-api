@@ -1,0 +1,66 @@
+domain: redhat.com
+layout:
+- go.kubebuilder.io/v3
+plugins:
+  manifests.sdk.operatorframework.io/v2: {}
+  scorecard.sdk.operatorframework.io/v2: {}
+projectName: application-api
+repo: github.com/redhat-appstudio/application-api
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: Application
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: Component
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: ComponentDetectionQuery
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: ApplicationSnapshotEnvironmentBinding
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: ApplicationSnapshot
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: ApplicationPromotionRun
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: Environment
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
+version: "3"
