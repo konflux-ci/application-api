@@ -5,7 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209212033.applicationpromotionruns.appstudio.redhat.com
+  name: v202209212055.applicationpromotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -140,7 +140,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209212033.applications.appstudio.redhat.com
+  name: v202209212055.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -232,13 +232,13 @@ spec:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
                   use as an array at the field path .status.conditions.  For example,
-                  \n \ttype FooStatus struct{ \t    // Represents the observations
-                  of a foo's current state. \t    // Known .status.conditions.type
-                  are: \"Available\", \"Progressing\", and \"Degraded\" \t    // +patchMergeKey=type
-                  \t    // +patchStrategy=merge \t    // +listType=map \t    // +listMapKey=type
-                  \t    Conditions []metav1.Condition `json:\"conditions,omitempty\"
+                  type FooStatus struct{     // Represents the observations of a foo's
+                  current state.     // Known .status.conditions.type are: \"Available\",
+                  \"Progressing\", and \"Degraded\"     // +patchMergeKey=type     //
+                  +patchStrategy=merge     // +listType=map     // +listMapKey=type
+                  \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
                   patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                  \n \t    // other fields \t}"
+                  \n     // other fields }"
                 properties:
                   lastTransitionTime:
                     description: lastTransitionTime is the last time the condition
@@ -314,7 +314,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209212033.applicationsnapshotenvironmentbindings.appstudio.redhat.com
+  name: v202209212055.applicationsnapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -528,13 +528,13 @@ spec:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
                   use as an array at the field path .status.conditions.  For example,
-                  \n \ttype FooStatus struct{ \t    // Represents the observations
-                  of a foo's current state. \t    // Known .status.conditions.type
-                  are: \"Available\", \"Progressing\", and \"Degraded\" \t    // +patchMergeKey=type
-                  \t    // +patchStrategy=merge \t    // +listType=map \t    // +listMapKey=type
-                  \t    Conditions []metav1.Condition `json:\"conditions,omitempty\"
+                  type FooStatus struct{     // Represents the observations of a foo's
+                  current state.     // Known .status.conditions.type are: \"Available\",
+                  \"Progressing\", and \"Degraded\"     // +patchMergeKey=type     //
+                  +patchStrategy=merge     // +listType=map     // +listMapKey=type
+                  \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
                   patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                  \n \t    // other fields \t}"
+                  \n     // other fields }"
                 properties:
                   lastTransitionTime:
                     description: lastTransitionTime is the last time the condition
@@ -604,7 +604,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209212033.applicationsnapshots.appstudio.redhat.com
+  name: v202209212055.applicationsnapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -693,13 +693,13 @@ spec:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
                   use as an array at the field path .status.conditions.  For example,
-                  \n \ttype FooStatus struct{ \t    // Represents the observations
-                  of a foo's current state. \t    // Known .status.conditions.type
-                  are: \"Available\", \"Progressing\", and \"Degraded\" \t    // +patchMergeKey=type
-                  \t    // +patchStrategy=merge \t    // +listType=map \t    // +listMapKey=type
-                  \t    Conditions []metav1.Condition `json:\"conditions,omitempty\"
+                  type FooStatus struct{     // Represents the observations of a foo's
+                  current state.     // Known .status.conditions.type are: \"Available\",
+                  \"Progressing\", and \"Degraded\"     // +patchMergeKey=type     //
+                  +patchStrategy=merge     // +listType=map     // +listMapKey=type
+                  \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
                   patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                  \n \t    // other fields \t}"
+                  \n     // other fields }"
                 properties:
                   lastTransitionTime:
                     description: lastTransitionTime is the last time the condition
@@ -769,7 +769,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209212033.componentdetectionqueries.appstudio.redhat.com
+  name: v202209212055.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1080,13 +1080,13 @@ spec:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
                   use as an array at the field path .status.conditions.  For example,
-                  \n \ttype FooStatus struct{ \t    // Represents the observations
-                  of a foo's current state. \t    // Known .status.conditions.type
-                  are: \"Available\", \"Progressing\", and \"Degraded\" \t    // +patchMergeKey=type
-                  \t    // +patchStrategy=merge \t    // +listType=map \t    // +listMapKey=type
-                  \t    Conditions []metav1.Condition `json:\"conditions,omitempty\"
+                  type FooStatus struct{     // Represents the observations of a foo's
+                  current state.     // Known .status.conditions.type are: \"Available\",
+                  \"Progressing\", and \"Degraded\"     // +patchMergeKey=type     //
+                  +patchStrategy=merge     // +listType=map     // +listMapKey=type
+                  \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
                   patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                  \n \t    // other fields \t}"
+                  \n     // other fields }"
                 properties:
                   lastTransitionTime:
                     description: lastTransitionTime is the last time the condition
@@ -1156,7 +1156,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209212033.components.appstudio.redhat.com
+  name: v202209212055.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1396,13 +1396,13 @@ spec:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
                   use as an array at the field path .status.conditions.  For example,
-                  \n \ttype FooStatus struct{ \t    // Represents the observations
-                  of a foo's current state. \t    // Known .status.conditions.type
-                  are: \"Available\", \"Progressing\", and \"Degraded\" \t    // +patchMergeKey=type
-                  \t    // +patchStrategy=merge \t    // +listType=map \t    // +listMapKey=type
-                  \t    Conditions []metav1.Condition `json:\"conditions,omitempty\"
+                  type FooStatus struct{     // Represents the observations of a foo's
+                  current state.     // Known .status.conditions.type are: \"Available\",
+                  \"Progressing\", and \"Degraded\"     // +patchMergeKey=type     //
+                  +patchStrategy=merge     // +listType=map     // +listMapKey=type
+                  \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
                   patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                  \n \t    // other fields \t}"
+                  \n     // other fields }"
                 properties:
                   lastTransitionTime:
                     description: lastTransitionTime is the last time the condition
@@ -1505,7 +1505,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209212033.environments.appstudio.redhat.com
+  name: v202209212055.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
