@@ -1,4 +1,4 @@
-module github.com/redhat-appstudio/application-api.git
+module github.com/redhat-appstudio/application-api
 
 go 1.18
 
