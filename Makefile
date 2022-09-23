@@ -24,6 +24,10 @@ KUSTOMIZE = $(shell pwd)/bin/kustomize
 kustomize: ## Download kustomize locally if necessary.
 	$(call go-get-tool,$(KUSTOMIZE),sigs.k8s.io/kustomize/kustomize/v4@v4.5.2)
 
+ENVTEST = $(shell pwd)/bin/setup-envtest
+envtest: ## Download envtest-setup locally if necessary.
+	$(call go-get-tool,$(ENVTEST),sigs.k8s.io/controller-runtime/tools/setup-envtest@latest)
+
 fmt: ## Run go fmt against code.
 	go fmt ./...
 
@@ -63,6 +67,9 @@ gosec:
 lint:
 	golangci-lint --version
 	GOMAXPROCS=2 golangci-lint run --fix --verbose --timeout 300s
+
+test: manifests generate fmt vet envtest ## Run tests.
+	KUBEBUILDER_ASSETS="$(shell $(ENVTEST) use $(ENVTEST_K8S_VERSION) -p path)" go test ./... -coverprofile cover.out -v
 
 build: generate fmt vet
 	go build main.go

@@ -5,7 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209200018.applicationpromotionruns.appstudio.redhat.com
+  name: v202209212055.applicationpromotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -140,7 +140,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209200018.applications.appstudio.redhat.com
+  name: v202209212055.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -314,7 +314,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209200018.applicationsnapshotenvironmentbindings.appstudio.redhat.com
+  name: v202209212055.applicationsnapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -604,7 +604,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209200018.applicationsnapshots.appstudio.redhat.com
+  name: v202209212055.applicationsnapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -769,7 +769,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209200018.componentdetectionqueries.appstudio.redhat.com
+  name: v202209212055.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1156,7 +1156,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209200018.components.appstudio.redhat.com
+  name: v202209212055.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1505,7 +1505,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202209200018.environments.appstudio.redhat.com
+  name: v202209212055.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
