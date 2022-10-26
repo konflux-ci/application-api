@@ -1,0 +1,18 @@
+apiVersion: apis.kcp.dev/v1alpha1
+kind: APIBinding
+metadata:
+  name: application-api-binding
+spec:
+  reference:
+    workspace:
+      exportName: application-api
+  permissionClaims:
+    - group: ""
+      resource: "secrets"
+      state: Accepted
+    - group: ""
+      resource: "configmaps"
+      state: Accepted
+    - group: ""
+      resource: "namespaces"
+      state: Accepted
