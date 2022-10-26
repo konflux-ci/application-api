@@ -6,3 +6,13 @@ spec:
   reference:
     workspace:
       exportName: application-api
+  permissionClaims:
+    - group: ""
+      resource: "secrets"
+      state: Accepted
+    - group: ""
+      resource: "configmaps"
+      state: Accepted
+    - group: ""
+      resource: "namespaces"
+      state: Accepted
