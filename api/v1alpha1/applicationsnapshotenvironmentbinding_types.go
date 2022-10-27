@@ -153,7 +153,7 @@ type ApplicationSnapshotEnvironmentBinding struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ApplicationSnapshotEnvironmentBindingSpec   `json:"spec,omitempty"`
+	Spec   ApplicationSnapshotEnvironmentBindingSpec   `json:"spec"`
 	Status ApplicationSnapshotEnvironmentBindingStatus `json:"status,omitempty"`
 }
 

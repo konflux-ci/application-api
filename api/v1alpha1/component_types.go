@@ -155,7 +155,7 @@ type Component struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ComponentSpec   `json:"spec,omitempty"`
+	Spec   ComponentSpec   `json:"spec"`
 	Status ComponentStatus `json:"status,omitempty"`
 }
 

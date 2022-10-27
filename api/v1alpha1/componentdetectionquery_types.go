@@ -73,7 +73,7 @@ type ComponentDetectionQuery struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ComponentDetectionQuerySpec   `json:"spec,omitempty"`
+	Spec   ComponentDetectionQuerySpec   `json:"spec"`
 	Status ComponentDetectionQueryStatus `json:"status,omitempty"`
 }
 
