@@ -1054,9 +1054,6 @@ metadata:
   creationTimestamp: null
   name: v202211092111.promotionruns.appstudio.redhat.com
 spec:
-  group: appstudio.redhat.com
-  names:
-    kind: PromotionRun
     listKind: PromotionRunList
     plural: promotionruns
     shortNames:
@@ -1587,9 +1584,6 @@ metadata:
   creationTimestamp: null
   name: v202211092111.snapshots.appstudio.redhat.com
 spec:
-  group: appstudio.redhat.com
-  names:
-    kind: Snapshot
     listKind: SnapshotList
     plural: snapshots
     shortNames:
