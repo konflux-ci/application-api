@@ -349,6 +349,19 @@ spec:
         required:
         - spec
         type: object
+    additionalPrinterColumns:
+      - name: Age
+        jsonPath: .metadata.creationTimestamp
+        description: The age of this resource
+        type: date
+      - name: Type
+        type: string
+        description: The type of component condition
+        jsonPath: .status.conditions[0].type
+      - name: Status
+        type: string
+        description: The status of component
+        jsonPath: .status.conditions[0].status
     served: true
     storage: true
     subresources:
