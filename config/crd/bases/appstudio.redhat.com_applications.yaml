@@ -178,6 +178,11 @@ spec:
     storage: true
     subresources:
       status: {}
+additionalPrinterColumns:
+  - name: Status
+    type: array
+    description: The status of application
+    jsonPath: .status.conditions
 status:
   acceptedNames:
     kind: ""
