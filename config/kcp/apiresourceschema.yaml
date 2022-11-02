@@ -19,7 +19,17 @@ spec:
     singular: application
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.conditions[0].status
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[0].reason
+      name: Reason
+      type: string
+    name: v1alpha1
     schema:
       description: Application is the Schema for the applications API
       properties:
@@ -194,7 +204,17 @@ spec:
     singular: componentdetectionquery
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.conditions[-1].status
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[-1].reason
+      name: Reason
+      type: string
+    name: v1alpha1
     schema:
       description: ComponentDetectionQuery is the Schema for the componentdetectionqueries
         API
@@ -584,7 +604,17 @@ spec:
     singular: component
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.conditions[0].status
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[0].reason
+      name: Reason
+      type: string
+    name: v1alpha1
     schema:
       description: Component is the Schema for the components API
       properties:

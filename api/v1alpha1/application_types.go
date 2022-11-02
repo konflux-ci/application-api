@@ -74,6 +74,9 @@ type ApplicationStatus struct {
 // Application is the Schema for the applications API
 // +kubebuilder:resource:path=applications,shortName=hasapp;ha;app
 // +kubebuilder:subresource:status
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.conditions[0].status"
+// +kubebuilder:printcolumn:name="Reason",type="string",JSONPath=".status.conditions[0].reason"
 type Application struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`

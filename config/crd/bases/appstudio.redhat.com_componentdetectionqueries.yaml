@@ -19,7 +19,17 @@ spec:
     singular: componentdetectionquery
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.conditions[-1].status
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[-1].reason
+      name: Reason
+      type: string
+    name: v1alpha1
     schema:
       openAPIV3Schema:
         description: ComponentDetectionQuery is the Schema for the componentdetectionqueries

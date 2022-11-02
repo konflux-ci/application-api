@@ -151,6 +151,9 @@ type GitOpsStatus struct {
 
 // Component is the Schema for the components API
 // +kubebuilder:resource:path=components,shortName=hascmp;hc;comp
+// +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
+// +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.conditions[0].status"
+// +kubebuilder:printcolumn:name="Reason",type="string",JSONPath=".status.conditions[0].reason"
 type Component struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
