@@ -5,142 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211031443.applicationpromotionruns.appstudio.redhat.com
-spec:
-  group: appstudio.redhat.com
-  names:
-    kind: ApplicationPromotionRun
-    listKind: ApplicationPromotionRunList
-    plural: applicationpromotionruns
-    shortNames:
-    - apr
-    - promotion
-    singular: applicationpromotionrun
-  scope: Namespaced
-  versions:
-  - name: v1alpha1
-    schema:
-      description: ApplicationPromotionRun is the Schema for the applicationpromotionruns
-        API
-      properties:
-        apiVersion:
-          description: 'APIVersion defines the versioned schema of this representation
-            of an object. Servers should convert recognized schemas to the latest
-            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-          type: string
-        kind:
-          description: 'Kind is a string value representing the REST resource this
-            object represents. Servers may infer this from the endpoint the client
-            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-          type: string
-        metadata:
-          type: object
-        spec:
-          description: ApplicationPromotionRunSpec defines the desired state of ApplicationPromotionRun
-          properties:
-            application:
-              description: Application is the name of an Application resource defined
-                within the namespaced, and which is the target of the promotion
-              type: string
-            automatedPromotion:
-              description: 'AutomatedPromotion is for fields specific to automated
-                promotion Only one field should be defined: either ''manualPromotion''
-                or ''automatedPromotion'', but not both.'
-              properties:
-                initialEnvironment:
-                  description: 'InitialEnvironment: start iterating through the digraph,
-                    beginning with the value specified in ''initialEnvironment'''
-                  type: string
-              required:
-              - initialEnvironment
-              type: object
-            manualPromotion:
-              description: 'ManualPromotion is for fields specific to manual promotion.
-                Only one field should be defined: either ''manualPromotion'' or ''automatedPromotion'',
-                but not both.'
-              properties:
-                targetEnvironment:
-                  description: TargetEnvironment is the environment to promote to
-                  type: string
-              required:
-              - targetEnvironment
-              type: object
-            snapshot:
-              description: Snapshot refers to the name of a Snapshot resource defined
-                within the namespace, used to promote container images between Environments.
-              type: string
-          required:
-          - application
-          - snapshot
-          type: object
-        status:
-          description: ApplicationPromotionRunStatus defines the observed state of
-            ApplicationPromotionRun
-          properties:
-            activeBindings:
-              description: 'ActiveBindings is the list of active bindings currently
-                being promoted to: - For an automated promotion, there can be multiple
-                active bindings at a time (one for each env at a particular tree depth)
-                - For a manual promotion, there will be only one.'
-              items:
-                type: string
-              type: array
-            completionResult:
-              description: CompletionResult indicates success/failure once the promotion
-                has completed all work. CompletionResult will only have a value if
-                State field is 'Complete'.
-              type: string
-            environmentStatus:
-              description: EnvironmentStatus represents the set of steps taken during
-                the  current promotion
-              items:
-                description: 'PromotionRunEnvironmentStatus represents the set of
-                  steps taken during the  current promotion: - manual promotions will
-                  only have a single step. - automated promotions may have one or
-                  more steps, depending on how many environments have been promoted
-                  to.'
-                properties:
-                  displayStatus:
-                    description: DisplayStatus is human-readible description of the
-                      current state/status.
-                    type: string
-                  environmentName:
-                    description: EnvironmentName is the name of the environment that
-                      was promoted to in this step
-                    type: string
-                  status:
-                    description: Status is/was the result of promoting to that environment.
-                    type: string
-                  step:
-                    description: Step is the sequential number of the step in the
-                      array, starting with 1
-                    type: integer
-                required:
-                - displayStatus
-                - environmentName
-                - status
-                - step
-                type: object
-              type: array
-            state:
-              description: State indicates whether or not the overall promotion (either
-                manual or automated is complete)
-              type: string
-          required:
-          - state
-          type: object
-      type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
-
----
-apiVersion: apis.kcp.dev/v1alpha1
-kind: APIResourceSchema
-metadata:
-  creationTimestamp: null
-  name: v202211031443.applications.appstudio.redhat.com
+  name: v202211031559.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -316,7 +181,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211031443.applicationsnapshotenvironmentbindings.appstudio.redhat.com
+  name: v202211031559.applicationsnapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -608,7 +473,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211031443.applicationsnapshots.appstudio.redhat.com
+  name: v202211031559.applicationsnapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -773,7 +638,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211031443.componentdetectionqueries.appstudio.redhat.com
+  name: v202211031559.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1162,7 +1027,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211031443.components.appstudio.redhat.com
+  name: v202211031559.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1513,7 +1378,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211031443.environments.appstudio.redhat.com
+  name: v202211031559.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1644,7 +1509,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211031443.promotionruns.appstudio.redhat.com
+  name: v202211031559.promotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
