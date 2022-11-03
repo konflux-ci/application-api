@@ -6,7 +6,7 @@ resources:
 - bases/appstudio.redhat.com_components.yaml
 - bases/appstudio.redhat.com_componentdetectionqueries.yaml
 - bases/appstudio.redhat.com_applicationsnapshotenvironmentbindings.yaml
-- bases/appstudio.redhat.com_applicationsnapshots.yaml
+- bases/appstudio.redhat.com_snapshots.yaml
 - bases/appstudio.redhat.com_promotionruns.yaml
 - bases/appstudio.redhat.com_environments.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
