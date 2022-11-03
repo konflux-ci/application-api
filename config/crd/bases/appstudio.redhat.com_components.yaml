@@ -30,6 +30,9 @@ spec:
     - jsonPath: .status.conditions[-1].reason
       name: Reason
       type: string
+    - jsonPath: .status.conditions[-1].type
+      name: Type
+      type: string
     name: v1alpha1
     schema:
       openAPIV3Schema:
