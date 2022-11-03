@@ -41,19 +41,6 @@ type ApplicationPromotionRunSpec struct {
 	AutomatedPromotion AutomatedPromotionConfiguration `json:"automatedPromotion,omitempty"`
 }
 
-// ManualPromotionConfiguration defines promotion parameters specific to manual promotion: the target environment to promote to.
-type ManualPromotionConfiguration struct {
-	// TargetEnvironment is the environment to promote to
-	TargetEnvironment string `json:"targetEnvironment"`
-}
-
-// AutomatedPromotionConfiguration defines promotion parameters specific to automated promotion: the initial environment
-// (in the promotion graph) to begin promoting on.
-type AutomatedPromotionConfiguration struct {
-	// InitialEnvironment: start iterating through the digraph, beginning with the value specified in 'initialEnvironment'
-	InitialEnvironment string `json:"initialEnvironment"`
-}
-
 // ApplicationPromotionRunStatus defines the observed state of ApplicationPromotionRun
 type ApplicationPromotionRunStatus struct {
 
@@ -72,45 +59,6 @@ type ApplicationPromotionRunStatus struct {
 	// - For a manual promotion, there will be only one.
 	ActiveBindings []string `json:"activeBindings,omitempty"`
 }
-
-// PromotionRunState defines the 3 states of an ApplicationPromotion resource.
-type PromotionRunState string
-
-const (
-	PromotionRunState_Active   PromotionRunState = "Active"
-	PromotionRunState_Waiting  PromotionRunState = "Waiting"
-	PromotionRunState_Complete PromotionRunState = "Complete"
-)
-
-// PromotionRunCompleteResult defines the success/failure states if the PromotionRunState is 'Complete'.
-type PromotionRunCompleteResult string
-
-const (
-	PromotionRunCompleteResult_Success PromotionRunCompleteResult = "Success"
-	PromotionRunCompleteResult_Failure PromotionRunCompleteResult = "Failure"
-)
-
-// PromotionRunEnvironmentStatus represents the set of steps taken during the  current promotion:
-// - manual promotions will only have a single step.
-// - automated promotions may have one or more steps, depending on how many environments have been promoted to.
-type PromotionRunEnvironmentStatus struct {
-
-	// Step is the sequential number of the step in the array, starting with 1
-	Step int `json:"step"`
-
-	// EnvironmentName is the name of the environment that was promoted to in this step
-	EnvironmentName string `json:"environmentName"`
-
-	// Status is/was the result of promoting to that environment.
-	Status PromotionRunEnvironmentStatusField `json:"status"`
-
-	// DisplayStatus is human-readible description of the current state/status.
-	DisplayStatus string `json:"displayStatus"`
-}
-
-// PromotionRunEnvironmentStatusField are the state values for promotion to individual enviroments, as
-// used by the Status field of ApplicationPromotionRunEnvironmentStatus
-type PromotionRunEnvironmentStatusField string
 
 const (
 	ApplicationPromotionRunEnvironmentStatus_Success    PromotionRunEnvironmentStatusField = "Success"

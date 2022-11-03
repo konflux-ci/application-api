@@ -17,14 +17,12 @@ limitations under the License.
 package v1alpha1
 
 import (
+	apiextensionsv1 "k8s.io/apiextensions-apiserver/pkg/apis/apiextensions/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// ApplicationSnapshotSpec defines the desired state of ApplicationSnapshot
-type ApplicationSnapshotSpec struct {
-
-	// NOTE: The name (kind) of this API resource, "ApplicationSnapshot" is likely to change in the short term (Q2 2022).
-	// Stay tuned for refactoring needed for your component.
+// SnapshotSpec defines the desired state of Snapshot
+type SnapshotSpec struct {
 
 	// Application is a reference to the name of an Application resource within the same namespace, which defines the target application for the Snapshot (when used with a Binding).
 	Application string `json:"application"`
@@ -36,15 +34,15 @@ type ApplicationSnapshotSpec struct {
 	DisplayDescription string `json:"displayDescription,omitempty"`
 
 	// Components field contains the sets of components to deploy as part of this snapshot.
-	Components []ApplicationSnapshotComponent `json:"components,omitempty"`
+	Components []SnapshotComponent `json:"components,omitempty"`
 
 	// Artifacts is a placeholder section for 'artifact links' we want to maintain to other AppStudio resources.
 	// See Environment API doc for details.
 	Artifacts SnapshotArtifacts `json:"artifacts,omitempty"`
 }
 
-// ApplicationSnapshotComponent
-type ApplicationSnapshotComponent struct {
+// SnapshotComponent contains the details of a component to deploy as part of a Snapshot
+type SnapshotComponent struct {
 
 	// Name is the name of the component
 	Name string `json:"name"`
@@ -53,8 +51,20 @@ type ApplicationSnapshotComponent struct {
 	ContainerImage string `json:"containerImage"`
 }
 
-// ApplicationSnapshotStatus defines the observed state of ApplicationSnapshot
-type ApplicationSnapshotStatus struct {
+// SnapshotArtifacts is a placeholder section for 'artifact links' we want to maintain to other AppStudio resources.
+//
+// For example: here I'm imagining we might want to keep track of container image <=> (source code repo, commit sha) links,
+// Which might be useful to present to the user within the UI.
+type SnapshotArtifacts struct {
+
+	// NOTE: This field (and struct) are placeholders.
+	// - Until this API is stabilized, consumers of the API may store any unstructured JSON/YAML data here,
+	//   but no backwards compatibility will be preserved.
+	UnstableFields *apiextensionsv1.JSON `json:"unstableFields,omitempty"`
+}
+
+// SnapshotStatus defines the observed state of Snapshot
+type SnapshotStatus struct {
 	// Conditions represent the latest available observations for the Snapshot
 	// +optional
 	Conditions []metav1.Condition `json:"conditions"`
@@ -63,25 +73,25 @@ type ApplicationSnapshotStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// ApplicationSnapshot is the Schema for the applicationsnapshots API
-// +kubebuilder:resource:path=applicationsnapshots,shortName=as;snapshot
-type ApplicationSnapshot struct {
+// Snapshot is the Schema for the snapshots API
+// +kubebuilder:resource:path=snapshots,shortName=as;snapshot
+type Snapshot struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ApplicationSnapshotSpec   `json:"spec,omitempty"`
-	Status ApplicationSnapshotStatus `json:"status,omitempty"`
+	Spec   SnapshotSpec   `json:"spec,omitempty"`
+	Status SnapshotStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// ApplicationSnapshotList contains a list of ApplicationSnapshot
-type ApplicationSnapshotList struct {
+// SnapshotList contains a list of Snapshot
+type SnapshotList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []ApplicationSnapshot `json:"items"`
+	Items           []Snapshot `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&ApplicationSnapshot{}, &ApplicationSnapshotList{})
+	SchemeBuilder.Register(&Snapshot{}, &SnapshotList{})
 }
