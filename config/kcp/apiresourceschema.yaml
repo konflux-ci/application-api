@@ -191,6 +191,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
+<<<<<<< HEAD
   name: v202211092111.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
@@ -648,12 +649,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-<<<<<<< HEAD
   name: v202211021841.componentdetectionqueries.appstudio.redhat.com
->>>>>>> 8f9ce71 (add type to cdq)
-=======
-  name: v202211031948.componentdetectionqueries.appstudio.redhat.com
->>>>>>> d48d4ac (add type to component printer column)
 spec:
   group: appstudio.redhat.com
   names:
@@ -1055,15 +1051,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-<<<<<<< HEAD
-<<<<<<< HEAD
   name: v202211092111.components.appstudio.redhat.com
-=======
-  name: v202211021841.components.appstudio.redhat.com
->>>>>>> 8f9ce71 (add type to cdq)
-=======
-  name: v202211031948.components.appstudio.redhat.com
->>>>>>> d48d4ac (add type to component printer column)
 spec:
   group: appstudio.redhat.com
   names:
@@ -1427,15 +1415,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-<<<<<<< HEAD
-<<<<<<< HEAD
   name: v202211092111.environments.appstudio.redhat.com
-=======
-  name: v202211021841.environments.appstudio.redhat.com
->>>>>>> 8f9ce71 (add type to cdq)
-=======
-  name: v202211031948.environments.appstudio.redhat.com
->>>>>>> d48d4ac (add type to component printer column)
 spec:
   group: appstudio.redhat.com
   names:
