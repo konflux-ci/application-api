@@ -20,11 +20,8 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// ApplicationPromotionRunSpec defines the desired state of ApplicationPromotionRun
-type ApplicationPromotionRunSpec struct {
-
-	// NOTE: The name (kind) of this API, "ApplicationPromotionRun" is likely to change in the short term (Q2 2022).
-	// Stay tuned for refactoring needed for your component.
+// PromotionRunSpec defines the desired state of PromotionRun
+type PromotionRunSpec struct {
 
 	// Snapshot refers to the name of a Snapshot resource defined within the namespace, used to promote container images between Environments.
 	Snapshot string `json:"snapshot"`
@@ -54,8 +51,8 @@ type AutomatedPromotionConfiguration struct {
 	InitialEnvironment string `json:"initialEnvironment"`
 }
 
-// ApplicationPromotionRunStatus defines the observed state of ApplicationPromotionRun
-type ApplicationPromotionRunStatus struct {
+// PromotionRunStatus defines the observed state of PromotionRun
+type PromotionRunStatus struct {
 
 	// State indicates whether or not the overall promotion (either manual or automated is complete)
 	State PromotionRunState `json:"state"`
@@ -71,9 +68,14 @@ type ApplicationPromotionRunStatus struct {
 	// - For an automated promotion, there can be multiple active bindings at a time (one for each env at a particular tree depth)
 	// - For a manual promotion, there will be only one.
 	ActiveBindings []string `json:"activeBindings,omitempty"`
+
+	// PromotionStartTime is set to the value when the PromotionRun Reconciler first started the promotion.
+	PromotionStartTime metav1.Time `json:"promotionStartTime,omitempty"`
+
+	Conditions []PromotionRunCondition `json:"conditions,omitempty"`
 }
 
-// PromotionRunState defines the 3 states of an ApplicationPromotion resource.
+// PromotionRunState defines the 3 states of an Promotion resource.
 type PromotionRunState string
 
 const (
@@ -109,37 +111,88 @@ type PromotionRunEnvironmentStatus struct {
 }
 
 // PromotionRunEnvironmentStatusField are the state values for promotion to individual enviroments, as
-// used by the Status field of ApplicationPromotionRunEnvironmentStatus
+// used by the Status field of PromotionRunEnvironmentStatus
 type PromotionRunEnvironmentStatusField string
 
 const (
-	ApplicationPromotionRunEnvironmentStatus_Success    PromotionRunEnvironmentStatusField = "Success"
-	ApplicationPromotionRunEnvironmentStatus_InProgress PromotionRunEnvironmentStatusField = "In Progress"
-	ApplicationPromotionRunEnvironmentStatus_Failed     PromotionRunEnvironmentStatusField = "Failed"
+	PromotionRunEnvironmentStatus_Success    PromotionRunEnvironmentStatusField = "Success"
+	PromotionRunEnvironmentStatus_InProgress PromotionRunEnvironmentStatusField = "In Progress"
+	PromotionRunEnvironmentStatus_Failed     PromotionRunEnvironmentStatusField = "Failed"
 )
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// ApplicationPromotionRun is the Schema for the applicationpromotionruns API
-// +kubebuilder:resource:path=applicationpromotionruns,shortName=apr;promotion
-type ApplicationPromotionRun struct {
+// PromotionRun is the Schema for the promotionruns API
+// +kubebuilder:resource:path=promotionruns,shortName=apr;promotion
+type PromotionRun struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ApplicationPromotionRunSpec   `json:"spec,omitempty"`
-	Status ApplicationPromotionRunStatus `json:"status,omitempty"`
+	Spec   PromotionRunSpec   `json:"spec,omitempty"`
+	Status PromotionRunStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// ApplicationPromotionRunList contains a list of ApplicationPromotionRun
-type ApplicationPromotionRunList struct {
+// PromotionRunList contains a list of PromotionRun
+type PromotionRunList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []ApplicationPromotionRun `json:"items"`
+	Items           []PromotionRun `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&ApplicationPromotionRun{}, &ApplicationPromotionRunList{})
+	SchemeBuilder.Register(&PromotionRun{}, &PromotionRunList{})
 }
+
+// PromotionRunCondition contains details about an PromotionRun condition, which is usually an error or warning
+type PromotionRunCondition struct {
+	// Type is a PromotionRun condition type
+	Type PromotionRunConditionType `json:"type"`
+
+	// Message contains human-readable message indicating details about the last condition.
+	// +optional
+	Message string `json:"message"`
+
+	// LastProbeTime is the last time the condition was observed.
+	// +optional
+	LastProbeTime metav1.Time `json:"lastProbeTime,omitempty"`
+
+	// LastTransitionTime is the last time the condition transitioned from one status to another.
+	// +optional
+	LastTransitionTime *metav1.Time `json:"lastTransitionTime,omitempty"`
+
+	// Status is the status of the condition.
+	Status PromotionRunConditionStatus `json:"status"`
+
+	// Reason is a unique, one-word, CamelCase reason for the condition's last transition.
+	// +optional
+	Reason PromotionRunReasonType `json:"reason"`
+}
+
+// PromotionRunConditionType represents type of GitOpsDeployment condition.
+type PromotionRunConditionType string
+
+const (
+	PromotionRunConditionErrorOccurred PromotionRunConditionType = "ErrorOccurred"
+)
+
+// PromotionRunConditionStatus is a type which represents possible comparison results
+type PromotionRunConditionStatus string
+
+// PromotionRun Condition Status
+const (
+	// PromotionRunConditionStatusTrue indicates that a condition type is true
+	PromotionRunConditionStatusTrue PromotionRunConditionStatus = "True"
+	// PromotionRunConditionStatusFalse indicates that a condition type is false
+	PromotionRunConditionStatusFalse PromotionRunConditionStatus = "False"
+	// PromotionRunConditionStatusUnknown indicates that the condition status could not be reliably determined
+	PromotionRunConditionStatusUnknown PromotionRunConditionStatus = "Unknown"
+)
+
+type PromotionRunReasonType string
+
+const (
+	PromotionRunReasonErrorOccurred PromotionRunReasonType = "ErrorOccurred"
+)
