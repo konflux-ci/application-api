@@ -44,7 +44,7 @@ resources:
     namespaced: true
   domain: redhat.com
   group: appstudio
-  kind: ApplicationSnapshotEnvironmentBinding
+  kind: SnapshotEnvironmentBinding
   path: github.com/redhat-appstudio/application-api/api/v1alpha1
   version: v1alpha1
 - api:
@@ -52,15 +52,18 @@ resources:
     namespaced: true
   domain: redhat.com
   group: appstudio
-  kind: ApplicationSnapshot
+  kind: Snapshot
   path: github.com/redhat-appstudio/application-api/api/v1alpha1
   version: v1alpha1
+  webhooks:
+    validation: true
+    webhookVersion: v1
 - api:
     crdVersion: v1
     namespaced: true
   domain: redhat.com
   group: appstudio
-  kind: ApplicationPromotionRun
+  kind: PromotionRun
   path: github.com/redhat-appstudio/application-api/api/v1alpha1
   version: v1alpha1
 - api:
