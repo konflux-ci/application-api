@@ -1,0 +1,40 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  annotations:
+    pipelinesascode.tekton.dev/max-keep-runs: "3"
+    pipelinesascode.tekton.dev/on-event: '[push]'
+    pipelinesascode.tekton.dev/on-target-branch: '[main,master]'
+  name: application-api-on-push
+spec:
+  params:
+  - name: git-url
+    value: '{{repo_url}}'
+  - name: revision
+    value: '{{revision}}'
+  - name: infra-deployment-update-script
+    value: |
+        sed -i -e 's|\(https://github.com/redhat-appstudio/application-api/.*?ref=\)\(.*\)|\1{{ revision }}|' components/application-api/base/kustomization.yaml
+  pipelineSpec:
+    params:
+    - description: Source Repository URL
+      name: git-url
+      type: string
+    - default: ""
+      description: Revision of the Source Repository
+      name: revision
+      type: string
+    - default: ""
+      name: infra-deployment-update-script
+    tasks:
+    - name: infra-deployments-mr
+      params:
+      - name: ORIGIN_REPO
+        value: $(params.git-url)
+      - name: REVISION
+        value: $(params.revision)
+      - name: SCRIPT
+        value: $(params.infra-deployment-update-script)
+      taskRef:
+        bundle: quay.io/redhat-appstudio/appstudio-tasks:748a03507b68aa610212e8031e3301ab943a14ef-2
+        name: update-infra-deployments
