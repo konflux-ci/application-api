@@ -5,7 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211092111.applications.appstudio.redhat.com
+  name: v202211101622.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -19,7 +19,17 @@ spec:
     singular: application
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.conditions[-1].status
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[-1].reason
+      name: Reason
+      type: string
+    name: v1alpha1
     schema:
       description: Application is the Schema for the applications API
       properties:
@@ -181,7 +191,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211092111.componentdetectionqueries.appstudio.redhat.com
+  name: v202211101622.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -194,7 +204,20 @@ spec:
     singular: componentdetectionquery
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.conditions[-1].status
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[-1].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[-1].type
+      name: Type
+      type: string
+    name: v1alpha1
     schema:
       description: ComponentDetectionQuery is the Schema for the componentdetectionqueries
         API
@@ -570,7 +593,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211092111.components.appstudio.redhat.com
+  name: v202211101622.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -584,7 +607,20 @@ spec:
     singular: component
   scope: Namespaced
   versions:
-  - name: v1alpha1
+  - additionalPrinterColumns:
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    - jsonPath: .status.conditions[-1].status
+      name: Status
+      type: string
+    - jsonPath: .status.conditions[-1].reason
+      name: Reason
+      type: string
+    - jsonPath: .status.conditions[-1].type
+      name: Type
+      type: string
+    name: v1alpha1
     schema:
       description: Component is the Schema for the components API
       properties:
@@ -921,7 +957,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211092111.environments.appstudio.redhat.com
+  name: v202211101622.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1052,7 +1088,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211092111.promotionruns.appstudio.redhat.com
+  name: v202211101622.promotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1224,7 +1260,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211092111.snapshotenvironmentbindings.appstudio.redhat.com
+  name: v202211101622.snapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1585,7 +1621,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211092111.snapshots.appstudio.redhat.com
+  name: v202211101622.snapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
