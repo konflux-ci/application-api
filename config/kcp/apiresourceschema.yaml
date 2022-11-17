@@ -5,7 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211101622.applications.appstudio.redhat.com
+  name: v202211171953.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -62,7 +62,10 @@ spec:
                     that should be used
                   type: string
                 url:
-                  description: URL refers to the repository URL that should be used.
+                  description: 'URL refers to the repository URL that should be used.
+                    If not specified, a GitOps repository under the $GITHUB_ORG (defaults
+                    to redhat-appstudio-appdata) organization on GitHub will be generated
+                    by HAS. Example: https://github.com/devfile-test/myrepo'
                   type: string
               required:
               - url
@@ -88,7 +91,10 @@ spec:
                     that should be used
                   type: string
                 url:
-                  description: URL refers to the repository URL that should be used.
+                  description: 'URL refers to the repository URL that should be used.
+                    If not specified, a GitOps repository under the $GITHUB_ORG (defaults
+                    to redhat-appstudio-appdata) organization on GitHub will be generated
+                    by HAS. Example: https://github.com/devfile-test/myrepo'
                   type: string
               required:
               - url
@@ -100,9 +106,7 @@ spec:
           description: ApplicationStatus defines the observed state of Application
           properties:
             conditions:
-              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                of cluster Important: Run "make" to regenerate code after modifying
-                this file'
+              description: Conditions is an array of the Application's status conditions
               items:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
@@ -191,7 +195,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211101622.componentdetectionqueries.appstudio.redhat.com
+  name: v202211171953.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -264,8 +268,8 @@ spec:
               - url
               type: object
             secret:
-              description: Secret describes the name of a Kubernetes secret containing
-                a Personal Access Token to access the git repostiory
+              description: Secret describes the name of an optional Kubernetes secret
+                containing a Personal Access Token to access the git repostiory
               type: string
           required:
           - git
@@ -284,12 +288,14 @@ spec:
                       with all the info gathered from the devfile or service detection
                     properties:
                       application:
-                        description: Application to add the component to
+                        description: Application is the name of the application that
+                          the component belongs to
                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                         type: string
                       componentName:
                         description: ComponentName is name of the component to be
-                          added to the HASApplication
+                          added to the Application. The name must adhere to DNS-1123
+                          validation.
                         maxLength: 63
                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                         type: string
@@ -299,7 +305,7 @@ spec:
                         type: string
                       env:
                         description: An array of environment variables to add to the
-                          component
+                          component (ValueFrom not currently supported)
                         items:
                           description: EnvVar represents an environment variable present
                             in a Container.
@@ -510,7 +516,8 @@ spec:
                 from detection
               type: object
             conditions:
-              description: Condition about the Component CR
+              description: Conditions is an array of the ComponentDetectionQuery's
+                status conditions
               items:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
@@ -593,7 +600,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211101622.components.appstudio.redhat.com
+  name: v202211171953.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -640,12 +647,13 @@ spec:
           description: ComponentSpec defines the desired state of Component
           properties:
             application:
-              description: Application to add the component to
+              description: Application is the name of the application that the component
+                belongs to
               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
               type: string
             componentName:
               description: ComponentName is name of the component to be added to the
-                HASApplication
+                Application. The name must adhere to DNS-1123 validation.
               maxLength: 63
               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
               type: string
@@ -654,6 +662,7 @@ spec:
               type: string
             env:
               description: An array of environment variables to add to the component
+                (ValueFrom not currently supported)
               items:
                 description: EnvVar represents an environment variable present in
                   a Container.
@@ -841,7 +850,7 @@ spec:
           description: ComponentStatus defines the observed state of Component
           properties:
             conditions:
-              description: Condition about the Component CR
+              description: Conditions is an array of the Component's status conditions
               items:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
@@ -921,7 +930,7 @@ spec:
               description: GitOps specific status for the Component CR
               properties:
                 branch:
-                  description: Branch is the branch used for the gitops repository
+                  description: Branch is the git branch used for the gitops repository
                   type: string
                 commitID:
                   description: CommitID is the most recent commit ID in the GitOps
@@ -957,7 +966,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211101622.environments.appstudio.redhat.com
+  name: v202211171953.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1088,7 +1097,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211101622.promotionruns.appstudio.redhat.com
+  name: v202211171953.promotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1260,7 +1269,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211101622.snapshotenvironmentbindings.appstudio.redhat.com
+  name: v202211171953.snapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1621,7 +1630,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211101622.snapshots.appstudio.redhat.com
+  name: v202211171953.snapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:

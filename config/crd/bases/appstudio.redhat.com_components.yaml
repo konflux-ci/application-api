@@ -54,12 +54,13 @@ spec:
             description: ComponentSpec defines the desired state of Component
             properties:
               application:
-                description: Application to add the component to
+                description: Application is the name of the application that the component
+                  belongs to
                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                 type: string
               componentName:
                 description: ComponentName is name of the component to be added to
-                  the HASApplication
+                  the Application. The name must adhere to DNS-1123 validation.
                 maxLength: 63
                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                 type: string
@@ -69,6 +70,7 @@ spec:
                 type: string
               env:
                 description: An array of environment variables to add to the component
+                  (ValueFrom not currently supported)
                 items:
                   description: EnvVar represents an environment variable present in
                     a Container.
@@ -256,7 +258,7 @@ spec:
             description: ComponentStatus defines the observed state of Component
             properties:
               conditions:
-                description: Condition about the Component CR
+                description: Conditions is an array of the Component's status conditions
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
@@ -336,7 +338,7 @@ spec:
                 description: GitOps specific status for the Component CR
                 properties:
                   branch:
-                    description: Branch is the branch used for the gitops repository
+                    description: Branch is the git branch used for the gitops repository
                     type: string
                   commitID:
                     description: CommitID is the most recent commit ID in the GitOps

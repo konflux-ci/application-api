@@ -81,8 +81,8 @@ spec:
                 - url
                 type: object
               secret:
-                description: Secret describes the name of a Kubernetes secret containing
-                  a Personal Access Token to access the git repostiory
+                description: Secret describes the name of an optional Kubernetes secret
+                  containing a Personal Access Token to access the git repostiory
                 type: string
             required:
             - git
@@ -101,12 +101,14 @@ spec:
                         with all the info gathered from the devfile or service detection
                       properties:
                         application:
-                          description: Application to add the component to
+                          description: Application is the name of the application
+                            that the component belongs to
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         componentName:
                           description: ComponentName is name of the component to be
-                            added to the HASApplication
+                            added to the Application. The name must adhere to DNS-1123
+                            validation.
                           maxLength: 63
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
@@ -116,7 +118,7 @@ spec:
                           type: string
                         env:
                           description: An array of environment variables to add to
-                            the component
+                            the component (ValueFrom not currently supported)
                           items:
                             description: EnvVar represents an environment variable
                               present in a Container.
@@ -329,7 +331,8 @@ spec:
                   info from detection
                 type: object
               conditions:
-                description: Condition about the Component CR
+                description: Conditions is an array of the ComponentDetectionQuery's
+                  status conditions
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
