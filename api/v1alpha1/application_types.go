@@ -31,14 +31,17 @@ type ApplicationSpec struct {
 	// AppModelRepository refers to the git repository that will store the application model (a devfile)
 	// Can be the same as GitOps repository.
 	// A repository will be generated if this field is left blank.
+	// +optional
 	AppModelRepository ApplicationGitRepository `json:"appModelRepository,omitempty"`
 
 	// GitOpsRepository refers to the git repository that will store the gitops resources.
 	// Can be the same as App Model Repository.
 	// A repository will be generated if this field is left blank.
+	// +optional
 	GitOpsRepository ApplicationGitRepository `json:"gitOpsRepository,omitempty"`
 
 	// Description refers to a brief description of the application.
+	// +optional
 	Description string `json:"description,omitempty"`
 }
 
@@ -51,9 +54,11 @@ type ApplicationGitRepository struct {
 	URL string `json:"url"`
 
 	// Branch corresponds to the branch in the repository that should be used
+	// +optional
 	Branch string `json:"branch,omitempty"`
 
 	// Context corresponds to the context within the repository that should be used
+	// +optional
 	Context string `json:"context,omitempty"`
 }
 

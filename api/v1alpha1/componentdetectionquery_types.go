@@ -30,6 +30,7 @@ type ComponentDetectionQuerySpec struct {
 	GitSource GitSource `json:"git"`
 
 	// Secret describes the name of an optional Kubernetes secret containing a Personal Access Token to access the git repostiory
+	// +optional
 	Secret string `json:"secret,omitempty"`
 }
 

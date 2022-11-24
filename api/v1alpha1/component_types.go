@@ -37,15 +37,19 @@ type GitSource struct {
 	URL string `json:"url"`
 
 	// Specify a branch/tag/commit id. If not specified, default is `main`/`master`.
+	// +optional
 	Revision string `json:"revision,omitempty"`
 
 	// A relative path inside the git repo containing the component
+	// +optional
 	Context string `json:"context,omitempty"`
 
 	// If specified, the devfile at the URL will be used for the component.
+	// +optional
 	DevfileURL string `json:"devfileUrl,omitempty"`
 
 	// If specified, the dockerfile at the URL will be used for the component.
+	// +optional
 	DockerfileURL string `json:"dockerfileUrl,omitempty"`
 }
 
@@ -57,6 +61,7 @@ type ComponentSource struct {
 // +union
 type ComponentSourceUnion struct {
 	// Git Source for a Component
+	// +optional
 	GitSource *GitSource `json:"git,omitempty"`
 }
 
@@ -78,30 +83,39 @@ type ComponentSpec struct {
 	// Secret describes the name of a Kubernetes secret containing either:
 	// 1. A Personal Access Token to access the Component's git repostiory (if using a Git-source component) or
 	// 2. An Image Pull Secret to access the Component's container image (if using an Image-source component).
+	// +optional
 	Secret string `json:"secret,omitempty"`
 
 	// Source describes the Component source
+	// +optional
 	Source ComponentSource `json:"source,omitempty"`
 
 	// Compute Resources required by this component
+	// +optional
 	Resources corev1.ResourceRequirements `json:"resources,omitempty"`
 
 	// The number of replicas to deploy the component with
+	// +optional
 	Replicas int `json:"replicas,omitempty"`
 
 	// The port to expose the component over
+	// +optional
 	TargetPort int `json:"targetPort,omitempty"`
 
 	// The route to expose the component with
+	// +optional
 	Route string `json:"route,omitempty"`
 
 	// An array of environment variables to add to the component (ValueFrom not currently supported)
+	// +optional
 	Env []corev1.EnvVar `json:"env,omitempty"`
 
 	// The container image to build or create the component from
+	// +optional
 	ContainerImage string `json:"containerImage,omitempty"`
 
 	// Whether or not to bypass the generation of GitOps resources for the Component. Defaults to false.
+	// +optional
 	SkipGitOpsResourceGeneration bool `json:"skipGitOpsResourceGeneration,omitempty"`
 }
 
