@@ -133,6 +133,10 @@ type SnapshotEnvironmentBindingStatus struct {
 	GitOpsRepoConditions []metav1.Condition `json:"gitopsRepoConditions,omitempty"`
 
 	BindingConditions []metav1.Condition `json:"bindingConditions,omitempty"`
+
+	// ComponentDeploymentConditions describes the deployment status of all of the Components of the Application.
+	// This status is updated by the Gitops Service's SnapshotEnvironmentBinding controller
+	ComponentDeploymentConditions []metav1.Condition `json:"componentDeploymentConditions,omitempty"`
 }
 
 // BindingStatusGitOpsDeployment describes an individual reference

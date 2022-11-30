@@ -57,12 +57,12 @@ spec:
                   is left blank.
                 properties:
                   branch:
-                    description: Branch corresponds to the branch in the repository
-                      that should be used
+                    description: 'Branch corresponds to the branch in the repository
+                      that should be used Example: devel'
                     type: string
                   context:
-                    description: Context corresponds to the context within the repository
-                      that should be used
+                    description: 'Context corresponds to the context within the repository
+                      that should be used Example: folderA/folderB/gitops'
                     type: string
                   url:
                     description: 'URL refers to the repository URL that should be
@@ -86,12 +86,12 @@ spec:
                   A repository will be generated if this field is left blank.
                 properties:
                   branch:
-                    description: Branch corresponds to the branch in the repository
-                      that should be used
+                    description: 'Branch corresponds to the branch in the repository
+                      that should be used Example: devel'
                     type: string
                   context:
-                    description: Context corresponds to the context within the repository
-                      that should be used
+                    description: 'Context corresponds to the context within the repository
+                      that should be used Example: folderA/folderB/gitops'
                     type: string
                   url:
                     description: 'URL refers to the repository URL that should be

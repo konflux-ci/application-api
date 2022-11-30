@@ -54,8 +54,8 @@ spec:
             description: ComponentSpec defines the desired state of Component
             properties:
               application:
-                description: Application is the name of the application that the component
-                  belongs to
+                description: Application is the name of the application resource that
+                  the component belongs to.
                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                 type: string
               componentName:
@@ -65,8 +65,8 @@ spec:
                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                 type: string
               containerImage:
-                description: The container image to build or create the component
-                  from
+                description: 'The container image to build or create the component
+                  from Example: quay.io/someorg/somerepository:latest'
                 type: string
               env:
                 description: An array of environment variables to add to the component
@@ -224,20 +224,20 @@ spec:
                     description: Git Source for a Component
                     properties:
                       context:
-                        description: A relative path inside the git repo containing
-                          the component
+                        description: 'A relative path inside the git repo containing
+                          the component Example: folderA/folderB/gitops'
                         type: string
                       devfileUrl:
-                        description: If specified, the devfile at the URL will be
-                          used for the component.
+                        description: 'If specified, the devfile at the URL will be
+                          used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
                         type: string
                       dockerfileUrl:
                         description: If specified, the dockerfile at the URL will
                           be used for the component.
                         type: string
                       revision:
-                        description: Specify a branch/tag/commit id. If not specified,
-                          default is `main`/`master`.
+                        description: 'Specify a branch/tag/commit id. If not specified,
+                          default is `main`/`master`. Example: devel'
                         type: string
                       url:
                         description: If importing from git, the repository to create
