@@ -54,10 +54,12 @@ type ApplicationGitRepository struct {
 	URL string `json:"url"`
 
 	// Branch corresponds to the branch in the repository that should be used
+	// Example: devel
 	// +optional
 	Branch string `json:"branch,omitempty"`
 
 	// Context corresponds to the context within the repository that should be used
+	// Example: folderA/folderB/gitops
 	// +optional
 	Context string `json:"context,omitempty"`
 }

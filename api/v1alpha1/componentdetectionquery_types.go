@@ -41,9 +41,11 @@ type ComponentDetectionDescription struct {
 	DevfileFound bool `json:"devfileFound,omitempty"`
 
 	// Language specifies the language of the component detected
+	// Example: JavaScript
 	Language string `json:"language,omitempty"`
 
 	// ProjectType specifies the type of project for the component detected
+	// Example Node.JS
 	ProjectType string `json:"projectType,omitempty"`
 
 	// ComponentStub is a stub of the component detected with all the info gathered from the devfile or service detection

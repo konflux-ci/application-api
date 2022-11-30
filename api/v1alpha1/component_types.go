@@ -37,14 +37,17 @@ type GitSource struct {
 	URL string `json:"url"`
 
 	// Specify a branch/tag/commit id. If not specified, default is `main`/`master`.
+	// Example: devel
 	// +optional
 	Revision string `json:"revision,omitempty"`
 
 	// A relative path inside the git repo containing the component
+	// Example: folderA/folderB/gitops
 	// +optional
 	Context string `json:"context,omitempty"`
 
 	// If specified, the devfile at the URL will be used for the component.
+	// Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml
 	// +optional
 	DevfileURL string `json:"devfileUrl,omitempty"`
 
@@ -77,7 +80,7 @@ type ComponentSpec struct {
 	ComponentName string `json:"componentName"`
 
 	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
-	// Application is the name of the application that the component belongs to
+	// Application is the name of the application resource that the component belongs to.
 	Application string `json:"application"`
 
 	// Secret describes the name of a Kubernetes secret containing either:
@@ -111,6 +114,7 @@ type ComponentSpec struct {
 	Env []corev1.EnvVar `json:"env,omitempty"`
 
 	// The container image to build or create the component from
+	// Example: quay.io/someorg/somerepository:latest
 	// +optional
 	ContainerImage string `json:"containerImage,omitempty"`
 
