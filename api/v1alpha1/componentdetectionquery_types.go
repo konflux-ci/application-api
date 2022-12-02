@@ -29,7 +29,8 @@ type ComponentDetectionQuerySpec struct {
 	// Git Source for a Component
 	GitSource GitSource `json:"git"`
 
-	// Secret describes the name of a Kubernetes secret containing a Personal Access Token to access the git repostiory
+	// Secret describes the name of an optional Kubernetes secret containing a Personal Access Token to access the git repostiory
+	// +optional
 	Secret string `json:"secret,omitempty"`
 }
 
@@ -40,9 +41,11 @@ type ComponentDetectionDescription struct {
 	DevfileFound bool `json:"devfileFound,omitempty"`
 
 	// Language specifies the language of the component detected
+	// Example: JavaScript
 	Language string `json:"language,omitempty"`
 
 	// ProjectType specifies the type of project for the component detected
+	// Example Node.JS
 	ProjectType string `json:"projectType,omitempty"`
 
 	// ComponentStub is a stub of the component detected with all the info gathered from the devfile or service detection
@@ -57,7 +60,7 @@ type ComponentDetectionQueryStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	// Condition about the Component CR
+	// Conditions is an array of the ComponentDetectionQuery's status conditions
 	Conditions []metav1.Condition `json:"conditions,omitempty"`
 
 	// ComponentDetected gives a list of components and the info from detection

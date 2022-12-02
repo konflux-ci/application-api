@@ -54,21 +54,23 @@ spec:
             description: ComponentSpec defines the desired state of Component
             properties:
               application:
-                description: Application to add the component to
+                description: Application is the name of the application resource that
+                  the component belongs to.
                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                 type: string
               componentName:
                 description: ComponentName is name of the component to be added to
-                  the HASApplication
+                  the Application. The name must adhere to DNS-1123 validation.
                 maxLength: 63
                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                 type: string
               containerImage:
-                description: The container image to build or create the component
-                  from
+                description: 'The container image to build or create the component
+                  from Example: quay.io/someorg/somerepository:latest'
                 type: string
               env:
                 description: An array of environment variables to add to the component
+                  (ValueFrom not currently supported)
                 items:
                   description: EnvVar represents an environment variable present in
                     a Container.
@@ -222,20 +224,20 @@ spec:
                     description: Git Source for a Component
                     properties:
                       context:
-                        description: A relative path inside the git repo containing
-                          the component
+                        description: 'A relative path inside the git repo containing
+                          the component Example: folderA/folderB/gitops'
                         type: string
                       devfileUrl:
-                        description: If specified, the devfile at the URL will be
-                          used for the component.
+                        description: 'If specified, the devfile at the URL will be
+                          used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
                         type: string
                       dockerfileUrl:
                         description: If specified, the dockerfile at the URL will
                           be used for the component.
                         type: string
                       revision:
-                        description: Specify a branch/tag/commit id. If not specified,
-                          default is `main`/`master`.
+                        description: 'Specify a branch/tag/commit id. If not specified,
+                          default is `main`/`master`. Example: devel'
                         type: string
                       url:
                         description: If importing from git, the repository to create
@@ -256,7 +258,7 @@ spec:
             description: ComponentStatus defines the observed state of Component
             properties:
               conditions:
-                description: Condition about the Component CR
+                description: Conditions is an array of the Component's status conditions
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
@@ -336,7 +338,7 @@ spec:
                 description: GitOps specific status for the Component CR
                 properties:
                   branch:
-                    description: Branch is the branch used for the gitops repository
+                    description: Branch is the git branch used for the gitops repository
                     type: string
                   commitID:
                     description: CommitID is the most recent commit ID in the GitOps

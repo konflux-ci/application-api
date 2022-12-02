@@ -58,20 +58,20 @@ spec:
                 description: Git Source for a Component
                 properties:
                   context:
-                    description: A relative path inside the git repo containing the
-                      component
+                    description: 'A relative path inside the git repo containing the
+                      component Example: folderA/folderB/gitops'
                     type: string
                   devfileUrl:
-                    description: If specified, the devfile at the URL will be used
-                      for the component.
+                    description: 'If specified, the devfile at the URL will be used
+                      for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
                     type: string
                   dockerfileUrl:
                     description: If specified, the dockerfile at the URL will be used
                       for the component.
                     type: string
                   revision:
-                    description: Specify a branch/tag/commit id. If not specified,
-                      default is `main`/`master`.
+                    description: 'Specify a branch/tag/commit id. If not specified,
+                      default is `main`/`master`. Example: devel'
                     type: string
                   url:
                     description: If importing from git, the repository to create the
@@ -81,8 +81,8 @@ spec:
                 - url
                 type: object
               secret:
-                description: Secret describes the name of a Kubernetes secret containing
-                  a Personal Access Token to access the git repostiory
+                description: Secret describes the name of an optional Kubernetes secret
+                  containing a Personal Access Token to access the git repostiory
                 type: string
             required:
             - git
@@ -101,22 +101,24 @@ spec:
                         with all the info gathered from the devfile or service detection
                       properties:
                         application:
-                          description: Application to add the component to
+                          description: Application is the name of the application
+                            resource that the component belongs to.
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         componentName:
                           description: ComponentName is name of the component to be
-                            added to the HASApplication
+                            added to the Application. The name must adhere to DNS-1123
+                            validation.
                           maxLength: 63
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         containerImage:
-                          description: The container image to build or create the
-                            component from
+                          description: 'The container image to build or create the
+                            component from Example: quay.io/someorg/somerepository:latest'
                           type: string
                         env:
                           description: An array of environment variables to add to
-                            the component
+                            the component (ValueFrom not currently supported)
                           items:
                             description: EnvVar represents an environment variable
                               present in a Container.
@@ -282,20 +284,21 @@ spec:
                               description: Git Source for a Component
                               properties:
                                 context:
-                                  description: A relative path inside the git repo
-                                    containing the component
+                                  description: 'A relative path inside the git repo
+                                    containing the component Example: folderA/folderB/gitops'
                                   type: string
                                 devfileUrl:
-                                  description: If specified, the devfile at the URL
-                                    will be used for the component.
+                                  description: 'If specified, the devfile at the URL
+                                    will be used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
                                   type: string
                                 dockerfileUrl:
                                   description: If specified, the dockerfile at the
                                     URL will be used for the component.
                                   type: string
                                 revision:
-                                  description: Specify a branch/tag/commit id. If
-                                    not specified, default is `main`/`master`.
+                                  description: 'Specify a branch/tag/commit id. If
+                                    not specified, default is `main`/`master`. Example:
+                                    devel'
                                   type: string
                                 url:
                                   description: If importing from git, the repository
@@ -317,19 +320,20 @@ spec:
                         component
                       type: boolean
                     language:
-                      description: Language specifies the language of the component
-                        detected
+                      description: 'Language specifies the language of the component
+                        detected Example: JavaScript'
                       type: string
                     projectType:
                       description: ProjectType specifies the type of project for the
-                        component detected
+                        component detected Example Node.JS
                       type: string
                   type: object
                 description: ComponentDetected gives a list of components and the
                   info from detection
                 type: object
               conditions:
-                description: Condition about the Component CR
+                description: Conditions is an array of the ComponentDetectionQuery's
+                  status conditions
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct

@@ -47,6 +47,7 @@ type BindingComponent struct {
 	// Configuration describes GitOps repository customizations that are specific to the
 	// the component-application-environment combination.
 	// - Values defined in this struct will overwrite values from Application/Environment/Component
+	// +optional
 	Configuration BindingComponentConfiguration `json:"configuration,omitempty"`
 }
 
@@ -64,9 +65,11 @@ type BindingComponentConfiguration struct {
 	Replicas int `json:"replicas"`
 
 	// Resources defines the Compute Resources required by the component
+	// +optional
 	Resources *corev1.ResourceRequirements `json:"resources,omitempty"`
 
 	// Env describes environment variables to use for the component
+	// +optional
 	Env []EnvVarPair `json:"env,omitempty"`
 }
 

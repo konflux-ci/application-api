@@ -5,7 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211212056.applications.appstudio.redhat.com
+  name: v202211301912.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -54,15 +54,18 @@ spec:
                 repository. A repository will be generated if this field is left blank.
               properties:
                 branch:
-                  description: Branch corresponds to the branch in the repository
-                    that should be used
+                  description: 'Branch corresponds to the branch in the repository
+                    that should be used Example: devel'
                   type: string
                 context:
-                  description: Context corresponds to the context within the repository
-                    that should be used
+                  description: 'Context corresponds to the context within the repository
+                    that should be used Example: folderA/folderB/gitops'
                   type: string
                 url:
-                  description: URL refers to the repository URL that should be used.
+                  description: 'URL refers to the repository URL that should be used.
+                    If not specified, a GitOps repository under the $GITHUB_ORG (defaults
+                    to redhat-appstudio-appdata) organization on GitHub will be generated
+                    by HAS. Example: https://github.com/devfile-test/myrepo'
                   type: string
               required:
               - url
@@ -80,15 +83,18 @@ spec:
                 A repository will be generated if this field is left blank.
               properties:
                 branch:
-                  description: Branch corresponds to the branch in the repository
-                    that should be used
+                  description: 'Branch corresponds to the branch in the repository
+                    that should be used Example: devel'
                   type: string
                 context:
-                  description: Context corresponds to the context within the repository
-                    that should be used
+                  description: 'Context corresponds to the context within the repository
+                    that should be used Example: folderA/folderB/gitops'
                   type: string
                 url:
-                  description: URL refers to the repository URL that should be used.
+                  description: 'URL refers to the repository URL that should be used.
+                    If not specified, a GitOps repository under the $GITHUB_ORG (defaults
+                    to redhat-appstudio-appdata) organization on GitHub will be generated
+                    by HAS. Example: https://github.com/devfile-test/myrepo'
                   type: string
               required:
               - url
@@ -100,9 +106,7 @@ spec:
           description: ApplicationStatus defines the observed state of Application
           properties:
             conditions:
-              description: 'INSERT ADDITIONAL STATUS FIELD - define observed state
-                of cluster Important: Run "make" to regenerate code after modifying
-                this file'
+              description: Conditions is an array of the Application's status conditions
               items:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
@@ -191,7 +195,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211212056.componentdetectionqueries.appstudio.redhat.com
+  name: v202211301912.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -241,20 +245,20 @@ spec:
               description: Git Source for a Component
               properties:
                 context:
-                  description: A relative path inside the git repo containing the
-                    component
+                  description: 'A relative path inside the git repo containing the
+                    component Example: folderA/folderB/gitops'
                   type: string
                 devfileUrl:
-                  description: If specified, the devfile at the URL will be used for
-                    the component.
+                  description: 'If specified, the devfile at the URL will be used
+                    for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
                   type: string
                 dockerfileUrl:
                   description: If specified, the dockerfile at the URL will be used
                     for the component.
                   type: string
                 revision:
-                  description: Specify a branch/tag/commit id. If not specified, default
-                    is `main`/`master`.
+                  description: 'Specify a branch/tag/commit id. If not specified,
+                    default is `main`/`master`. Example: devel'
                   type: string
                 url:
                   description: If importing from git, the repository to create the
@@ -264,8 +268,8 @@ spec:
               - url
               type: object
             secret:
-              description: Secret describes the name of a Kubernetes secret containing
-                a Personal Access Token to access the git repostiory
+              description: Secret describes the name of an optional Kubernetes secret
+                containing a Personal Access Token to access the git repostiory
               type: string
           required:
           - git
@@ -284,22 +288,24 @@ spec:
                       with all the info gathered from the devfile or service detection
                     properties:
                       application:
-                        description: Application to add the component to
+                        description: Application is the name of the application resource
+                          that the component belongs to.
                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                         type: string
                       componentName:
                         description: ComponentName is name of the component to be
-                          added to the HASApplication
+                          added to the Application. The name must adhere to DNS-1123
+                          validation.
                         maxLength: 63
                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                         type: string
                       containerImage:
-                        description: The container image to build or create the component
-                          from
+                        description: 'The container image to build or create the component
+                          from Example: quay.io/someorg/somerepository:latest'
                         type: string
                       env:
                         description: An array of environment variables to add to the
-                          component
+                          component (ValueFrom not currently supported)
                         items:
                           description: EnvVar represents an environment variable present
                             in a Container.
@@ -464,20 +470,21 @@ spec:
                             description: Git Source for a Component
                             properties:
                               context:
-                                description: A relative path inside the git repo containing
-                                  the component
+                                description: 'A relative path inside the git repo
+                                  containing the component Example: folderA/folderB/gitops'
                                 type: string
                               devfileUrl:
-                                description: If specified, the devfile at the URL
-                                  will be used for the component.
+                                description: 'If specified, the devfile at the URL
+                                  will be used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
                                 type: string
                               dockerfileUrl:
                                 description: If specified, the dockerfile at the URL
                                   will be used for the component.
                                 type: string
                               revision:
-                                description: Specify a branch/tag/commit id. If not
-                                  specified, default is `main`/`master`.
+                                description: 'Specify a branch/tag/commit id. If not
+                                  specified, default is `main`/`master`. Example:
+                                  devel'
                                 type: string
                               url:
                                 description: If importing from git, the repository
@@ -498,19 +505,20 @@ spec:
                     description: DevfileFound tells if a devfile is found in the component
                     type: boolean
                   language:
-                    description: Language specifies the language of the component
-                      detected
+                    description: 'Language specifies the language of the component
+                      detected Example: JavaScript'
                     type: string
                   projectType:
                     description: ProjectType specifies the type of project for the
-                      component detected
+                      component detected Example Node.JS
                     type: string
                 type: object
               description: ComponentDetected gives a list of components and the info
                 from detection
               type: object
             conditions:
-              description: Condition about the Component CR
+              description: Conditions is an array of the ComponentDetectionQuery's
+                status conditions
               items:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
@@ -593,7 +601,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211212056.components.appstudio.redhat.com
+  name: v202211301912.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -640,20 +648,23 @@ spec:
           description: ComponentSpec defines the desired state of Component
           properties:
             application:
-              description: Application to add the component to
+              description: Application is the name of the application resource that
+                the component belongs to.
               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
               type: string
             componentName:
               description: ComponentName is name of the component to be added to the
-                HASApplication
+                Application. The name must adhere to DNS-1123 validation.
               maxLength: 63
               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
               type: string
             containerImage:
-              description: The container image to build or create the component from
+              description: 'The container image to build or create the component from
+                Example: quay.io/someorg/somerepository:latest'
               type: string
             env:
               description: An array of environment variables to add to the component
+                (ValueFrom not currently supported)
               items:
                 description: EnvVar represents an environment variable present in
                   a Container.
@@ -807,20 +818,20 @@ spec:
                   description: Git Source for a Component
                   properties:
                     context:
-                      description: A relative path inside the git repo containing
-                        the component
+                      description: 'A relative path inside the git repo containing
+                        the component Example: folderA/folderB/gitops'
                       type: string
                     devfileUrl:
-                      description: If specified, the devfile at the URL will be used
-                        for the component.
+                      description: 'If specified, the devfile at the URL will be used
+                        for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
                       type: string
                     dockerfileUrl:
                       description: If specified, the dockerfile at the URL will be
                         used for the component.
                       type: string
                     revision:
-                      description: Specify a branch/tag/commit id. If not specified,
-                        default is `main`/`master`.
+                      description: 'Specify a branch/tag/commit id. If not specified,
+                        default is `main`/`master`. Example: devel'
                       type: string
                     url:
                       description: If importing from git, the repository to create
@@ -841,7 +852,7 @@ spec:
           description: ComponentStatus defines the observed state of Component
           properties:
             conditions:
-              description: Condition about the Component CR
+              description: Conditions is an array of the Component's status conditions
               items:
                 description: "Condition contains details for one aspect of the current
                   state of this API Resource. --- This struct is intended for direct
@@ -921,7 +932,7 @@ spec:
               description: GitOps specific status for the Component CR
               properties:
                 branch:
-                  description: Branch is the branch used for the gitops repository
+                  description: Branch is the git branch used for the gitops repository
                   type: string
                 commitID:
                   description: CommitID is the most recent commit ID in the GitOps
@@ -957,7 +968,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211212056.environments.appstudio.redhat.com
+  name: v202211301912.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1088,7 +1099,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211212056.promotionruns.appstudio.redhat.com
+  name: v202211301912.promotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1260,7 +1271,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211212056.snapshotenvironmentbindings.appstudio.redhat.com
+  name: v202211301912.snapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1693,7 +1704,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211212056.snapshots.appstudio.redhat.com
+  name: v202211301912.snapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
