@@ -55,7 +55,9 @@ var _ webhook.Validator = &Application{}
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *Application) ValidateCreate() error {
 
-	// TODO(user): fill in your validation logic upon object creation.
+	if r.Spec.DisplayName == "" {
+		return fmt.Errorf("display name must be provided when creating an Application")
+	}
 	return nil
 }
 

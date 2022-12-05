@@ -44,6 +44,33 @@ var _ = Describe("Application validation webhook", func() {
 		Description     = "Simple petclinic app"
 	)
 
+	Context("Create Application CR with missing displayName", func() {
+		It("Should fail with error saying displayName is required field", func() {
+			ctx := context.Background()
+
+			hasApp := &Application{
+				TypeMeta: metav1.TypeMeta{
+					APIVersion: "appstudio.redhat.com/v1alpha1",
+					Kind:       "Application",
+				},
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      HASAppName,
+					Namespace: HASAppNamespace,
+				},
+				Spec: ApplicationSpec{
+					AppModelRepository: ApplicationGitRepository{
+						URL: "https://github.com/testorg/petclinic-app",
+					},
+					GitOpsRepository: ApplicationGitRepository{
+						URL: "https://github.com/testorg/gitops-app",
+					},
+				},
+			}
+
+			Expect(k8sClient.Create(ctx, hasApp)).Should(Not(Succeed()))
+		})
+	})
+
 	Context("Update Application CR fields", func() {
 		It("Should update non immutable fields successfully and err out on immutable fields", func() {
 			ctx := context.Background()
