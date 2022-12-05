@@ -56,7 +56,7 @@ var _ webhook.Validator = &Application{}
 func (r *Application) ValidateCreate() error {
 
 	if r.Spec.DisplayName == "" {
-		return fmt.Errorf("Display Name must be provided when creating an Application")
+		return fmt.Errorf("display name must be provided when creating an Application")
 	}
 	return nil
 }
