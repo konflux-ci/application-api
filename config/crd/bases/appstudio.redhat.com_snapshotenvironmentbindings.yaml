@@ -43,10 +43,10 @@ spec:
             properties:
               application:
                 description: Application is a reference to the Application resource
-                  (defined in the namespace) involved in the binding
+                  (defined in the namespace) involved in the binding. Required
                 type: string
               components:
-                description: Components contains individual component data
+                description: Components contains individual component data. Required.
                 items:
                   description: BindingComponent contains individual component data
                   properties:
@@ -118,12 +118,12 @@ spec:
                 type: array
               environment:
                 description: Environment is the Environment resource (defined in the
-                  namespace) that the binding will deploy to
+                  namespace) that the binding will deploy to. Required
                 type: string
               snapshot:
                 description: Snapshot is the Snapshot resource (defined in the namespace)
                   that contains the container image versions for the components of
-                  the Application
+                  the Application. Required
                 type: string
             required:
             - application

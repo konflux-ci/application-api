@@ -24,17 +24,21 @@ import (
 // SnapshotEnvironmentBindingSpec defines the desired state of SnapshotEnvironmentBinding
 type SnapshotEnvironmentBindingSpec struct {
 
-	// Application is a reference to the Application resource (defined in the namespace) involved in the binding
+	// Application is a reference to the Application resource (defined in the namespace) involved in the binding.
+	// Required
 	Application string `json:"application"`
 
-	// Environment is the Environment resource (defined in the namespace) that the binding will deploy to
+	// Environment is the Environment resource (defined in the namespace) that the binding will deploy to.
+	// Required
 	Environment string `json:"environment"`
 
 	// Snapshot is the Snapshot resource (defined in the namespace) that contains the container image versions
-	// for the components of the Application
+	// for the components of the Application.
+	// Required
 	Snapshot string `json:"snapshot"`
 
-	// Components contains individual component data
+	// Components contains individual component data.
+	// Required.
 	Components []BindingComponent `json:"components"`
 }
 

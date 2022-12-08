@@ -5,7 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211301912.applications.appstudio.redhat.com
+  name: v202212082011.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -52,6 +52,7 @@ spec:
               description: AppModelRepository refers to the git repository that will
                 store the application model (a devfile) Can be the same as GitOps
                 repository. A repository will be generated if this field is left blank.
+                Optional
               properties:
                 branch:
                   description: 'Branch corresponds to the branch in the repository
@@ -72,15 +73,16 @@ spec:
               type: object
             description:
               description: Description refers to a brief description of the application.
+                Optional
               type: string
             displayName:
               description: DisplayName refers to the name that an application will
-                be deployed with in App Studio.
+                be deployed with in App Studio. Required.
               type: string
             gitOpsRepository:
               description: GitOpsRepository refers to the git repository that will
                 store the gitops resources. Can be the same as App Model Repository.
-                A repository will be generated if this field is left blank.
+                A repository will be generated if this field is left blank. Optional
               properties:
                 branch:
                   description: 'Branch corresponds to the branch in the repository
@@ -195,7 +197,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211301912.componentdetectionqueries.appstudio.redhat.com
+  name: v202212082011.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -242,23 +244,24 @@ spec:
           description: ComponentDetectionQuerySpec defines the desired state of ComponentDetectionQuery
           properties:
             git:
-              description: Git Source for a Component
+              description: Git Source for a Component Required
               properties:
                 context:
                   description: 'A relative path inside the git repo containing the
-                    component Example: folderA/folderB/gitops'
+                    component Example: folderA/folderB/gitops Optional'
                   type: string
                 devfileUrl:
                   description: 'If specified, the devfile at the URL will be used
-                    for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
+                    for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml
+                    Optional'
                   type: string
                 dockerfileUrl:
                   description: If specified, the dockerfile at the URL will be used
-                    for the component.
+                    for the component. Optional
                   type: string
                 revision:
                   description: 'Specify a branch/tag/commit id. If not specified,
-                    default is `main`/`master`. Example: devel'
+                    default is `main`/`master`. Example: devel Optional'
                   type: string
                 url:
                   description: If importing from git, the repository to create the
@@ -269,7 +272,7 @@ spec:
               type: object
             secret:
               description: Secret describes the name of an optional Kubernetes secret
-                containing a Personal Access Token to access the git repostiory
+                containing a Personal Access Token to access the git repostiory Optional
               type: string
           required:
           - git
@@ -289,23 +292,23 @@ spec:
                     properties:
                       application:
                         description: Application is the name of the application resource
-                          that the component belongs to.
+                          that the component belongs to. Required
                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                         type: string
                       componentName:
                         description: ComponentName is name of the component to be
                           added to the Application. The name must adhere to DNS-1123
-                          validation.
+                          validation. Required
                         maxLength: 63
                         pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                         type: string
                       containerImage:
                         description: 'The container image to build or create the component
-                          from Example: quay.io/someorg/somerepository:latest'
+                          from Example: quay.io/someorg/somerepository:latest Optional'
                         type: string
                       env:
                         description: An array of environment variables to add to the
-                          component (ValueFrom not currently supported)
+                          component (ValueFrom not currently supported) Optional
                         items:
                           description: EnvVar represents an environment variable present
                             in a Container.
@@ -420,10 +423,11 @@ spec:
                         type: array
                       replicas:
                         description: The number of replicas to deploy the component
-                          with
+                          with Optional
                         type: integer
                       resources:
                         description: Compute Resources required by this component
+                          Optional
                         properties:
                           limits:
                             additionalProperties:
@@ -450,41 +454,43 @@ spec:
                             type: object
                         type: object
                       route:
-                        description: The route to expose the component with
+                        description: The route to expose the component with Optional
                         type: string
                       secret:
                         description: 'Secret describes the name of a Kubernetes secret
                           containing either: 1. A Personal Access Token to access
                           the Component''s git repostiory (if using a Git-source component)
                           or 2. An Image Pull Secret to access the Component''s container
-                          image (if using an Image-source component).'
+                          image (if using an Image-source component). Optional'
                         type: string
                       skipGitOpsResourceGeneration:
                         description: Whether or not to bypass the generation of GitOps
-                          resources for the Component. Defaults to false.
+                          resources for the Component. Defaults to false. Optional
                         type: boolean
                       source:
-                        description: Source describes the Component source
+                        description: Source describes the Component source Optional
                         properties:
                           git:
-                            description: Git Source for a Component
+                            description: Git Source for a Component Optional
                             properties:
                               context:
                                 description: 'A relative path inside the git repo
-                                  containing the component Example: folderA/folderB/gitops'
+                                  containing the component Example: folderA/folderB/gitops
+                                  Optional'
                                 type: string
                               devfileUrl:
                                 description: 'If specified, the devfile at the URL
-                                  will be used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
+                                  will be used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml
+                                  Optional'
                                 type: string
                               dockerfileUrl:
                                 description: If specified, the dockerfile at the URL
-                                  will be used for the component.
+                                  will be used for the component. Optional
                                 type: string
                               revision:
                                 description: 'Specify a branch/tag/commit id. If not
                                   specified, default is `main`/`master`. Example:
-                                  devel'
+                                  devel Optional'
                                 type: string
                               url:
                                 description: If importing from git, the repository
@@ -495,7 +501,7 @@ spec:
                             type: object
                         type: object
                       targetPort:
-                        description: The port to expose the component over
+                        description: The port to expose the component over Optional
                         type: integer
                     required:
                     - application
@@ -601,7 +607,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211301912.components.appstudio.redhat.com
+  name: v202212082011.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -649,22 +655,22 @@ spec:
           properties:
             application:
               description: Application is the name of the application resource that
-                the component belongs to.
+                the component belongs to. Required
               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
               type: string
             componentName:
               description: ComponentName is name of the component to be added to the
-                Application. The name must adhere to DNS-1123 validation.
+                Application. The name must adhere to DNS-1123 validation. Required
               maxLength: 63
               pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
               type: string
             containerImage:
               description: 'The container image to build or create the component from
-                Example: quay.io/someorg/somerepository:latest'
+                Example: quay.io/someorg/somerepository:latest Optional'
               type: string
             env:
               description: An array of environment variables to add to the component
-                (ValueFrom not currently supported)
+                (ValueFrom not currently supported) Optional
               items:
                 description: EnvVar represents an environment variable present in
                   a Container.
@@ -769,10 +775,10 @@ spec:
                 type: object
               type: array
             replicas:
-              description: The number of replicas to deploy the component with
+              description: The number of replicas to deploy the component with Optional
               type: integer
             resources:
-              description: Compute Resources required by this component
+              description: Compute Resources required by this component Optional
               properties:
                 limits:
                   additionalProperties:
@@ -798,40 +804,41 @@ spec:
                   type: object
               type: object
             route:
-              description: The route to expose the component with
+              description: The route to expose the component with Optional
               type: string
             secret:
               description: 'Secret describes the name of a Kubernetes secret containing
                 either: 1. A Personal Access Token to access the Component''s git
                 repostiory (if using a Git-source component) or 2. An Image Pull Secret
                 to access the Component''s container image (if using an Image-source
-                component).'
+                component). Optional'
               type: string
             skipGitOpsResourceGeneration:
               description: Whether or not to bypass the generation of GitOps resources
-                for the Component. Defaults to false.
+                for the Component. Defaults to false. Optional
               type: boolean
             source:
-              description: Source describes the Component source
+              description: Source describes the Component source Optional
               properties:
                 git:
-                  description: Git Source for a Component
+                  description: Git Source for a Component Optional
                   properties:
                     context:
                       description: 'A relative path inside the git repo containing
-                        the component Example: folderA/folderB/gitops'
+                        the component Example: folderA/folderB/gitops Optional'
                       type: string
                     devfileUrl:
                       description: 'If specified, the devfile at the URL will be used
-                        for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
+                        for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml
+                        Optional'
                       type: string
                     dockerfileUrl:
                       description: If specified, the dockerfile at the URL will be
-                        used for the component.
+                        used for the component. Optional
                       type: string
                     revision:
                       description: 'Specify a branch/tag/commit id. If not specified,
-                        default is `main`/`master`. Example: devel'
+                        default is `main`/`master`. Example: devel Optional'
                       type: string
                     url:
                       description: If importing from git, the repository to create
@@ -842,7 +849,7 @@ spec:
                   type: object
               type: object
             targetPort:
-              description: The port to expose the component over
+              description: The port to expose the component over Optional
               type: integer
           required:
           - application
@@ -968,7 +975,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211301912.environments.appstudio.redhat.com
+  name: v202212082011.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1099,7 +1106,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211301912.promotionruns.appstudio.redhat.com
+  name: v202212082011.promotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1271,7 +1278,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211301912.snapshotenvironmentbindings.appstudio.redhat.com
+  name: v202212082011.snapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1307,10 +1314,10 @@ spec:
           properties:
             application:
               description: Application is a reference to the Application resource
-                (defined in the namespace) involved in the binding
+                (defined in the namespace) involved in the binding. Required
               type: string
             components:
-              description: Components contains individual component data
+              description: Components contains individual component data. Required.
               items:
                 description: BindingComponent contains individual component data
                 properties:
@@ -1382,12 +1389,12 @@ spec:
               type: array
             environment:
               description: Environment is the Environment resource (defined in the
-                namespace) that the binding will deploy to
+                namespace) that the binding will deploy to. Required
               type: string
             snapshot:
               description: Snapshot is the Snapshot resource (defined in the namespace)
                 that contains the container image versions for the components of the
-                Application
+                Application. Required
               type: string
           required:
           - application
@@ -1704,7 +1711,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202211301912.snapshots.appstudio.redhat.com
+  name: v202212082011.snapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:

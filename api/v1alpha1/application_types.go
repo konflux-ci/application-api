@@ -26,22 +26,23 @@ import (
 // ApplicationSpec defines the desired state of Application
 type ApplicationSpec struct {
 	// DisplayName refers to the name that an application will be deployed with in App Studio.
+	// Required.
 	DisplayName string `json:"displayName"`
 
 	// AppModelRepository refers to the git repository that will store the application model (a devfile)
 	// Can be the same as GitOps repository.
 	// A repository will be generated if this field is left blank.
-	// +optional
+	// Optional
 	AppModelRepository ApplicationGitRepository `json:"appModelRepository,omitempty"`
 
 	// GitOpsRepository refers to the git repository that will store the gitops resources.
 	// Can be the same as App Model Repository.
 	// A repository will be generated if this field is left blank.
-	// +optional
+	// Optional
 	GitOpsRepository ApplicationGitRepository `json:"gitOpsRepository,omitempty"`
 
 	// Description refers to a brief description of the application.
-	// +optional
+	// Optional
 	Description string `json:"description,omitempty"`
 }
 

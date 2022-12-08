@@ -55,23 +55,24 @@ spec:
               ComponentDetectionQuery
             properties:
               git:
-                description: Git Source for a Component
+                description: Git Source for a Component Required
                 properties:
                   context:
                     description: 'A relative path inside the git repo containing the
-                      component Example: folderA/folderB/gitops'
+                      component Example: folderA/folderB/gitops Optional'
                     type: string
                   devfileUrl:
                     description: 'If specified, the devfile at the URL will be used
-                      for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
+                      for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml
+                      Optional'
                     type: string
                   dockerfileUrl:
                     description: If specified, the dockerfile at the URL will be used
-                      for the component.
+                      for the component. Optional
                     type: string
                   revision:
                     description: 'Specify a branch/tag/commit id. If not specified,
-                      default is `main`/`master`. Example: devel'
+                      default is `main`/`master`. Example: devel Optional'
                     type: string
                   url:
                     description: If importing from git, the repository to create the
@@ -83,6 +84,7 @@ spec:
               secret:
                 description: Secret describes the name of an optional Kubernetes secret
                   containing a Personal Access Token to access the git repostiory
+                  Optional
                 type: string
             required:
             - git
@@ -102,23 +104,24 @@ spec:
                       properties:
                         application:
                           description: Application is the name of the application
-                            resource that the component belongs to.
+                            resource that the component belongs to. Required
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         componentName:
                           description: ComponentName is name of the component to be
                             added to the Application. The name must adhere to DNS-1123
-                            validation.
+                            validation. Required
                           maxLength: 63
                           pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                           type: string
                         containerImage:
                           description: 'The container image to build or create the
-                            component from Example: quay.io/someorg/somerepository:latest'
+                            component from Example: quay.io/someorg/somerepository:latest
+                            Optional'
                           type: string
                         env:
                           description: An array of environment variables to add to
-                            the component (ValueFrom not currently supported)
+                            the component (ValueFrom not currently supported) Optional
                           items:
                             description: EnvVar represents an environment variable
                               present in a Container.
@@ -234,10 +237,11 @@ spec:
                           type: array
                         replicas:
                           description: The number of replicas to deploy the component
-                            with
+                            with Optional
                           type: integer
                         resources:
                           description: Compute Resources required by this component
+                            Optional
                           properties:
                             limits:
                               additionalProperties:
@@ -264,41 +268,45 @@ spec:
                               type: object
                           type: object
                         route:
-                          description: The route to expose the component with
+                          description: The route to expose the component with Optional
                           type: string
                         secret:
                           description: 'Secret describes the name of a Kubernetes
                             secret containing either: 1. A Personal Access Token to
                             access the Component''s git repostiory (if using a Git-source
                             component) or 2. An Image Pull Secret to access the Component''s
-                            container image (if using an Image-source component).'
+                            container image (if using an Image-source component).
+                            Optional'
                           type: string
                         skipGitOpsResourceGeneration:
                           description: Whether or not to bypass the generation of
                             GitOps resources for the Component. Defaults to false.
+                            Optional
                           type: boolean
                         source:
-                          description: Source describes the Component source
+                          description: Source describes the Component source Optional
                           properties:
                             git:
-                              description: Git Source for a Component
+                              description: Git Source for a Component Optional
                               properties:
                                 context:
                                   description: 'A relative path inside the git repo
-                                    containing the component Example: folderA/folderB/gitops'
+                                    containing the component Example: folderA/folderB/gitops
+                                    Optional'
                                   type: string
                                 devfileUrl:
                                   description: 'If specified, the devfile at the URL
-                                    will be used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml'
+                                    will be used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml
+                                    Optional'
                                   type: string
                                 dockerfileUrl:
                                   description: If specified, the dockerfile at the
-                                    URL will be used for the component.
+                                    URL will be used for the component. Optional
                                   type: string
                                 revision:
                                   description: 'Specify a branch/tag/commit id. If
                                     not specified, default is `main`/`master`. Example:
-                                    devel'
+                                    devel Optional'
                                   type: string
                                 url:
                                   description: If importing from git, the repository
@@ -309,7 +317,7 @@ spec:
                               type: object
                           type: object
                         targetPort:
-                          description: The port to expose the component over
+                          description: The port to expose the component over Optional
                           type: integer
                       required:
                       - application

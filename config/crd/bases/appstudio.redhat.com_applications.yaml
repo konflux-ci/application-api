@@ -54,7 +54,7 @@ spec:
                 description: AppModelRepository refers to the git repository that
                   will store the application model (a devfile) Can be the same as
                   GitOps repository. A repository will be generated if this field
-                  is left blank.
+                  is left blank. Optional
                 properties:
                   branch:
                     description: 'Branch corresponds to the branch in the repository
@@ -75,15 +75,16 @@ spec:
                 type: object
               description:
                 description: Description refers to a brief description of the application.
+                  Optional
                 type: string
               displayName:
                 description: DisplayName refers to the name that an application will
-                  be deployed with in App Studio.
+                  be deployed with in App Studio. Required.
                 type: string
               gitOpsRepository:
                 description: GitOpsRepository refers to the git repository that will
                   store the gitops resources. Can be the same as App Model Repository.
-                  A repository will be generated if this field is left blank.
+                  A repository will be generated if this field is left blank. Optional
                 properties:
                   branch:
                     description: 'Branch corresponds to the branch in the repository
