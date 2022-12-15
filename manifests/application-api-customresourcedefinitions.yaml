@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: applications.appstudio.redhat.com
 spec:
@@ -115,13 +115,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -193,18 +192,12 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: componentdetectionqueries.appstudio.redhat.com
 spec:
@@ -366,6 +359,7 @@ spec:
                                     required:
                                     - key
                                     type: object
+                                    x-kubernetes-map-type: atomic
                                   fieldRef:
                                     description: 'Selects a field of the pod: supports
                                       metadata.name, metadata.namespace, `metadata.labels[''<KEY>'']`,
@@ -384,6 +378,7 @@ spec:
                                     required:
                                     - fieldPath
                                     type: object
+                                    x-kubernetes-map-type: atomic
                                   resourceFieldRef:
                                     description: 'Selects a resource of the container:
                                       only resources limits and requests (limits.cpu,
@@ -409,6 +404,7 @@ spec:
                                     required:
                                     - resource
                                     type: object
+                                    x-kubernetes-map-type: atomic
                                   secretKeyRef:
                                     description: Selects a key of a secret in the
                                       pod's namespace
@@ -430,6 +426,7 @@ spec:
                                     required:
                                     - key
                                     type: object
+                                    x-kubernetes-map-type: atomic
                                 type: object
                             required:
                             - name
@@ -546,13 +543,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -618,18 +614,12 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: components.appstudio.redhat.com
 spec:
@@ -735,6 +725,7 @@ spec:
                           required:
                           - key
                           type: object
+                          x-kubernetes-map-type: atomic
                         fieldRef:
                           description: 'Selects a field of the pod: supports metadata.name,
                             metadata.namespace, `metadata.labels[''<KEY>'']`, `metadata.annotations[''<KEY>'']`,
@@ -752,6 +743,7 @@ spec:
                           required:
                           - fieldPath
                           type: object
+                          x-kubernetes-map-type: atomic
                         resourceFieldRef:
                           description: 'Selects a resource of the container: only
                             resources limits and requests (limits.cpu, limits.memory,
@@ -776,6 +768,7 @@ spec:
                           required:
                           - resource
                           type: object
+                          x-kubernetes-map-type: atomic
                         secretKeyRef:
                           description: Selects a key of a secret in the pod's namespace
                           properties:
@@ -794,6 +787,7 @@ spec:
                           required:
                           - key
                           type: object
+                          x-kubernetes-map-type: atomic
                       type: object
                   required:
                   - name
@@ -890,13 +884,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -995,18 +988,12 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: environments.appstudio.redhat.com
 spec:
@@ -1139,18 +1126,12 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: promotionruns.appstudio.redhat.com
 spec:
@@ -1319,18 +1300,12 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: snapshotenvironmentbindings.appstudio.redhat.com
 spec:
@@ -1466,13 +1441,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -1538,13 +1512,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -1689,13 +1662,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -1761,18 +1733,12 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.6.1
+    controller-gen.kubebuilder.io/version: v0.10.0
   creationTimestamp: null
   name: snapshots.appstudio.redhat.com
 spec:
@@ -1820,7 +1786,7 @@ spec:
                   unstableFields:
                     description: 'NOTE: This field (and struct) are placeholders.
                       - Until this API is stabilized, consumers of the API may store
-                      any unstructured JSON/YAML data here,   but no backwards compatibility
+                      any unstructured JSON/YAML data here, but no backwards compatibility
                       will be preserved.'
                     x-kubernetes-preserve-unknown-fields: true
                 type: object
@@ -1864,13 +1830,12 @@ spec:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
                     use as an array at the field path .status.conditions.  For example,
-                    type FooStatus struct{     // Represents the observations of a
-                    foo's current state.     // Known .status.conditions.type are:
-                    \"Available\", \"Progressing\", and \"Degraded\"     // +patchMergeKey=type
-                    \    // +patchStrategy=merge     // +listType=map     // +listMapKey=type
-                    \    Conditions []metav1.Condition `json:\"conditions,omitempty\"
-                    patchStrategy:\"merge\" patchMergeKey:\"type\" protobuf:\"bytes,1,rep,name=conditions\"`
-                    \n     // other fields }"
+                    type FooStatus struct{ // Represents the observations of a foo's
+                    current state. // Known .status.conditions.type are: \"Available\",
+                    \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
+                    // +listType=map // +listMapKey=type Conditions []metav1.Condition
+                    `json:\"conditions,omitempty\" patchStrategy:\"merge\" patchMergeKey:\"type\"
+                    protobuf:\"bytes,1,rep,name=conditions\"` \n // other fields }"
                   properties:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
@@ -1934,9 +1899,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []
