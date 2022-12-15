@@ -5,7 +5,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202212082011.applications.appstudio.redhat.com
+  name: v202212152006.applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -52,28 +52,28 @@ spec:
               description: AppModelRepository refers to the git repository that will
                 store the application model (a devfile) Can be the same as GitOps
                 repository. A repository will be generated if this field is left blank.
-                Optional
+                Optional.
               properties:
                 branch:
                   description: 'Branch corresponds to the branch in the repository
-                    that should be used Example: devel'
+                    that should be used Example: devel. Optional.'
                   type: string
                 context:
                   description: 'Context corresponds to the context within the repository
-                    that should be used Example: folderA/folderB/gitops'
+                    that should be used Example: folderA/folderB/gitops. Optional.'
                   type: string
                 url:
                   description: 'URL refers to the repository URL that should be used.
                     If not specified, a GitOps repository under the $GITHUB_ORG (defaults
                     to redhat-appstudio-appdata) organization on GitHub will be generated
-                    by HAS. Example: https://github.com/devfile-test/myrepo'
+                    by HAS. Example: https://github.com/devfile-test/myrepo. Required.'
                   type: string
               required:
               - url
               type: object
             description:
               description: Description refers to a brief description of the application.
-                Optional
+                Optional.
               type: string
             displayName:
               description: DisplayName refers to the name that an application will
@@ -82,21 +82,21 @@ spec:
             gitOpsRepository:
               description: GitOpsRepository refers to the git repository that will
                 store the gitops resources. Can be the same as App Model Repository.
-                A repository will be generated if this field is left blank. Optional
+                A repository will be generated if this field is left blank. Optional.
               properties:
                 branch:
                   description: 'Branch corresponds to the branch in the repository
-                    that should be used Example: devel'
+                    that should be used Example: devel. Optional.'
                   type: string
                 context:
                   description: 'Context corresponds to the context within the repository
-                    that should be used Example: folderA/folderB/gitops'
+                    that should be used Example: folderA/folderB/gitops. Optional.'
                   type: string
                 url:
                   description: 'URL refers to the repository URL that should be used.
                     If not specified, a GitOps repository under the $GITHUB_ORG (defaults
                     to redhat-appstudio-appdata) organization on GitHub will be generated
-                    by HAS. Example: https://github.com/devfile-test/myrepo'
+                    by HAS. Example: https://github.com/devfile-test/myrepo. Required.'
                   type: string
               required:
               - url
@@ -197,7 +197,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202212082011.componentdetectionqueries.appstudio.redhat.com
+  name: v202212152006.componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -607,7 +607,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202212082011.components.appstudio.redhat.com
+  name: v202212152006.components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -975,7 +975,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202212082011.environments.appstudio.redhat.com
+  name: v202212152006.environments.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1106,7 +1106,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202212082011.promotionruns.appstudio.redhat.com
+  name: v202212152006.promotionruns.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1278,7 +1278,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202212082011.snapshotenvironmentbindings.appstudio.redhat.com
+  name: v202212152006.snapshotenvironmentbindings.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
@@ -1711,7 +1711,7 @@ apiVersion: apis.kcp.dev/v1alpha1
 kind: APIResourceSchema
 metadata:
   creationTimestamp: null
-  name: v202212082011.snapshots.appstudio.redhat.com
+  name: v202212152006.snapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
   names:
