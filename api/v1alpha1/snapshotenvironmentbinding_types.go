@@ -26,19 +26,23 @@ type SnapshotEnvironmentBindingSpec struct {
 
 	// Application is a reference to the Application resource (defined in the namespace) involved in the binding.
 	// Required
+	// +required
 	Application string `json:"application"`
 
 	// Environment is the Environment resource (defined in the namespace) that the binding will deploy to.
 	// Required
+	// +required
 	Environment string `json:"environment"`
 
 	// Snapshot is the Snapshot resource (defined in the namespace) that contains the container image versions
 	// for the components of the Application.
 	// Required
+	// +required
 	Snapshot string `json:"snapshot"`
 
 	// Components contains individual component data.
 	// Required.
+	// +required
 	Components []BindingComponent `json:"components"`
 }
 
@@ -50,7 +54,8 @@ type BindingComponent struct {
 
 	// Configuration describes GitOps repository customizations that are specific to the
 	// the component-application-environment combination.
-	// - Values defined in this struct will overwrite values from Application/Environment/Component
+	// - Values defined in this struct will overwrite values from Application/Environment/Component.
+	// Optional
 	// +optional
 	Configuration BindingComponentConfiguration `json:"configuration,omitempty"`
 }
@@ -68,11 +73,13 @@ type BindingComponentConfiguration struct {
 	// Replicas defines the number of replicas to use for the component
 	Replicas int `json:"replicas"`
 
-	// Resources defines the Compute Resources required by the component
+	// Resources defines the Compute Resources required by the component.
+	// Optional.
 	// +optional
 	Resources *corev1.ResourceRequirements `json:"resources,omitempty"`
 
-	// Env describes environment variables to use for the component
+	// Env describes environment variables to use for the component.
+	// Optional.
 	// +optional
 	Env []EnvVarPair `json:"env,omitempty"`
 }
