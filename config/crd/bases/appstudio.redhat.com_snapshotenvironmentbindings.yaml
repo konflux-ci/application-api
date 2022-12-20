@@ -43,10 +43,10 @@ spec:
             properties:
               application:
                 description: Application is a reference to the Application resource
-                  (defined in the namespace) involved in the binding
+                  (defined in the namespace) involved in the binding. Required
                 type: string
               components:
-                description: Components contains individual component data
+                description: Components contains individual component data. Required.
                 items:
                   description: BindingComponent contains individual component data
                   properties:
@@ -54,11 +54,11 @@ spec:
                       description: Configuration describes GitOps repository customizations
                         that are specific to the the component-application-environment
                         combination. - Values defined in this struct will overwrite
-                        values from Application/Environment/Component
+                        values from Application/Environment/Component. Optional
                       properties:
                         env:
                           description: Env describes environment variables to use
-                            for the component
+                            for the component. Optional.
                           items:
                             description: EnvVarPair describes environment variables
                               to use for the component
@@ -80,7 +80,7 @@ spec:
                           type: integer
                         resources:
                           description: Resources defines the Compute Resources required
-                            by the component
+                            by the component. Optional.
                           properties:
                             limits:
                               additionalProperties:
@@ -118,12 +118,12 @@ spec:
                 type: array
               environment:
                 description: Environment is the Environment resource (defined in the
-                  namespace) that the binding will deploy to
+                  namespace) that the binding will deploy to. Required
                 type: string
               snapshot:
                 description: Snapshot is the Snapshot resource (defined in the namespace)
                   that contains the container image versions for the components of
-                  the Application
+                  the Application. Required
                 type: string
             required:
             - application
