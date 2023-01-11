@@ -21,6 +21,14 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
+// Constants used with SnapshotEnvironmentBindingStatus's ComponentDeploymentConditions field
+const (
+	ComponentDeploymentConditionAllComponentsDeployed = "AllComponentsDeployed"
+	ComponentDeploymentConditionCommitsSynced         = "CommitsSynced"
+	ComponentDeploymentConditionCommitsUnsynced       = "CommitsUnsynced"
+	ComponentDeploymentConditionErrorOccurred         = "ErrorOccurred"
+)
+
 // SnapshotEnvironmentBindingSpec defines the desired state of SnapshotEnvironmentBinding
 type SnapshotEnvironmentBindingSpec struct {
 
