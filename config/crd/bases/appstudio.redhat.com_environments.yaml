@@ -96,6 +96,10 @@ spec:
                       workspace). \n See this temporary URL for details on what values
                       to provide for the APIURL and Secret: https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource"
                     properties:
+                      allowInsecureSkipTLSVerify:
+                        description: Indicates that ArgoCD/GitOps Service should not
+                          check the TLS certificate.
+                        type: boolean
                       apiURL:
                         description: APIURL is a reference to a cluster API url defined
                           within the kube config file of the cluster credentials secret.
@@ -114,6 +118,7 @@ spec:
                           field is not specified.
                         type: string
                     required:
+                    - allowInsecureSkipTLSVerify
                     - apiURL
                     - clusterCredentialsSecret
                     - targetNamespace
