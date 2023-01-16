@@ -102,6 +102,9 @@ type KubernetesClusterCredentials struct {
 	// See this temporary URL for details:
 	// https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource
 	ClusterCredentialsSecret string `json:"clusterCredentialsSecret"`
+
+	// Indicates that ArgoCD/GitOps Service should not check the TLS certificate.
+	AllowInsecureSkipTLSVerify bool `json:"allowInsecureSkipTLSVerify"`
 }
 
 // EnvironmentConfiguration contains Environment-specific configurations details, to be used when generating
