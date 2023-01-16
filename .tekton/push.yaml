@@ -14,7 +14,7 @@ spec:
     value: '{{revision}}'
   - name: infra-deployment-update-script
     value: |
-        sed -i -e 's|\(https://github.com/redhat-appstudio/application-api/.*?ref=\)\(.*\)|\1{{ revision }}|' components/application-api/base/kustomization.yaml
+        sed -i -e 's|\(https://github.com/redhat-appstudio/application-api/.*?ref=\)\(.*\)|\1{{ revision }}|' components/application-api/kustomization.yaml
   pipelineSpec:
     params:
     - description: Source Repository URL
