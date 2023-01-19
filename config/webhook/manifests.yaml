@@ -45,6 +45,46 @@ webhooks:
     resources:
     - components
   sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-appstudio-redhat-com-v1alpha1-promotionrun
+  failurePolicy: Fail
+  name: mpromotionrun.kb.io
+  rules:
+  - apiGroups:
+    - appstudio.redhat.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - promotionruns
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /mutate-appstudio-redhat-com-v1alpha1-snapshotenvironmentbinding
+  failurePolicy: Fail
+  name: msnapshotenvironmentbinding.kb.io
+  rules:
+  - apiGroups:
+    - appstudio.redhat.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - snapshotenvironmentbindings
+  sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1
 kind: ValidatingWebhookConfiguration
@@ -98,6 +138,26 @@ webhooks:
     service:
       name: webhook-service
       namespace: system
+      path: /validate-appstudio-redhat-com-v1alpha1-promotionrun
+  failurePolicy: Fail
+  name: vpromotionrun.kb.io
+  rules:
+  - apiGroups:
+    - appstudio.redhat.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - promotionruns
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
       path: /validate-appstudio-redhat-com-v1alpha1-snapshot
   failurePolicy: Fail
   name: vsnapshot.kb.io
@@ -111,4 +171,24 @@ webhooks:
     - UPDATE
     resources:
     - snapshots
+  sideEffects: None
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    service:
+      name: webhook-service
+      namespace: system
+      path: /validate-appstudio-redhat-com-v1alpha1-snapshotenvironmentbinding
+  failurePolicy: Fail
+  name: vsnapshotenvironmentbinding.kb.io
+  rules:
+  - apiGroups:
+    - appstudio.redhat.com
+    apiVersions:
+    - v1alpha1
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - snapshotenvironmentbindings
   sideEffects: None
