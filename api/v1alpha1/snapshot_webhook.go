@@ -17,6 +17,9 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"fmt"
+	"reflect"
+
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
@@ -32,7 +35,7 @@ func (r *Snapshot) SetupWebhookWithManager(mgr ctrl.Manager) error {
 		Complete()
 }
 
-// TODO(user): change verbs to "verbs=create;update;delete" if you want to enable deletion validation.
+// change verbs to "verbs=create;update;delete" if you want to enable deletion validation.
 //+kubebuilder:webhook:path=/validate-appstudio-redhat-com-v1alpha1-snapshot,mutating=false,failurePolicy=fail,sideEffects=None,groups=appstudio.redhat.com,resources=snapshots,verbs=create;update,versions=v1alpha1,name=vsnapshot.kb.io,admissionReviewVersions=v1
 
 var _ webhook.Validator = &Snapshot{}
@@ -41,7 +44,6 @@ var _ webhook.Validator = &Snapshot{}
 func (r *Snapshot) ValidateCreate() error {
 	snapshotlog.Info("validate create", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object creation.
 	return nil
 }
 
@@ -49,7 +51,21 @@ func (r *Snapshot) ValidateCreate() error {
 func (r *Snapshot) ValidateUpdate(old runtime.Object) error {
 	snapshotlog.Info("validate update", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object update.
+	switch old := old.(type) {
+	case *Snapshot:
+
+		if !reflect.DeepEqual(r.Spec.Application, old.Spec.Application) {
+			return fmt.Errorf("application cannot be updated to %+v", r.Spec.Application)
+		}
+
+		if !reflect.DeepEqual(r.Spec.Components, old.Spec.Components) {
+			return fmt.Errorf("components cannot be updated to %+v", r.Spec.Components)
+		}
+
+	default:
+		return fmt.Errorf("runtime object is not of type Snapshot")
+	}
+
 	return nil
 }
 
@@ -57,6 +73,5 @@ func (r *Snapshot) ValidateUpdate(old runtime.Object) error {
 func (r *Snapshot) ValidateDelete() error {
 	snapshotlog.Info("validate delete", "name", r.Name)
 
-	// TODO(user): fill in your validation logic upon object deletion.
 	return nil
 }
