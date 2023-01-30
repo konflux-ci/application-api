@@ -22,6 +22,7 @@ import (
 	"reflect"
 
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/util/validation"
 	ctrl "sigs.k8s.io/controller-runtime"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
@@ -57,6 +58,10 @@ var _ webhook.Validator = &Component{}
 func (r *Component) ValidateCreate() error {
 	componentlog.Info("validating the create request", "name", r.Name)
 
+	// We use the DNS-1035 format for component names, so ensure it conforms to that specification
+	if len(validation.IsDNS1035Label(r.Name)) != 0 {
+		return fmt.Errorf("invalid component name: %q: a Component resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’,", r.Name)
+	}
 	sourceSpecified := false
 
 	if r.Spec.Source.GitSource != nil && r.Spec.Source.GitSource.URL != "" {
