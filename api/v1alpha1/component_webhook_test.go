@@ -46,6 +46,8 @@ var _ = Describe("Application validation webhook", func() {
 
 			uniqueHASCompName := HASCompName + "1"
 
+			badHASCompName := "1-sdsfsdfsdf-bad-name"
+
 			// Bad Component Name, Bad Application Name and no Src
 			hasComp := &Component{
 				TypeMeta: metav1.TypeMeta{
@@ -53,7 +55,6 @@ var _ = Describe("Application validation webhook", func() {
 					Kind:       "Component",
 				},
 				ObjectMeta: metav1.ObjectMeta{
-					Name:      uniqueHASCompName,
 					Namespace: HASAppNamespace,
 				},
 				Spec: ComponentSpec{
@@ -74,6 +75,13 @@ var _ = Describe("Application validation webhook", func() {
 
 			hasComp.Spec.ComponentName = ComponentName
 			hasComp.Spec.Application = HASAppName
+
+			hasComp.Name = badHASCompName
+			err = k8sClient.Create(ctx, hasComp)
+			Expect(err).Should(HaveOccurred())
+			Expect(err.Error()).Should(ContainSubstring("a component resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’"))
+
+			hasComp.Name = uniqueHASCompName
 
 			err = k8sClient.Create(ctx, hasComp)
 			Expect(err).Should(HaveOccurred())

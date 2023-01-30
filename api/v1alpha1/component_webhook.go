@@ -60,7 +60,7 @@ func (r *Component) ValidateCreate() error {
 
 	// We use the DNS-1035 format for component names, so ensure it conforms to that specification
 	if len(validation.IsDNS1035Label(r.Name)) != 0 {
-		return fmt.Errorf("invalid component name: %q: a Component resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’,", r.Name)
+		return fmt.Errorf("invalid component name: %q: a component resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’,", r.Name)
 	}
 	sourceSpecified := false
 
