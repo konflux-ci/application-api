@@ -24,7 +24,7 @@ import (
 type EnvironmentSpec struct {
 
 	// Type is whether the Environment is a POC or non-POC environment
-	Type EnvironmentType `json:"type"`
+	Type EnvironmentType `json:"type,omitempty"`
 
 	// DisplayName is the user-visible, user-definable name for the environment (but not used for functional requirements)
 	DisplayName string `json:"displayName"`

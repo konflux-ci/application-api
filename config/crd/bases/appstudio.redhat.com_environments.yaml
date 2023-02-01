@@ -126,7 +126,6 @@ spec:
             required:
             - deploymentStrategy
             - displayName
-            - type
             type: object
           status:
             description: EnvironmentStatus defines the observed state of Environment
