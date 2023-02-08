@@ -19,6 +19,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func TestComponentCreateValidatingWebhook(t *testing.T) {
@@ -29,9 +30,25 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 		err     string
 	}{
 		{
-			name: "component name cannot be created due to bad URL",
+			name: "component metadata.name is invalid",
+			err:  "invalid component name",
+			newComp: Component{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "1-test-component",
+				},
+				Spec: ComponentSpec{
+					ComponentName: "component1",
+					Application:   "application1",
+				},
+			},
+		},
+		{
+			name: "component cannot be created due to bad URL",
 			err:  "invalid URI for request",
 			newComp: Component{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "test-component",
+				},
 				Spec: ComponentSpec{
 					ComponentName: "component1",
 					Application:   "application1",
@@ -49,6 +66,9 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 			name: "component needs to have one source specified",
 			err:  "git source or an image source must be specified",
 			newComp: Component{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "test-component",
+				},
 				Spec: ComponentSpec{
 					ComponentName: "component1",
 					Application:   "application1",
@@ -63,6 +83,9 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 		{
 			name: "valid component with git src",
 			newComp: Component{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "test-component",
+				},
 				Spec: ComponentSpec{
 					ComponentName: "component1",
 					Application:   "application1",
@@ -79,6 +102,9 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 		{
 			name: "valid component with container image",
 			newComp: Component{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "test-component",
+				},
 				Spec: ComponentSpec{
 					ComponentName:  "component1",
 					Application:    "application1",
@@ -103,6 +129,9 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 func TestComponentUpdateValidatingWebhook(t *testing.T) {
 
 	originalComponent := Component{
+		ObjectMeta: v1.ObjectMeta{
+			Name: "test-component",
+		},
 		Spec: ComponentSpec{
 			ComponentName: "component",
 			Application:   "application",

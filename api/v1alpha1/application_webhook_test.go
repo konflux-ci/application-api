@@ -71,6 +71,35 @@ var _ = Describe("Application validation webhook", func() {
 		})
 	})
 
+	Context("Create Application CR with invalid metadata.name", func() {
+		It("Should fail with error saying name does not conform to spec", func() {
+			ctx := context.Background()
+
+			hasApp := &Application{
+				TypeMeta: metav1.TypeMeta{
+					APIVersion: "appstudio.redhat.com/v1alpha1",
+					Kind:       "Application",
+				},
+				ObjectMeta: metav1.ObjectMeta{
+					Name:      "1-invalid-application-name",
+					Namespace: HASAppNamespace,
+				},
+				Spec: ApplicationSpec{
+					AppModelRepository: ApplicationGitRepository{
+						URL: "https://github.com/testorg/petclinic-app",
+					},
+					GitOpsRepository: ApplicationGitRepository{
+						URL: "https://github.com/testorg/gitops-app",
+					},
+				},
+			}
+
+			err := k8sClient.Create(ctx, hasApp)
+			Expect(err).Should(Not(Succeed()))
+			Expect(err.Error()).Should(ContainSubstring("an application resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’"))
+		})
+	})
+
 	Context("Update Application CR fields", func() {
 		It("Should update non immutable fields successfully and err out on immutable fields", func() {
 			ctx := context.Background()
