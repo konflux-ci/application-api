@@ -1,0 +1,27 @@
+# permissions for end users to view deploymenttargetclasses.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: deploymenttargetclass-viewer-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: application-api
+    app.kubernetes.io/part-of: application-api
+    app.kubernetes.io/managed-by: kustomize
+  name: deploymenttargetclass-viewer-role
+rules:
+- apiGroups:
+  - appstudio.redhat.com
+  resources:
+  - deploymenttargetclasses
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - appstudio.redhat.com
+  resources:
+  - deploymenttargetclasses/status
+  verbs:
+  - get

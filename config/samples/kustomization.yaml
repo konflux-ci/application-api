@@ -7,4 +7,5 @@ resources:
 - appstudio_v1alpha1_applicationsnapshot.yaml
 - appstudio_v1alpha1_applicationpromotionrun.yaml
 - appstudio_v1alpha1_environment.yaml
+- appstudio_v1alpha1_deploymenttargetclass.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
