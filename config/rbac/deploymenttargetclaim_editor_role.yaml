@@ -1,0 +1,31 @@
+# permissions for end users to edit deploymenttargetclaims.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/name: clusterrole
+    app.kubernetes.io/instance: deploymenttargetclaim-editor-role
+    app.kubernetes.io/component: rbac
+    app.kubernetes.io/created-by: application-api
+    app.kubernetes.io/part-of: application-api
+    app.kubernetes.io/managed-by: kustomize
+  name: deploymenttargetclaim-editor-role
+rules:
+- apiGroups:
+  - appstudio.redhat.com
+  resources:
+  - deploymenttargetclaims
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - appstudio.redhat.com
+  resources:
+  - deploymenttargetclaims/status
+  verbs:
+  - get
