@@ -1,0 +1,12 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: DeploymentTargetClaim
+metadata:
+  labels:
+    app.kubernetes.io/name: deploymenttargetclaim
+    app.kubernetes.io/instance: deploymenttargetclaim-sample
+    app.kubernetes.io/part-of: application-api
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: application-api
+  name: deploymenttargetclaim-sample
+spec:
+  # TODO(user): Add fields here
