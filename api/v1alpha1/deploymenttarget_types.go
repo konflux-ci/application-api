@@ -34,9 +34,27 @@ type DeploymentTargetSpec struct {
 
 // DeploymentTargetStatus defines the observed state of DeploymentTarget
 type DeploymentTargetStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Phase DeploymentTargetPhase `json:"phase,omitempty"`
 }
+
+type DeploymentTargetPhase string
+
+const (
+	// DT is not yet available for binding.
+	DeploymentTargetPhase_Pending DeploymentTargetPhase = "Pending"
+
+	// DT waits for a Claim to be bound to.
+	DeploymentTargetPhase_Available DeploymentTargetPhase = "Available"
+
+	// The DT was bounded to a DTC.
+	DeploymentTargetPhase_Bound DeploymentTargetPhase = "Bound"
+
+	// The DT was previously bound to a DTC which got deleted. external resources were not freed.
+	DeploymentTargetPhase_Released DeploymentTargetPhase = "Released"
+
+	// DT was released from its claim, but there was a failure during the release of external resources.
+	DeploymentTargetPhase_Failed DeploymentTargetPhase = "Failed"
+)
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
