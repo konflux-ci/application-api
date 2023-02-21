@@ -44,6 +44,9 @@ spec:
           status:
             description: DeploymentTargetClaimStatus defines the observed state of
               DeploymentTargetClaim
+            properties:
+              phase:
+                type: string
             type: object
         type: object
     served: true

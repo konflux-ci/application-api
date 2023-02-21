@@ -36,9 +36,21 @@ const (
 
 // DeploymentTargetClaimStatus defines the observed state of DeploymentTargetClaim
 type DeploymentTargetClaimStatus struct {
-	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
-	// Important: Run "make" to regenerate code after modifying this file
+	Phase DeploymentTargetClaimPhase `json:"phase,omitempty"`
 }
+
+type DeploymentTargetClaimPhase string
+
+const (
+	// DTC wait for the binding controller or user to bind it with a DT that satisfies it.
+	DeploymentTargetClaimPhase_Pending DeploymentTargetClaimPhase = "Pending"
+
+	// The DTC was bounded to a DT that satisfies it by the binding controller.
+	DeploymentTargetClaimPhase_Bound DeploymentTargetClaimPhase = "Bound"
+
+	// The DTC lost its bounded DT. The DT doesn’t exist anymore because it got deleted.
+	DeploymentTargetClaimPhase_Lost DeploymentTargetClaimPhase = "Lost"
+)
 
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
