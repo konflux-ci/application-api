@@ -1,0 +1,12 @@
+apiVersion: appstudio.redhat.com/v1alpha1
+kind: DeploymentTargetClass
+metadata:
+  labels:
+    app.kubernetes.io/name: deploymenttargetclass
+    app.kubernetes.io/instance: deploymenttargetclass-sample
+    app.kubernetes.io/part-of: application-api
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: application-api
+  name: deploymenttargetclass-sample
+spec:
+  # TODO(user): Add fields here

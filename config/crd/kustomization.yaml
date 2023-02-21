@@ -9,6 +9,7 @@ resources:
 - bases/appstudio.redhat.com_snapshots.yaml
 - bases/appstudio.redhat.com_promotionruns.yaml
 - bases/appstudio.redhat.com_environments.yaml
+- bases/appstudio.redhat.com_deploymenttargetclasses.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
 
 # the following config is for teaching kustomize how to do kustomization for CRDs.
