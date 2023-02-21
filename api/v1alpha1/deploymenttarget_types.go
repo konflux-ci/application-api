@@ -23,19 +23,17 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
-// DeploymentTargetClaimSpec defines the desired state of DeploymentTargetClaim
-type DeploymentTargetClaimSpec struct {
+// DeploymentTargetSpec defines the desired state of DeploymentTarget
+type DeploymentTargetSpec struct {
 	DeploymentTargetClassName DeploymentTargetClassName `json:"deploymentTargetClassName"`
+
+	KubernetesClusterCredentials KubernetesClusterCredentials `json:"kubernetesCredentials"`
+
+	ClaimRef string `json:"claimRef"`
 }
 
-type DeploymentTargetClassName string
-
-const (
-	DTCTName_IsolationLevelNamespace DeploymentTargetClassName = "isolation-level-namespace"
-)
-
-// DeploymentTargetClaimStatus defines the observed state of DeploymentTargetClaim
-type DeploymentTargetClaimStatus struct {
+// DeploymentTargetStatus defines the observed state of DeploymentTarget
+type DeploymentTargetStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
@@ -43,25 +41,26 @@ type DeploymentTargetClaimStatus struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// DeploymentTargetClaim is the Schema for the deploymenttargetclaims API.
-// It represents a request for a DeploymentTarget.
-type DeploymentTargetClaim struct {
+// DeploymentTarget is the Schema for the deploymenttargets API.
+// A deployment target, usually a K8s api endpoint. The credentials for connecting
+// to the target will be stored in a secret which will be referenced in the clusterCredentialsSecret field
+type DeploymentTarget struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   DeploymentTargetClaimSpec   `json:"spec,omitempty"`
-	Status DeploymentTargetClaimStatus `json:"status,omitempty"`
+	Spec   DeploymentTargetSpec   `json:"spec,omitempty"`
+	Status DeploymentTargetStatus `json:"status,omitempty"`
 }
 
 //+kubebuilder:object:root=true
 
-// DeploymentTargetClaimList contains a list of DeploymentTargetClaim
-type DeploymentTargetClaimList struct {
+// DeploymentTargetList contains a list of DeploymentTarget
+type DeploymentTargetList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []DeploymentTargetClaim `json:"items"`
+	Items           []DeploymentTarget `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&DeploymentTargetClaim{}, &DeploymentTargetClaimList{})
+	SchemeBuilder.Register(&DeploymentTarget{}, &DeploymentTargetList{})
 }

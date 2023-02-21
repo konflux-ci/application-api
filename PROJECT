@@ -98,4 +98,12 @@ resources:
   kind: DeploymentTargetClaim
   path: github.com/redhat-appstudio/application-api/api/v1alpha1
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: redhat.com
+  group: appstudio
+  kind: DeploymentTarget
+  path: github.com/redhat-appstudio/application-api/api/v1alpha1
+  version: v1alpha1
 version: "3"
