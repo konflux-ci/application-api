@@ -1,0 +1,90 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.10.0
+  creationTimestamp: null
+  name: deploymenttargets.appstudio.redhat.com
+spec:
+  group: appstudio.redhat.com
+  names:
+    kind: DeploymentTarget
+    listKind: DeploymentTargetList
+    plural: deploymenttargets
+    singular: deploymenttarget
+  scope: Namespaced
+  versions:
+  - name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: DeploymentTarget is the Schema for the deploymenttargets API.
+          A deployment target, usually a K8s api endpoint. The credentials for connecting
+          to the target will be stored in a secret which will be referenced in the
+          clusterCredentialsSecret field
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: DeploymentTargetSpec defines the desired state of DeploymentTarget
+            properties:
+              claimRef:
+                type: string
+              deploymentTargetClassName:
+                type: string
+              kubernetesCredentials:
+                description: "KubernetesClusterCredentials allows you to specify cluster
+                  credentials for stanadard K8s cluster (e.g. non-KCP workspace).
+                  \n See this temporary URL for details on what values to provide
+                  for the APIURL and Secret: https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource"
+                properties:
+                  allowInsecureSkipTLSVerify:
+                    description: Indicates that ArgoCD/GitOps Service should not check
+                      the TLS certificate.
+                    type: boolean
+                  apiURL:
+                    description: APIURL is a reference to a cluster API url defined
+                      within the kube config file of the cluster credentials secret.
+                    type: string
+                  clusterCredentialsSecret:
+                    description: "ClusterCredentialsSecret is a reference to the name
+                      of k8s Secret, defined within the same namespace as the Environment
+                      resource, that contains a kubeconfig. The Secret must be of
+                      type 'managed-gitops.redhat.com/managed-environment' \n See
+                      this temporary URL for details: https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource"
+                    type: string
+                  targetNamespace:
+                    description: TargetNamespace is the default destination target
+                      on the cluster for deployments. This Namespace will be used
+                      for any GitOps repository K8s resources where the `.metadata.Namespace`
+                      field is not specified.
+                    type: string
+                required:
+                - allowInsecureSkipTLSVerify
+                - apiURL
+                - clusterCredentialsSecret
+                - targetNamespace
+                type: object
+            required:
+            - claimRef
+            - deploymentTargetClassName
+            - kubernetesCredentials
+            type: object
+          status:
+            description: DeploymentTargetStatus defines the observed state of DeploymentTarget
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
