@@ -33,7 +33,7 @@ const (
 )
 
 type GitSource struct {
-	// If importing from git, the repository to create the component from
+	// An HTTPS URL representing the git repository to create the component from.
 	URL string `json:"url"`
 
 	// Specify a branch/tag/commit id. If not specified, default is `main`/`master`.
