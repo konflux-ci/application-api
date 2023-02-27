@@ -168,8 +168,17 @@ type BindingStatusGitOpsDeployment struct {
 	ComponentName string `json:"componentName"`
 
 	// GitOpsDeployment is a reference to the name of a GitOpsDeployment resource which is used to deploy the binding.
-	// The Health/sync status for the binding can thus be read from the references GitOpsDEployment
+	// The Health/sync status for the binding can thus be read from the references GitOpsDeployment
 	GitOpsDeployment string `json:"gitopsDeployment,omitempty"`
+
+	// GitOpsDeploymentSyncStatus is the sync status of the deployment owned by the binding
+	GitOpsDeploymentSyncStatus string `json:"syncStatus,omitempty"`
+
+	// GitOpsDeploymentHealthStatus is the health status of the deployment owned by the binding
+	GitOpsDeploymentHealthStatus string `json:"health,omitempty"`
+
+	// GitOpsDeploymentCommitID is the commit ID of the GitOpsDeployment
+	GitOpsDeploymentCommitID string `json:"commitID,omitempty"`
 }
 
 //+kubebuilder:object:root=true
