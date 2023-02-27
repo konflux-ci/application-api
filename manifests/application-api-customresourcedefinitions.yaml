@@ -1639,6 +1639,10 @@ spec:
                     this binding. \n To determine the health/sync status of a binding,
                     you can look at the GitOpsDeployments decribed here."
                   properties:
+                    commitID:
+                      description: GitOpsDeploymentCommitID is the commit ID of the
+                        GitOpsDeployment
+                      type: string
                     componentName:
                       description: ComponentName is the name of the component in the
                         (component, gitopsdeployment) pair
@@ -1647,7 +1651,15 @@ spec:
                       description: GitOpsDeployment is a reference to the name of
                         a GitOpsDeployment resource which is used to deploy the binding.
                         The Health/sync status for the binding can thus be read from
-                        the references GitOpsDEployment
+                        the references GitOpsDeployment
+                      type: string
+                    health:
+                      description: GitOpsDeploymentHealthStatus is the health status
+                        of the deployment owned by the binding
+                      type: string
+                    syncStatus:
+                      description: GitOpsDeploymentSyncStatus is the sync status of
+                        the deployment owned by the binding
                       type: string
                   required:
                   - componentName
