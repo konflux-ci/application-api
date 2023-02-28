@@ -268,8 +268,8 @@ spec:
                       default is `main`/`master`. Example: devel. Optional.'
                     type: string
                   url:
-                    description: If importing from git, the repository to create the
-                      component from
+                    description: An HTTPS URL representing the git repository to create
+                      the component from.
                     type: string
                 required:
                 - url
@@ -506,8 +506,8 @@ spec:
                                     devel. Optional.'
                                   type: string
                                 url:
-                                  description: If importing from git, the repository
-                                    to create the component from
+                                  description: An HTTPS URL representing the git repository
+                                    to create the component from.
                                   type: string
                               required:
                               - url
@@ -861,8 +861,8 @@ spec:
                           default is `main`/`master`. Example: devel. Optional.'
                         type: string
                       url:
-                        description: If importing from git, the repository to create
-                          the component from
+                        description: An HTTPS URL representing the git repository
+                          to create the component from.
                         type: string
                     required:
                     - url
