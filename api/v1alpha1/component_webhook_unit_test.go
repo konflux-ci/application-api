@@ -1,5 +1,5 @@
 //
-// Copyright 2022 Red Hat, Inc.
+// Copyright 2022-2023 Red Hat, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package v1alpha1
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -44,7 +45,7 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 		},
 		{
 			name: "component cannot be created due to bad URL",
-			err:  "invalid URI for request",
+			err:  "invalid URI for request" + InvalidSchemeGitSourceURL,
 			newComp: Component{
 				ObjectMeta: v1.ObjectMeta{
 					Name: "test-component",
@@ -64,7 +65,7 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 		},
 		{
 			name: "component needs to have one source specified",
-			err:  "git source or an image source must be specified",
+			err:  MissingGitOrImageSource,
 			newComp: Component{
 				ObjectMeta: v1.ObjectMeta{
 					Name: "test-component",
@@ -81,7 +82,8 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 			},
 		},
 		{
-			name: "valid component with git src",
+			name: "valid component with invalid git vendor src",
+			err:  fmt.Errorf(InvalidGithubVendorURL, "http://url", SupportedGitRepo).Error(),
 			newComp: Component{
 				ObjectMeta: v1.ObjectMeta{
 					Name: "test-component",
@@ -93,6 +95,26 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 						ComponentSourceUnion: ComponentSourceUnion{
 							GitSource: &GitSource{
 								URL: "http://url",
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "valid component with invalid git scheme src",
+			err:  "invalid URI for request" + InvalidSchemeGitSourceURL,
+			newComp: Component{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "test-component",
+				},
+				Spec: ComponentSpec{
+					ComponentName: "component1",
+					Application:   "application1",
+					Source: ComponentSource{
+						ComponentSourceUnion: ComponentSourceUnion{
+							GitSource: &GitSource{
+								URL: "git@github.com:devfile-samples/devfile-sample-java-springboot-basic.git",
 							},
 						},
 					},
@@ -153,7 +175,7 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 	}{
 		{
 			name: "component name cannot be changed",
-			err:  "component name cannot be updated to",
+			err:  fmt.Errorf(ComponentNameUpdateError, "component1").Error(),
 			updateComp: Component{
 				Spec: ComponentSpec{
 					ComponentName: "component1",
@@ -162,7 +184,7 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 		},
 		{
 			name: "application name cannot be changed",
-			err:  "application name cannot be updated to",
+			err:  fmt.Errorf(ApplicationNameUpdateError, "application1").Error(),
 			updateComp: Component{
 				Spec: ComponentSpec{
 					ComponentName: "component",
@@ -172,7 +194,10 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 		},
 		{
 			name: "git src cannot be changed",
-			err:  "git source cannot be updated to",
+			err: fmt.Errorf(GitSourceUpdateError, GitSource{
+				URL:     "http://link1",
+				Context: "context",
+			}).Error(),
 			updateComp: Component{
 				Spec: ComponentSpec{
 					ComponentName: "component",
@@ -200,7 +225,7 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 		},
 		{
 			name: "not component",
-			err:  "runtime object is not of type Component",
+			err:  InvalidComponentError,
 			updateComp: Component{
 				Spec: ComponentSpec{
 					ComponentName: "component1",
@@ -255,7 +280,7 @@ func TestComponentDeleteValidatingWebhook(t *testing.T) {
 		err     string
 	}{
 		{
-			name:    "ValidateDelete should return nil, it's unimplimented",
+			name:    "ValidateDelete should return nil, it's unimplemented",
 			err:     "",
 			newComp: Component{},
 		},

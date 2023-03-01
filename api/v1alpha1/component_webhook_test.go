@@ -1,5 +1,5 @@
 //
-// Copyright 2022 Red Hat, Inc.
+// Copyright 2022-2023 Red Hat, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,6 +17,8 @@ package v1alpha1
 
 import (
 	"context"
+	"errors"
+	"fmt"
 	"reflect"
 
 	. "github.com/onsi/ginkgo"
@@ -34,8 +36,6 @@ var _ = Describe("Application validation webhook", func() {
 		HASAppName      = "test-application-123"
 		HASCompName     = "test-component-123"
 		HASAppNamespace = "default"
-		DisplayName     = "petclinic"
-		Description     = "Simple petclinic app"
 		ComponentName   = "backend"
 		SampleRepoLink  = "https://github.com/devfile-samples/devfile-sample-java-springboot-basic"
 	)
@@ -79,19 +79,24 @@ var _ = Describe("Application validation webhook", func() {
 			hasComp.Name = badHASCompName
 			err = k8sClient.Create(ctx, hasComp)
 			Expect(err).Should(HaveOccurred())
-			Expect(err.Error()).Should(ContainSubstring("a component resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’"))
-
+			Expect(err.Error()).Should(ContainSubstring(fmt.Errorf(InvalidDNS1035Name, hasComp.Name).Error()))
 			hasComp.Name = uniqueHASCompName
 
 			err = k8sClient.Create(ctx, hasComp)
 			Expect(err).Should(HaveOccurred())
-			Expect(err.Error()).Should(ContainSubstring("git source or an image source must be specified"))
+			Expect(err.Error()).Should(ContainSubstring(MissingGitOrImageSource))
 
 			// Bad URL
 			hasComp.Spec.Source.GitSource.URL = "badurl"
 			err = k8sClient.Create(ctx, hasComp)
 			Expect(err).Should(HaveOccurred())
-			Expect(err.Error()).Should(ContainSubstring("invalid URI for request"))
+			Expect(err.Error()).Should(ContainSubstring(errors.New("invalid URI for request" + InvalidSchemeGitSourceURL).Error()))
+
+			//Bad URL with unsupported vendor
+			hasComp.Spec.Source.GitSource.URL = "http://url"
+			err = k8sClient.Create(ctx, hasComp)
+			Expect(err).Should(HaveOccurred())
+			Expect(err.Error()).Should(ContainSubstring(fmt.Errorf(InvalidGithubVendorURL, "http://url", SupportedGitRepo).Error()))
 
 			// Good URL
 			hasComp.Spec.Source.GitSource.URL = SampleRepoLink
@@ -152,14 +157,14 @@ var _ = Describe("Application validation webhook", func() {
 			createdHasComp.Spec.Application = "newapp"
 			err := k8sClient.Update(ctx, createdHasComp)
 			Expect(err).Should(HaveOccurred())
-			Expect(err.Error()).Should(ContainSubstring("application name cannot be updated"))
+			Expect(err.Error()).Should(ContainSubstring(fmt.Errorf(ApplicationNameUpdateError, createdHasComp.Spec.Application).Error()))
 
 			// Update the Comp component name
 			createdHasComp.Spec.Application = hasComp.Spec.Application
 			createdHasComp.Spec.ComponentName = "newcomp"
 			err = k8sClient.Update(ctx, createdHasComp)
 			Expect(err).Should(HaveOccurred())
-			Expect(err.Error()).Should(ContainSubstring("component name cannot be updated"))
+			Expect(err.Error()).Should(ContainSubstring(fmt.Errorf(ComponentNameUpdateError, createdHasComp.Spec.ComponentName).Error()))
 
 			// Update the Comp git src
 			createdHasComp.Spec.ComponentName = hasComp.Spec.ComponentName
@@ -169,7 +174,7 @@ var _ = Describe("Application validation webhook", func() {
 			}
 			err = k8sClient.Update(ctx, createdHasComp)
 			Expect(err).Should(HaveOccurred())
-			Expect(err.Error()).Should(ContainSubstring("git source cannot be updated"))
+			Expect(err.Error()).Should(ContainSubstring(fmt.Errorf(GitSourceUpdateError, *createdHasComp.Spec.Source.GitSource).Error()))
 
 			// Delete the specified HASComp resource
 			deleteHASCompCR(hasCompLookupKey)

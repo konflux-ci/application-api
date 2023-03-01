@@ -1,5 +1,5 @@
 /*
-Copyright 2022 Red Hat, Inc.
+Copyright 2022-2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -17,9 +17,11 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"errors"
 	"fmt"
 	"net/url"
 	"reflect"
+	"strings"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation"
@@ -43,6 +45,9 @@ func (r *Component) SetupWebhookWithManager(mgr ctrl.Manager) error {
 
 var _ webhook.Defaulter = &Component{}
 
+//Github is the only supported vendor right now
+const SupportedGitRepo = "github.com"
+
 // Default implements webhook.Defaulter so a webhook will be registered for the type
 func (r *Component) Default() {
 
@@ -60,21 +65,24 @@ func (r *Component) ValidateCreate() error {
 
 	// We use the DNS-1035 format for component names, so ensure it conforms to that specification
 	if len(validation.IsDNS1035Label(r.Name)) != 0 {
-		return fmt.Errorf("invalid component name: %q: a component resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’,", r.Name)
+		return fmt.Errorf(InvalidDNS1035Name, r.Name)
 	}
 	sourceSpecified := false
 
 	if r.Spec.Source.GitSource != nil && r.Spec.Source.GitSource.URL != "" {
-		if _, err := url.ParseRequestURI(r.Spec.Source.GitSource.URL); err != nil {
-			return err
+		if gitsourceURL, err := url.ParseRequestURI(r.Spec.Source.GitSource.URL); err != nil {
+			return fmt.Errorf(err.Error() + InvalidSchemeGitSourceURL)
+		} else if SupportedGitRepo != strings.ToLower(gitsourceURL.Host) {
+			return fmt.Errorf(InvalidGithubVendorURL, gitsourceURL, SupportedGitRepo)
 		}
+
 		sourceSpecified = true
 	} else if r.Spec.ContainerImage != "" {
 		sourceSpecified = true
 	}
 
 	if !sourceSpecified {
-		return fmt.Errorf("a git source or an image source must be specified when creating a component")
+		return errors.New(MissingGitOrImageSource)
 	}
 
 	return nil
@@ -88,18 +96,18 @@ func (r *Component) ValidateUpdate(old runtime.Object) error {
 	case *Component:
 
 		if r.Spec.ComponentName != old.Spec.ComponentName {
-			return fmt.Errorf("component name cannot be updated to %s", r.Spec.ComponentName)
+			return fmt.Errorf(ComponentNameUpdateError, r.Spec.ComponentName)
 		}
 
 		if r.Spec.Application != old.Spec.Application {
-			return fmt.Errorf("application name cannot be updated to %s", r.Spec.Application)
+			return fmt.Errorf(ApplicationNameUpdateError, r.Spec.Application)
 		}
 
 		if r.Spec.Source.GitSource != nil && old.Spec.Source.GitSource != nil && !reflect.DeepEqual(*(r.Spec.Source.GitSource), *(old.Spec.Source.GitSource)) {
-			return fmt.Errorf("git source cannot be updated to %+v", *(r.Spec.Source.GitSource))
+			return fmt.Errorf(GitSourceUpdateError, *(r.Spec.Source.GitSource))
 		}
 	default:
-		return fmt.Errorf("runtime object is not of type Component")
+		return errors.New(InvalidComponentError)
 	}
 
 	return nil
