@@ -43,37 +43,22 @@ spec:
               deploymentTargetClassName:
                 type: string
               kubernetesCredentials:
-                description: "KubernetesClusterCredentials allows you to specify cluster
-                  credentials for stanadard K8s cluster (e.g. non-KCP workspace).
-                  \n See this temporary URL for details on what values to provide
-                  for the APIURL and Secret: https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource"
+                description: DeploymentTargetKubernetesClusterCredentials defines
+                  the K8s cluster credentials for the DeploymentTarget.
                 properties:
-                  allowInsecureSkipTLSVerify:
-                    description: Indicates that ArgoCD/GitOps Service should not check
-                      the TLS certificate.
-                    type: boolean
                   apiURL:
-                    description: APIURL is a reference to a cluster API url defined
-                      within the kube config file of the cluster credentials secret.
+                    description: APIURL is a reference to a cluster API url.
                     type: string
                   clusterCredentialsSecret:
-                    description: "ClusterCredentialsSecret is a reference to the name
-                      of k8s Secret, defined within the same namespace as the Environment
-                      resource, that contains a kubeconfig. The Secret must be of
-                      type 'managed-gitops.redhat.com/managed-environment' \n See
-                      this temporary URL for details: https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource"
+                    description: ClusterCredentialsSecret is a reference to the name
+                      of k8s Secret that contains a kubeconfig.
                     type: string
-                  targetNamespace:
-                    description: TargetNamespace is the default destination target
-                      on the cluster for deployments. This Namespace will be used
-                      for any GitOps repository K8s resources where the `.metadata.Namespace`
-                      field is not specified.
+                  defaultNamespace:
                     type: string
                 required:
-                - allowInsecureSkipTLSVerify
                 - apiURL
                 - clusterCredentialsSecret
-                - targetNamespace
+                - defaultNamespace
                 type: object
             required:
             - claimRef
