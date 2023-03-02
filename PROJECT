@@ -84,7 +84,7 @@ resources:
   version: v1alpha1
 - api:
     crdVersion: v1
-    namespaced: true
+    namespaced: false
   domain: redhat.com
   group: appstudio
   kind: DeploymentTargetClass

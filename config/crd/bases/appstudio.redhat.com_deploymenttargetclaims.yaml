@@ -38,8 +38,11 @@ spec:
             properties:
               deploymentTargetClassName:
                 type: string
+              targetName:
+                type: string
             required:
             - deploymentTargetClassName
+            - targetName
             type: object
           status:
             description: DeploymentTargetClaimStatus defines the observed state of

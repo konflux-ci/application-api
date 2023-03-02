@@ -26,9 +26,20 @@ import (
 type DeploymentTargetSpec struct {
 	DeploymentTargetClassName DeploymentTargetClassName `json:"deploymentTargetClassName"`
 
-	KubernetesClusterCredentials KubernetesClusterCredentials `json:"kubernetesCredentials"`
+	KubernetesClusterCredentials DeploymentTargetKubernetesClusterCredentials `json:"kubernetesCredentials"`
 
 	ClaimRef string `json:"claimRef"`
+}
+
+// DeploymentTargetKubernetesClusterCredentials defines the K8s cluster credentials for the DeploymentTarget.
+type DeploymentTargetKubernetesClusterCredentials struct {
+	DefaultNamespace string `json:"defaultNamespace"`
+
+	// APIURL is a reference to a cluster API url.
+	APIURL string `json:"apiURL"`
+
+	// ClusterCredentialsSecret is a reference to the name of k8s Secret that contains a kubeconfig.
+	ClusterCredentialsSecret string `json:"clusterCredentialsSecret"`
 }
 
 // DeploymentTargetStatus defines the observed state of DeploymentTarget

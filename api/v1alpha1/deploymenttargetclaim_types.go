@@ -25,13 +25,10 @@ import (
 // DeploymentTargetClaimSpec defines the desired state of DeploymentTargetClaim
 type DeploymentTargetClaimSpec struct {
 	DeploymentTargetClassName DeploymentTargetClassName `json:"deploymentTargetClassName"`
+	TargetName                string                    `json:"targetName"`
 }
 
 type DeploymentTargetClassName string
-
-const (
-	DTCTName_IsolationLevelNamespace DeploymentTargetClassName = "isolation-level-namespace"
-)
 
 // DeploymentTargetClaimStatus defines the observed state of DeploymentTargetClaim
 type DeploymentTargetClaimStatus struct {
