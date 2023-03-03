@@ -81,37 +81,6 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 			},
 			expectedError: "environment cannot be updated to test-env-a-changed",
 		},
-
-		{
-			testName: "Error occurs when existing label is changed.",
-			testData: SnapshotEnvironmentBinding{
-				ObjectMeta: v1.ObjectMeta{
-					Labels: map[string]string{"test-key-a": "test-value-b"},
-				},
-				Spec: SnapshotEnvironmentBindingSpec{
-					Application: "test-app-a",
-					Environment: "test-env-a-changed",
-				},
-			},
-			expectedError: "labels cannot be updated to map[test-key-a:test-value-b]",
-		},
-
-		{
-			testName: "Error occurs when new label is added.",
-			testData: SnapshotEnvironmentBinding{
-				ObjectMeta: v1.ObjectMeta{
-					Labels: map[string]string{
-						"test-key-a": "test-value-a",
-						"test-key-b": "test-value-b",
-					},
-				},
-				Spec: SnapshotEnvironmentBindingSpec{
-					Application: "test-app-a",
-					Environment: "test-env-a-changed",
-				},
-			},
-			expectedError: "labels cannot be updated to map[test-key-a:test-value-a test-key-b:test-value-b]",
-		},
 	}
 
 	for _, test := range tests {

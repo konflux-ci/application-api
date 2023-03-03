@@ -62,11 +62,6 @@ func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) error {
 
 	switch old := old.(type) {
 	case *SnapshotEnvironmentBinding:
-
-		if !reflect.DeepEqual(r.Labels, old.Labels) {
-			return fmt.Errorf("labels cannot be updated to %+v", r.Labels)
-		}
-
 		if !reflect.DeepEqual(r.Spec.Application, old.Spec.Application) {
 			return fmt.Errorf("application cannot be updated to %+v", r.Spec.Application)
 		}
