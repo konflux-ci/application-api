@@ -61,7 +61,6 @@ spec:
                 - defaultNamespace
                 type: object
             required:
-            - claimRef
             - deploymentTargetClassName
             - kubernetesCredentials
             type: object

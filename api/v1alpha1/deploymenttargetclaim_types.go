@@ -25,7 +25,7 @@ import (
 // DeploymentTargetClaimSpec defines the desired state of DeploymentTargetClaim
 type DeploymentTargetClaimSpec struct {
 	DeploymentTargetClassName DeploymentTargetClassName `json:"deploymentTargetClassName"`
-	TargetName                string                    `json:"targetName"`
+	TargetName                string                    `json:"targetName,omitempty"`
 }
 
 type DeploymentTargetClassName string

@@ -28,7 +28,7 @@ type DeploymentTargetSpec struct {
 
 	KubernetesClusterCredentials DeploymentTargetKubernetesClusterCredentials `json:"kubernetesCredentials"`
 
-	ClaimRef string `json:"claimRef"`
+	ClaimRef string `json:"claimRef,omitempty"`
 }
 
 // DeploymentTargetKubernetesClusterCredentials defines the K8s cluster credentials for the DeploymentTarget.
