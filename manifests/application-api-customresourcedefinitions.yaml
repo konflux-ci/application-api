@@ -1032,7 +1032,6 @@ spec:
                 type: string
             required:
             - deploymentTargetClassName
-            - targetName
             type: object
           status:
             description: DeploymentTargetClaimStatus defines the observed state of
@@ -1173,7 +1172,6 @@ spec:
                 - defaultNamespace
                 type: object
             required:
-            - claimRef
             - deploymentTargetClassName
             - kubernetesCredentials
             type: object
