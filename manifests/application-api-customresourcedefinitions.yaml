@@ -255,13 +255,15 @@ spec:
                       component Example: folderA/folderB/gitops. Optional.'
                     type: string
                   devfileUrl:
-                    description: 'If specified, the devfile at the URL will be used
-                      for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
+                    description: 'If specified, the devfile at the URI will be used
+                      for the component. Can be a local path inside the repository,
+                      or an external URL. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
                       Optional.'
                     type: string
                   dockerfileUrl:
-                    description: If specified, the dockerfile at the URL will be used
-                      for the component. Optional.
+                    description: If specified, the dockerfile at the URI will be used
+                      for the component. Can be a local path inside the repository,
+                      or an external URL. Optional.
                     type: string
                   revision:
                     description: 'Specify a branch/tag/commit id. If not specified,
@@ -492,13 +494,17 @@ spec:
                                     Optional.'
                                   type: string
                                 devfileUrl:
-                                  description: 'If specified, the devfile at the URL
-                                    will be used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
+                                  description: 'If specified, the devfile at the URI
+                                    will be used for the component. Can be a local
+                                    path inside the repository, or an external URL.
+                                    Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
                                     Optional.'
                                   type: string
                                 dockerfileUrl:
                                   description: If specified, the dockerfile at the
-                                    URL will be used for the component. Optional.
+                                    URI will be used for the component. Can be a local
+                                    path inside the repository, or an external URL.
+                                    Optional.
                                   type: string
                                 revision:
                                   description: 'Specify a branch/tag/commit id. If
@@ -848,13 +854,15 @@ spec:
                           the component Example: folderA/folderB/gitops. Optional.'
                         type: string
                       devfileUrl:
-                        description: 'If specified, the devfile at the URL will be
-                          used for the component. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
+                        description: 'If specified, the devfile at the URI will be
+                          used for the component. Can be a local path inside the repository,
+                          or an external URL. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
                           Optional.'
                         type: string
                       dockerfileUrl:
-                        description: If specified, the dockerfile at the URL will
-                          be used for the component. Optional.
+                        description: If specified, the dockerfile at the URI will
+                          be used for the component. Can be a local path inside the
+                          repository, or an external URL. Optional.
                         type: string
                       revision:
                         description: 'Specify a branch/tag/commit id. If not specified,

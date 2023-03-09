@@ -46,12 +46,12 @@ type GitSource struct {
 	// Optional.
 	Context string `json:"context,omitempty"`
 
-	// If specified, the devfile at the URL will be used for the component.
+	// If specified, the devfile at the URI will be used for the component. Can be a local path inside the repository, or an external URL.
 	// Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
 	// Optional.
 	DevfileURL string `json:"devfileUrl,omitempty"`
 
-	// If specified, the dockerfile at the URL will be used for the component.
+	// If specified, the dockerfile at the URI will be used for the component. Can be a local path inside the repository, or an external URL.
 	// Optional.
 	DockerfileURL string `json:"dockerfileUrl,omitempty"`
 }
