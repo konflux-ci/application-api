@@ -2020,6 +2020,40 @@ spec:
                     name:
                       description: Name is the name of the component
                       type: string
+                    source:
+                      description: Source describes the Component source. Optional.
+                      properties:
+                        git:
+                          description: Git Source for a Component. Optional.
+                          properties:
+                            context:
+                              description: 'A relative path inside the git repo containing
+                                the component Example: folderA/folderB/gitops. Optional.'
+                              type: string
+                            devfileUrl:
+                              description: 'If specified, the devfile at the URI will
+                                be used for the component. Can be a local path inside
+                                the repository, or an external URL. Example: https://raw.githubusercontent.com/devfile-samples/devfile-sample-java-springboot-basic/main/devfile.yaml.
+                                Optional.'
+                              type: string
+                            dockerfileUrl:
+                              description: If specified, the dockerfile at the URI
+                                will be used for the component. Can be a local path
+                                inside the repository, or an external URL. Optional.
+                              type: string
+                            revision:
+                              description: 'Specify a branch/tag/commit id. If not
+                                specified, default is `main`/`master`. Example: devel.
+                                Optional.'
+                              type: string
+                            url:
+                              description: An HTTPS URL representing the git repository
+                                to create the component from.
+                              type: string
+                          required:
+                          - url
+                          type: object
+                      type: object
                   required:
                   - containerImage
                   - name

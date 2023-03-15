@@ -87,7 +87,7 @@ func TestSnapshotValidatingWebhook(t *testing.T) {
 					},
 				},
 			},
-			expectedError: "components cannot be updated to [{Name:test-component-a-changed ContainerImage:test-container-image-a}]",
+			expectedError: "components cannot be updated to [{Name:test-component-a-changed ContainerImage:test-container-image-a Source:{ComponentSourceUnion:{GitSource:<nil>}}}]",
 		},
 
 		{
@@ -103,7 +103,30 @@ func TestSnapshotValidatingWebhook(t *testing.T) {
 					},
 				},
 			},
-			expectedError: "components cannot be updated to [{Name:test-component-a ContainerImage:test-container-image-a-changed}]",
+			expectedError: "components cannot be updated to [{Name:test-component-a ContainerImage:test-container-image-a-changed Source:{ComponentSourceUnion:{GitSource:<nil>}}}]",
+		},
+
+		{
+			testName: "Error when adding Source",
+			testData: Snapshot{
+				Spec: SnapshotSpec{
+					Application: "test-app-a",
+					Components: []SnapshotComponent{
+						{
+							Name:           "test-component-a",
+							ContainerImage: "test-container-image-a",
+							Source: ComponentSource{
+								ComponentSourceUnion: ComponentSourceUnion{
+									GitSource: &GitSource{
+										URL: "https://github.com/dummy/repo",
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+			expectedError: "components cannot be updated to [{Name:test-component-a ContainerImage:test-container-image-a Source:{ComponentSourceUnion:{GitSource:",
 		},
 	}
 

@@ -45,7 +45,7 @@ func (r *Component) SetupWebhookWithManager(mgr ctrl.Manager) error {
 
 var _ webhook.Defaulter = &Component{}
 
-//Github is the only supported vendor right now
+// Github is the only supported vendor right now
 const SupportedGitRepo = "github.com"
 
 // Default implements webhook.Defaulter so a webhook will be registered for the type

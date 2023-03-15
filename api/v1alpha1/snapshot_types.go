@@ -49,6 +49,11 @@ type SnapshotComponent struct {
 
 	// ContainerImage is the container image to use when deploying the component, as part of a Snapshot
 	ContainerImage string `json:"containerImage"`
+
+	// Source describes the Component source.
+	// Optional.
+	// +optional
+	Source ComponentSource `json:"source,omitempty"`
 }
 
 // SnapshotArtifacts is a placeholder section for 'artifact links' we want to maintain to other AppStudio resources.
