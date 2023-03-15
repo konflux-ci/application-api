@@ -24,6 +24,7 @@ import (
 type EnvironmentSpec struct {
 
 	// Type is whether the Environment is a POC or non-POC environment
+	// - This field is deprecated, and should not be used.
 	Type EnvironmentType `json:"type,omitempty"`
 
 	// DisplayName is the user-visible, user-definable name for the environment (but not used for functional requirements)
@@ -73,8 +74,7 @@ const (
 )
 
 // UnstableEnvironmentConfiguration contains fields that are related to configuration of the target environment:
-// - credentials for connecting to the cluster (if connecting to a non-KCP cluster)
-// - KCP workspace configuration credentials (TBD)
+// - credentials for connecting to the cluster
 //
 // Note: as of this writing (Jul 2022), I expect the contents of this struct to undergo major changes, and the API should not be considered
 // complete, or even a reflection of final desired state.

@@ -29,15 +29,15 @@ const (
 	ComponentDeploymentConditionErrorOccurred         = "ErrorOccurred"
 )
 
-// SnapshotEnvironmentBindingSpec defines the desired state of SnapshotEnvironmentBinding
+// See 'SnapshotEnvironmentBinding' resource for details of this resource. SnapshotEnvironmentBindingSpec defines the desired state of SnapshotEnvironmentBinding.
 type SnapshotEnvironmentBindingSpec struct {
 
-	// Application is a reference to the Application resource (defined in the namespace) involved in the binding.
+	// Application is a reference to the Application resource (defined in the same namespace) that we are deploying as part of this SnapshotEnvironmentBinding.
 	// Required
 	// +required
 	Application string `json:"application"`
 
-	// Environment is the Environment resource (defined in the namespace) that the binding will deploy to.
+	// Environment is the environment resource (defined in the namespace) that the binding will deploy to.
 	// Required
 	// +required
 	Environment string `json:"environment"`
@@ -48,7 +48,7 @@ type SnapshotEnvironmentBindingSpec struct {
 	// +required
 	Snapshot string `json:"snapshot"`
 
-	// Components contains individual component data.
+	// Component-specific configuration information, used when generating GitOps repository resources.
 	// Required.
 	// +required
 	Components []BindingComponent `json:"components"`
@@ -139,7 +139,8 @@ type BindingComponentStatus struct {
 // SnapshotEnvironmentBindingStatus defines the observed state of SnapshotEnvironmentBinding
 type SnapshotEnvironmentBindingStatus struct {
 
-	// GitOpsDeployments describes the set of GitOpsDeployment resources that correspond to the binding.
+	// GitOpsDeployments describes the set of GitOpsDeployment resources that are owned by the SnapshotEnvironmentBinding, and are
+	// deploying the Components of the Application to the target Environment.
 	// To determine the health/sync status of a binding, you can look at the GitOpsDeployments decribed here.
 	GitOpsDeployments []BindingStatusGitOpsDeployment `json:"gitopsDeployments,omitempty"`
 
@@ -151,6 +152,7 @@ type SnapshotEnvironmentBindingStatus struct {
 	// This status is updated by the Application Service controller.
 	GitOpsRepoConditions []metav1.Condition `json:"gitopsRepoConditions,omitempty"`
 
+	// BindingConditions will contain user-oriented error messages from the SnapshotEnvironmentBinding reconciler.
 	BindingConditions []metav1.Condition `json:"bindingConditions,omitempty"`
 
 	// ComponentDeploymentConditions describes the deployment status of all of the Components of the Application.
@@ -184,7 +186,22 @@ type BindingStatusGitOpsDeployment struct {
 //+kubebuilder:object:root=true
 //+kubebuilder:subresource:status
 
-// SnapshotEnvironmentBinding is the Schema for the snapshotenvironmentbindings API
+// The `SnapshotEnvironmentBinding` resource specifies the deployment relationship between (a single application, a
+// single environment, and a single snapshot) combination.
+//
+// It can be thought of as a 3-tuple that defines what Application should be deployed to what Environment, and
+// which Snapshot should be deployed (Snapshot being the specific component container image versions of that
+// Aplication that should be deployed to that Environment).
+//
+// **Note**: There should not exist multiple SnapshotEnvironmentBinding CRs in a Namespace that share the same
+// Application and Environment value. For example:
+// - Good:
+//    - SnapshotEnvironmentBinding A: (application=appA, environment=dev, snapshot=my-snapshot)
+//    - SnapshotEnvironmentBinding B: (application=appA, environment=staging, snapshot=my-snapshot)
+// - Bad:
+//    - SnapshotEnvironmentBinding A: (application=*appA*, environment=*staging*, snapshot=my-snapshot)
+//    - SnapshotEnvironmentBinding B: (application=*appA*, environment=*staging*, snapshot=second-snapshot)
+
 // +kubebuilder:resource:path=snapshotenvironmentbindings,shortName=aseb;binding
 type SnapshotEnvironmentBinding struct {
 	metav1.TypeMeta   `json:",inline"`
