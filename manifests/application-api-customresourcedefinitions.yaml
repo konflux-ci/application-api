@@ -1279,6 +1279,7 @@ spec:
                 type: array
               type:
                 description: Type is whether the Environment is a POC or non-POC environment
+                  - This field is deprecated, and should not be used.
                 type: string
               unstableConfigurationFields:
                 description: 'UnstableConfigurationFields are experimental/prototype:
@@ -1528,8 +1529,19 @@ spec:
   - name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: SnapshotEnvironmentBinding is the Schema for the snapshotenvironmentbindings
-          API
+        description: "The `SnapshotEnvironmentBinding` resource specifies the deployment
+          relationship between (a single application, a single environment, and a
+          single snapshot) combination. \n It can be thought of as a 3-tuple that
+          defines what Application should be deployed to what Environment, and which
+          Snapshot should be deployed (Snapshot being the specific component container
+          image versions of that Aplication that should be deployed to that Environment).
+          \n **Note**: There should not exist multiple SnapshotEnvironmentBinding
+          CRs in a Namespace that share the same Application and Environment value.
+          For example: - Good: - SnapshotEnvironmentBinding A: (application=appA,
+          environment=dev, snapshot=my-snapshot) - SnapshotEnvironmentBinding B: (application=appA,
+          environment=staging, snapshot=my-snapshot) \n - Bad: - SnapshotEnvironmentBinding
+          A: (application=*appA*, environment=*staging*, snapshot=my-snapshot) - SnapshotEnvironmentBinding
+          B: (application=*appA*, environment=*staging*, snapshot=second-snapshot)"
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -1544,15 +1556,18 @@ spec:
           metadata:
             type: object
           spec:
-            description: SnapshotEnvironmentBindingSpec defines the desired state
-              of SnapshotEnvironmentBinding
+            description: See 'SnapshotEnvironmentBinding' resource for details of
+              this resource. SnapshotEnvironmentBindingSpec defines the desired state
+              of SnapshotEnvironmentBinding.
             properties:
               application:
                 description: Application is a reference to the Application resource
-                  (defined in the namespace) involved in the binding. Required
+                  (defined in the same namespace) that we are deploying as part of
+                  this SnapshotEnvironmentBinding. Required
                 type: string
               components:
-                description: Components contains individual component data. Required.
+                description: Component-specific configuration information, used when
+                  generating GitOps repository resources. Required.
                 items:
                   description: BindingComponent contains individual component data
                   properties:
@@ -1623,7 +1638,7 @@ spec:
                   type: object
                 type: array
               environment:
-                description: Environment is the Environment resource (defined in the
+                description: Environment is the environment resource (defined in the
                   namespace) that the binding will deploy to. Required
                 type: string
               snapshot:
@@ -1642,6 +1657,8 @@ spec:
               of SnapshotEnvironmentBinding
             properties:
               bindingConditions:
+                description: BindingConditions will contain user-oriented error messages
+                  from the SnapshotEnvironmentBinding reconciler.
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
@@ -1836,9 +1853,10 @@ spec:
                 type: array
               gitopsDeployments:
                 description: GitOpsDeployments describes the set of GitOpsDeployment
-                  resources that correspond to the binding. To determine the health/sync
-                  status of a binding, you can look at the GitOpsDeployments decribed
-                  here.
+                  resources that are owned by the SnapshotEnvironmentBinding, and
+                  are deploying the Components of the Application to the target Environment.
+                  To determine the health/sync status of a binding, you can look at
+                  the GitOpsDeployments decribed here.
                 items:
                   description: "BindingStatusGitOpsDeployment describes an individual
                     reference to a GitOpsDeployment resources that is used to deploy

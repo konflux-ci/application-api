@@ -196,12 +196,13 @@ type BindingStatusGitOpsDeployment struct {
 // **Note**: There should not exist multiple SnapshotEnvironmentBinding CRs in a Namespace that share the same
 // Application and Environment value. For example:
 // - Good:
-//    - SnapshotEnvironmentBinding A: (application=appA, environment=dev, snapshot=my-snapshot)
-//    - SnapshotEnvironmentBinding B: (application=appA, environment=staging, snapshot=my-snapshot)
+//   - SnapshotEnvironmentBinding A: (application=appA, environment=dev, snapshot=my-snapshot)
+//   - SnapshotEnvironmentBinding B: (application=appA, environment=staging, snapshot=my-snapshot)
+//
 // - Bad:
-//    - SnapshotEnvironmentBinding A: (application=*appA*, environment=*staging*, snapshot=my-snapshot)
-//    - SnapshotEnvironmentBinding B: (application=*appA*, environment=*staging*, snapshot=second-snapshot)
-
+//   - SnapshotEnvironmentBinding A: (application=*appA*, environment=*staging*, snapshot=my-snapshot)
+//   - SnapshotEnvironmentBinding B: (application=*appA*, environment=*staging*, snapshot=second-snapshot)
+//
 // +kubebuilder:resource:path=snapshotenvironmentbindings,shortName=aseb;binding
 type SnapshotEnvironmentBinding struct {
 	metav1.TypeMeta   `json:",inline"`
