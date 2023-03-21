@@ -83,6 +83,7 @@ spec:
                 type: array
               type:
                 description: Type is whether the Environment is a POC or non-POC environment
+                  - This field is deprecated, and should not be used.
                 type: string
               unstableConfigurationFields:
                 description: 'UnstableConfigurationFields are experimental/prototype:
