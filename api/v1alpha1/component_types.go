@@ -155,6 +155,10 @@ type ComponentStatus struct {
 
 	// GitOps specific status for the Component CR
 	GitOps GitOpsStatus `json:"gitops,omitempty"`
+
+	// The last built commit id (SHA-1 checksum) from the latest component build.
+	// Example: 41fbdb124775323f58fd5ce93c70bb7d79c20650.
+	LastBuiltCommit string `json:"lastBuiltCommit,omitempty"`
 }
 
 // GitOpsStatus contains GitOps repository-specific status for the component
