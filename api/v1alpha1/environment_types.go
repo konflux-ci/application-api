@@ -112,6 +112,21 @@ type KubernetesClusterCredentials struct {
 type EnvironmentConfiguration struct {
 	// Env is an array of standard environment vairables
 	Env []EnvVarPair `json:"env"`
+
+	// Target is used to reference a DeploymentTargetClaim for a target Environment.
+	// The Environment controller uses the referenced DeploymentTargetClaim to access its bounded
+	// DeploymentTarget with cluster credential secret.
+	Target EnvironmentTarget `json:"target,omitempty"`
+}
+
+// EnvironmentTarget provides the configuration for a deployment target.
+type EnvironmentTarget struct {
+	DeploymentTargetClaim DeploymentTargetClaimConfig `json:"deploymentTargetClaim"`
+}
+
+// DeploymentTargetClaimConfig specifies the DeploymentTargetClaim details for a given Environment.
+type DeploymentTargetClaimConfig struct {
+	ClaimName string `json:"claimName"`
 }
 
 // EnvironmentStatus defines the observed state of Environment
@@ -129,6 +144,12 @@ type Environment struct {
 
 	Spec   EnvironmentSpec   `json:"spec,omitempty"`
 	Status EnvironmentStatus `json:"status,omitempty"`
+}
+
+// GetDeploymentTargetClaimName returns the name of the DeploymentTargetClaim
+// associated with this Environment
+func (e *Environment) GetDeploymentTargetClaimName() string {
+	return e.Spec.Configuration.Target.DeploymentTargetClaim.ClaimName
 }
 
 //+kubebuilder:object:root=true
