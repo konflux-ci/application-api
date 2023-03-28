@@ -46,6 +46,10 @@ spec:
                 description: DeploymentTargetKubernetesClusterCredentials defines
                   the K8s cluster credentials for the DeploymentTarget.
                 properties:
+                  allowInsecureSkipTLSVerify:
+                    description: Indicates that a Service should not check the TLS
+                      certificate when connecting to this target.
+                    type: boolean
                   apiURL:
                     description: APIURL is a reference to a cluster API url.
                     type: string
@@ -56,6 +60,7 @@ spec:
                   defaultNamespace:
                     type: string
                 required:
+                - allowInsecureSkipTLSVerify
                 - apiURL
                 - clusterCredentialsSecret
                 - defaultNamespace

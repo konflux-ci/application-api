@@ -40,6 +40,9 @@ type DeploymentTargetKubernetesClusterCredentials struct {
 
 	// ClusterCredentialsSecret is a reference to the name of k8s Secret that contains a kubeconfig.
 	ClusterCredentialsSecret string `json:"clusterCredentialsSecret"`
+
+	// Indicates that a Service should not check the TLS certificate when connecting to this target.
+	AllowInsecureSkipTLSVerify bool `json:"allowInsecureSkipTLSVerify"`
 }
 
 // DeploymentTargetStatus defines the observed state of DeploymentTarget
