@@ -41,6 +41,7 @@ var _ webhook.Defaulter = &SnapshotEnvironmentBinding{}
 
 // Default implements webhook.Defaulter so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) Default() {
+	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("kind", "SnapshotEnvironmentBinding").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
 	snapshotenvironmentbindinglog.Info("default", "name", r.Name)
 }
 
@@ -51,14 +52,16 @@ var _ webhook.Validator = &SnapshotEnvironmentBinding{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) ValidateCreate() error {
-	snapshotenvironmentbindinglog.Info("validate create", "name", r.Name)
+	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("kind", "SnapshotEnvironmentBinding").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
+	snapshotenvironmentbindinglog.Info("validate create")
 
 	return nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) error {
-	snapshotenvironmentbindinglog.Info("validate update", "name", r.Name)
+	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("kind", "SnapshotEnvironmentBinding").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
+	snapshotenvironmentbindinglog.Info("validate update")
 
 	switch old := old.(type) {
 	case *SnapshotEnvironmentBinding:
@@ -79,7 +82,8 @@ func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) error {
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) ValidateDelete() error {
-	snapshotenvironmentbindinglog.Info("validate delete", "name", r.Name)
+	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("kind", "SnapshotEnvironmentBinding").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
+	snapshotenvironmentbindinglog.Info("validate delete")
 
 	return nil
 }
