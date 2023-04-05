@@ -131,6 +131,7 @@ type DeploymentTargetClaimConfig struct {
 
 // EnvironmentStatus defines the observed state of Environment
 type EnvironmentStatus struct {
+	Conditions []metav1.Condition `json:"conditions,omitempty"`
 }
 
 //+kubebuilder:object:root=true
