@@ -100,19 +100,22 @@ spec:
                   type: string
                 type: array
               type:
-                description: Type is whether the Environment is a POC or non-POC environment
-                  - This field is deprecated, and should not be used.
+                description: 'DEPRECATED: Type is whether the Environment is a POC
+                  or non-POC environment - This field is deprecated, and should not
+                  be used.'
                 type: string
               unstableConfigurationFields:
                 description: 'UnstableConfigurationFields are experimental/prototype:
                   the API has not been finalized here, and is subject to breaking
                   changes. See comment on UnstableEnvironmentConfiguration for details.'
                 properties:
+                  environmentType:
+                    description: EnvironmentType indicates whether the target environment
+                      is Kubernetes or OpenShift
+                    type: string
                   kubernetesCredentials:
-                    description: "KubernetesClusterCredentials allows you to specify
-                      cluster credentials for stanadard K8s cluster (e.g. non-KCP
-                      workspace). \n See this temporary URL for details on what values
-                      to provide for the APIURL and Secret: https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource"
+                    description: KubernetesClusterCredentials contains cluster credentials
+                      for a target Kubernetes/OpenShift cluster.
                     properties:
                       allowInsecureSkipTLSVerify:
                         description: Indicates that ArgoCD/GitOps Service should not

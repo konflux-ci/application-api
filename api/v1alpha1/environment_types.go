@@ -23,7 +23,7 @@ import (
 // EnvironmentSpec defines the desired state of Environment
 type EnvironmentSpec struct {
 
-	// Type is whether the Environment is a POC or non-POC environment
+	// DEPRECATED: Type is whether the Environment is a POC or non-POC environment
 	// - This field is deprecated, and should not be used.
 	Type EnvironmentType `json:"type,omitempty"`
 
@@ -51,11 +51,15 @@ type EnvironmentSpec struct {
 	UnstableConfigurationFields *UnstableEnvironmentConfiguration `json:"unstableConfigurationFields,omitempty"`
 }
 
-// EnvironmentType currently indicates whether an environment is POC/Non-POC, see API doc for details.
+// DEPRECATED: EnvironmentType should no longer be used, and has no replacement.
+// - It's original purpose was to indicate whether an environment is POC/Non-POC, but these data were ultimately not required.
 type EnvironmentType string
 
 const (
-	EnvironmentType_POC    EnvironmentType = "POC"
+	// DEPRECATED: EnvironmentType_POC should no longer be used, and has no replacement.
+	EnvironmentType_POC EnvironmentType = "POC"
+
+	// EnvironmentType_NonPOC should no longer be used, and has no replacement.
 	EnvironmentType_NonPOC EnvironmentType = "Non-POC"
 )
 
@@ -79,10 +83,24 @@ const (
 // Note: as of this writing (Jul 2022), I expect the contents of this struct to undergo major changes, and the API should not be considered
 // complete, or even a reflection of final desired state.
 type UnstableEnvironmentConfiguration struct {
+	// EnvironmentType indicates whether the target environment is Kubernetes or OpenShift
+	EnvironmentType ConfigurationEnvironmentType `json:"environmentType,omitempty"`
+
+	// KubernetesClusterCredentials contains cluster credentials for a target Kubernetes/OpenShift cluster.
 	KubernetesClusterCredentials `json:"kubernetesCredentials,omitempty"`
 }
 
-// KubernetesClusterCredentials allows you to specify cluster credentials for stanadard K8s cluster (e.g. non-KCP workspace).
+type ConfigurationEnvironmentType string
+
+const (
+	// ConfigurationEnvironmentType_Kubernetes indicates the target environment is generic Kubernetes
+	ConfigurationEnvironmentType_Kubernetes ConfigurationEnvironmentType = "Kubernetes"
+
+	// ConfigurationEnvironmentType_OpenShift indicates the target environment is OpenShift
+	ConfigurationEnvironmentType_OpenShift ConfigurationEnvironmentType = "OpenShift"
+)
+
+// KubernetesClusterCredentials contains cluster credentials for a target Kubernetes/OpenShift cluster.
 //
 // See this temporary URL for details on what values to provide for the APIURL and Secret:
 // https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource
