@@ -109,8 +109,8 @@ spec:
                   the API has not been finalized here, and is subject to breaking
                   changes. See comment on UnstableEnvironmentConfiguration for details.'
                 properties:
-                  environmentType:
-                    description: EnvironmentType indicates whether the target environment
+                  clusterType:
+                    description: ClusterType indicates whether the target environment
                       is Kubernetes or OpenShift
                     type: string
                   kubernetesCredentials:

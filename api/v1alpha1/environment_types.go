@@ -59,7 +59,7 @@ const (
 	// DEPRECATED: EnvironmentType_POC should no longer be used, and has no replacement.
 	EnvironmentType_POC EnvironmentType = "POC"
 
-	// EnvironmentType_NonPOC should no longer be used, and has no replacement.
+	// DEPRECATED: EnvironmentType_NonPOC should no longer be used, and has no replacement.
 	EnvironmentType_NonPOC EnvironmentType = "Non-POC"
 )
 
