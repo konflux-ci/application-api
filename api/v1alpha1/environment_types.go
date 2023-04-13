@@ -83,21 +83,21 @@ const (
 // Note: as of this writing (Jul 2022), I expect the contents of this struct to undergo major changes, and the API should not be considered
 // complete, or even a reflection of final desired state.
 type UnstableEnvironmentConfiguration struct {
-	// EnvironmentType indicates whether the target environment is Kubernetes or OpenShift
-	EnvironmentType ConfigurationEnvironmentType `json:"environmentType,omitempty"`
+	// ClusterType indicates whether the target environment is Kubernetes or OpenShift
+	ClusterType ConfigurationClusterType `json:"clusterType,omitempty"`
 
 	// KubernetesClusterCredentials contains cluster credentials for a target Kubernetes/OpenShift cluster.
 	KubernetesClusterCredentials `json:"kubernetesCredentials,omitempty"`
 }
 
-type ConfigurationEnvironmentType string
+type ConfigurationClusterType string
 
 const (
-	// ConfigurationEnvironmentType_Kubernetes indicates the target environment is generic Kubernetes
-	ConfigurationEnvironmentType_Kubernetes ConfigurationEnvironmentType = "Kubernetes"
+	// ConfigurationClusterType_Kubernetes indicates the target environment is generic Kubernetes
+	ConfigurationClusterType_Kubernetes ConfigurationClusterType = "Kubernetes"
 
-	// ConfigurationEnvironmentType_OpenShift indicates the target environment is OpenShift
-	ConfigurationEnvironmentType_OpenShift ConfigurationEnvironmentType = "OpenShift"
+	// ConfigurationClusterType_OpenShift indicates the target environment is OpenShift
+	ConfigurationClusterType_OpenShift ConfigurationClusterType = "OpenShift"
 )
 
 // KubernetesClusterCredentials contains cluster credentials for a target Kubernetes/OpenShift cluster.
