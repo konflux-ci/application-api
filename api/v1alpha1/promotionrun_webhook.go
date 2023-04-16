@@ -41,7 +41,7 @@ var _ webhook.Defaulter = &PromotionRun{}
 
 // Default implements webhook.Defaulter so a webhook will be registered for the type
 func (r *PromotionRun) Default() {
-	promotionrunlog = promotionrunlog.WithValues("kind", "PromotionRun").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
+	promotionrunlog = promotionrunlog.WithValues("controllerKind", "PromotionRun").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	promotionrunlog.Info("default")
 }
 
@@ -52,7 +52,7 @@ var _ webhook.Validator = &PromotionRun{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *PromotionRun) ValidateCreate() error {
-	promotionrunlog = promotionrunlog.WithValues("kind", "PromotionRun").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
+	promotionrunlog = promotionrunlog.WithValues("controllerKind", "PromotionRun").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	promotionrunlog.Info("validat create")
 
 	return nil
@@ -60,7 +60,7 @@ func (r *PromotionRun) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *PromotionRun) ValidateUpdate(old runtime.Object) error {
-	promotionrunlog = promotionrunlog.WithValues("kind", "PromotionRun").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
+	promotionrunlog = promotionrunlog.WithValues("controllerKind", "PromotionRun").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	promotionrunlog.Info("validate update")
 
 	switch old := old.(type) {
@@ -79,7 +79,7 @@ func (r *PromotionRun) ValidateUpdate(old runtime.Object) error {
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
 func (r *PromotionRun) ValidateDelete() error {
-	promotionrunlog = promotionrunlog.WithValues("kind", "PromotionRun").WithValues("resource", r.Name).WithValues("namespace", r.Namespace)
+	promotionrunlog = promotionrunlog.WithValues("controllerKind", "PromotionRun").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	promotionrunlog.Info("validate delete")
 
 	return nil
