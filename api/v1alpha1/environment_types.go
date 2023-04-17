@@ -123,6 +123,24 @@ type KubernetesClusterCredentials struct {
 
 	// Indicates that ArgoCD/GitOps Service should not check the TLS certificate.
 	AllowInsecureSkipTLSVerify bool `json:"allowInsecureSkipTLSVerify"`
+
+	// Namespaces allows one to indicate which Namespaces the Secret's ServiceAccount has access to.
+	//
+	// Optional, defaults to empty. If empty, it is assumed that the ServiceAccount has access to all Namespaces.
+	//
+	// The ServiceAccount that GitOps Service/Argo CD uses to deploy may not have access to all of the Namespaces on a cluster.
+	// If not specified, it is assumed that the Argo CD ServiceAccount has read/write at cluster-scope.
+	// - If you are familiar with Argo CD: this field is equivalent to the field of the same name in the Argo CD Cluster Secret.
+	Namespaces []string `json:"namespaces,omitempty"`
+
+	// ClusterResources is used in conjuction with the Namespace field.
+	// If the Namespaces field is non-empty, this field will be used to determine whether Argo CD should
+	// attempt to manage cluster-scoped resources.
+	// - If Namespaces field is empty, this field is not used.
+	// - If you are familiar with Argo CD: this field is equivalent to the field of the same name in the Argo CD Cluster Secret.
+	//
+	// Optional, default to false.
+	ClusterResources bool `json:"clusterResources,omitempty"`
 }
 
 // EnvironmentConfiguration contains Environment-specific configurations details, to be used when generating
