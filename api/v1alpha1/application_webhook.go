@@ -55,7 +55,8 @@ var _ webhook.Validator = &Application{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *Application) ValidateCreate() error {
-
+	applicationlog = applicationlog.WithValues("controllerKind", "Application").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	applicationlog.Info("validating the create request")
 	// We use the DNS-1035 format for application names, so ensure it conforms to that specification
 	if len(validation.IsDNS1035Label(r.Name)) != 0 {
 		return fmt.Errorf("invalid application name: %q: an application resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’,", r.Name)
@@ -68,7 +69,8 @@ func (r *Application) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *Application) ValidateUpdate(old runtime.Object) error {
-	applicationlog.Info("validating the update request", "name", r.Name)
+	applicationlog = applicationlog.WithValues("controllerKind", "Application").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	applicationlog.Info("validating the update request")
 
 	switch old := old.(type) {
 	case *Application:

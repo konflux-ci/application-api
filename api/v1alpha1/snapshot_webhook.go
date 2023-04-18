@@ -42,14 +42,16 @@ var _ webhook.Validator = &Snapshot{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *Snapshot) ValidateCreate() error {
-	snapshotlog.Info("validate create", "name", r.Name)
+	snapshotlog = promotionrunlog.WithValues("controllerKind", "Snapshot").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	snapshotlog.Info("validate create")
 
 	return nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *Snapshot) ValidateUpdate(old runtime.Object) error {
-	snapshotlog.Info("validate update", "name", r.Name)
+	snapshotlog = promotionrunlog.WithValues("controllerKind", "Snapshot").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	snapshotlog.Info("validate update")
 
 	switch old := old.(type) {
 	case *Snapshot:
@@ -71,7 +73,8 @@ func (r *Snapshot) ValidateUpdate(old runtime.Object) error {
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
 func (r *Snapshot) ValidateDelete() error {
-	snapshotlog.Info("validate delete", "name", r.Name)
+	snapshotlog = promotionrunlog.WithValues("controllerKind", "Snapshot").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	snapshotlog.Info("validate delete")
 
 	return nil
 }
