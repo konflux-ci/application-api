@@ -113,6 +113,10 @@ type KubernetesClusterCredentials struct {
 	// APIURL is a reference to a cluster API url defined within the kube config file of the cluster credentials secret.
 	APIURL string `json:"apiURL"`
 
+	// IngressDomain is the cluster domain.
+	// For example, in minikube it would be $(minikube ip).nip.io and in OCP it would look like apps.xyz.rhcloud.com
+	IngressDomain string `json:"ingressDomain"`
+
 	// ClusterCredentialsSecret is a reference to the name of k8s Secret, defined within the same namespace as the Environment resource,
 	// that contains a kubeconfig.
 	// The Secret must be of type 'managed-gitops.redhat.com/managed-environment'
