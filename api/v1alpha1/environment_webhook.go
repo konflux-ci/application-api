@@ -43,7 +43,6 @@ var _ webhook.Defaulter = &Environment{}
 
 // Default implements webhook.Defaulter so a webhook will be registered for the type
 func (r *Environment) Default() {
-	environmentlog.Info("default", "name", r.Name)
 
 	// TODO(user): fill in your defaulting logic.
 }
@@ -79,16 +78,17 @@ func (r *Environment) ValidateDelete() error {
 // validateIngressDomain validates the ingress domain
 func (r *Environment) validateIngressDomain() error {
 	unstableConfig := r.Spec.UnstableConfigurationFields
-	if unstableConfig != nil && unstableConfig.ClusterType == ConfigurationClusterType_Kubernetes {
+	if unstableConfig != nil {
 		// if cluster type is Kubernetes, then Ingress Domain should be set
-		if unstableConfig.IngressDomain == "" {
+		if unstableConfig.ClusterType == ConfigurationClusterType_Kubernetes && unstableConfig.IngressDomain == "" {
 			return fmt.Errorf(MissingIngressDomain)
 		}
-	}
 
-	// We use the DNS-1123 format for ingress domain, so ensure it conforms to that specification
-	if len(validation.IsDNS1123Subdomain(unstableConfig.IngressDomain)) != 0 {
-		return fmt.Errorf(InvalidDNS1123Subdomain, unstableConfig.IngressDomain)
+		// We use the DNS-1123 format for ingress domain, so ensure it conforms to that specification
+		if len(validation.IsDNS1123Subdomain(unstableConfig.IngressDomain)) != 0 {
+			return fmt.Errorf(InvalidDNS1123Subdomain, unstableConfig.IngressDomain)
+		}
+
 	}
 
 	return nil

@@ -82,6 +82,17 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 			name:   "environment ingress domain is good",
 			newEnv: orgEnv,
 		},
+		{
+			name: "environment unstable config is empty",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: nil,
+				},
+			},
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -154,6 +165,17 @@ func TestEnvironmentUpdateValidatingWebhook(t *testing.T) {
 		{
 			name:   "environment ingress domain is good",
 			newEnv: orgEnv,
+		},
+		{
+			name: "environment unstable config is empty",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: nil,
+				},
+			},
 		},
 	}
 	for _, test := range tests {
