@@ -116,7 +116,7 @@ type KubernetesClusterCredentials struct {
 	// IngressDomain is the cluster's ingress domain.
 	// For example, in minikube it would be $(minikube ip).nip.io and in OCP it would look like apps.xyz.rhcloud.com.
 	// If clusterType == "Kubernetes", ingressDomain is mandatory and is enforced by the webhook validation
-	IngressDomain string `json:"ingressDomain,omitEmpty"`
+	IngressDomain string `json:"ingressDomain,omitempty"`
 
 	// ClusterCredentialsSecret is a reference to the name of k8s Secret, defined within the same namespace as the Environment resource,
 	// that contains a kubeconfig.

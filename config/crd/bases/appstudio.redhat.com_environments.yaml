@@ -173,7 +173,6 @@ spec:
                     - allowInsecureSkipTLSVerify
                     - apiURL
                     - clusterCredentialsSecret
-                    - ingressDomain
                     - targetNamespace
                     type: object
                 type: object

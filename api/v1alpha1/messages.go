@@ -23,7 +23,7 @@ const (
 	InvalidSchemeGitSourceURL = ": gitsource URL must be an absolute URL starting with an 'https/http' scheme "
 	InvalidGithubVendorURL    = "gitsource URL %s must come from a supported vendor: %s"
 
-	MissingIngressDomain = "ingress domain cannot be empty if cluster if of type Kubernetes"
+	MissingIngressDomain = "ingress domain cannot be empty if cluster is of type Kubernetes"
 
 	MissingGitOrImageSource = "a git source or an image source must be specified when creating a component"
 
