@@ -1,5 +1,5 @@
 /*
-Copyright 2022.
+Copyright 2022-2023.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -113,9 +113,10 @@ type KubernetesClusterCredentials struct {
 	// APIURL is a reference to a cluster API url defined within the kube config file of the cluster credentials secret.
 	APIURL string `json:"apiURL"`
 
-	// IngressDomain is the cluster domain.
-	// For example, in minikube it would be $(minikube ip).nip.io and in OCP it would look like apps.xyz.rhcloud.com
-	IngressDomain string `json:"ingressDomain"`
+	// IngressDomain is the cluster's ingress domain.
+	// For example, in minikube it would be $(minikube ip).nip.io and in OCP it would look like apps.xyz.rhcloud.com.
+	// If clusterType == "Kubernetes", ingressDomain is mandatory and is enforced by the webhook validation
+	IngressDomain string `json:"ingressDomain,omitEmpty"`
 
 	// ClusterCredentialsSecret is a reference to the name of k8s Secret, defined within the same namespace as the Environment resource,
 	// that contains a kubeconfig.

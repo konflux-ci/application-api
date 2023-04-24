@@ -82,9 +82,12 @@ resources:
   kind: Environment
   path: github.com/redhat-appstudio/application-api/api/v1alpha1
   version: v1alpha1
+  webhooks:
+    defaulting: true
+    validation: true
+    webhookVersion: v1
 - api:
     crdVersion: v1
-    namespaced: false
   domain: redhat.com
   group: appstudio
   kind: DeploymentTargetClass

@@ -18,8 +18,12 @@ package v1alpha1
 const (
 	InvalidDNS1035Name = "invalid component name: %q: a component resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’"
 
+	InvalidDNS1123Subdomain = "invalid ingress domain: %q: an ingress domain must consist of lower case alphanumeric characters, '-' or '.', and must start and end with an alphanumeric character"
+
 	InvalidSchemeGitSourceURL = ": gitsource URL must be an absolute URL starting with an 'https/http' scheme "
 	InvalidGithubVendorURL    = "gitsource URL %s must come from a supported vendor: %s"
+
+	MissingIngressDomain = "ingress domain cannot be empty if cluster if of type Kubernetes"
 
 	MissingGitOrImageSource = "a git source or an image source must be specified when creating a component"
 
