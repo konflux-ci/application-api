@@ -41,7 +41,7 @@ var _ webhook.Defaulter = &SnapshotEnvironmentBinding{}
 
 // Default implements webhook.Defaulter so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) Default() {
-	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	snapshotenvironmentbindinglog.Info("default", "name", r.Name)
 }
 
@@ -52,25 +52,25 @@ var _ webhook.Validator = &SnapshotEnvironmentBinding{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) ValidateCreate() error {
-	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
-	snapshotenvironmentbindinglog.Info("validate create")
+	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	snapshotenvironmentbindinglog.Info("validating create")
 
 	return nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) error {
-	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
-	snapshotenvironmentbindinglog.Info("validate update")
+	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	snapshotenvironmentbindinglog.Info("validating update")
 
 	switch old := old.(type) {
 	case *SnapshotEnvironmentBinding:
 		if !reflect.DeepEqual(r.Spec.Application, old.Spec.Application) {
-			return fmt.Errorf("application cannot be updated to %+v", r.Spec.Application)
+			return fmt.Errorf("application field cannot be updated to %+v", r.Spec.Application)
 		}
 
 		if !reflect.DeepEqual(r.Spec.Environment, old.Spec.Environment) {
-			return fmt.Errorf("environment cannot be updated to %+v", r.Spec.Environment)
+			return fmt.Errorf("environment field cannot be updated to %+v", r.Spec.Environment)
 		}
 
 	default:
@@ -82,8 +82,8 @@ func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) error {
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
 func (r *SnapshotEnvironmentBinding) ValidateDelete() error {
-	snapshotenvironmentbindinglog = snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
-	snapshotenvironmentbindinglog.Info("validate delete")
+	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	snapshotenvironmentbindinglog.Info("validating delete")
 
 	return nil
 }
