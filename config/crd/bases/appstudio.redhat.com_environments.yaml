@@ -142,6 +142,13 @@ spec:
                           same name in the Argo CD Cluster Secret. \n Optional, default
                           to false."
                         type: boolean
+                      ingressDomain:
+                        description: IngressDomain is the cluster's ingress domain.
+                          For example, in minikube it would be $(minikube ip).nip.io
+                          and in OCP it would look like apps.xyz.rhcloud.com. If clusterType
+                          == "Kubernetes", ingressDomain is mandatory and is enforced
+                          by the webhook validation
+                        type: string
                       namespaces:
                         description: "Namespaces allows one to indicate which Namespaces
                           the Secret's ServiceAccount has access to. \n Optional,
