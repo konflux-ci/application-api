@@ -93,6 +93,39 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 				},
 			},
 		},
+		{
+			name: "environment's ingress domain is empty when its OpenShift",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							TargetNamespace: "mynamespace",
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "environment's ingress domain is provided when its OpenShift",
+			err:  fmt.Sprintf(InvalidDNS1123Subdomain, badIngressDomain),
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: badIngressDomain,
+						},
+					},
+				},
+			},
+		},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
@@ -174,6 +207,36 @@ func TestEnvironmentUpdateValidatingWebhook(t *testing.T) {
 				},
 				Spec: EnvironmentSpec{
 					UnstableConfigurationFields: nil,
+				},
+			},
+		},
+		{
+			name: "environment's ingress domain is empty when its OpenShift",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType:                  ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{},
+					},
+				},
+			},
+		},
+		{
+			name: "environment's ingress domain is provided when its OpenShift",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: "domain",
+						},
+					},
 				},
 			},
 		},

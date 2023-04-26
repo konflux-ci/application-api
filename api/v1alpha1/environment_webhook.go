@@ -84,8 +84,8 @@ func (r *Environment) validateIngressDomain() error {
 			return fmt.Errorf(MissingIngressDomain)
 		}
 
-		// We use the DNS-1123 format for ingress domain, so ensure it conforms to that specification
-		if len(validation.IsDNS1123Subdomain(unstableConfig.IngressDomain)) != 0 {
+		// if Ingress Domain is provided, we use the DNS-1123 format for ingress domain, so ensure it conforms to that specification
+		if unstableConfig.IngressDomain != "" && len(validation.IsDNS1123Subdomain(unstableConfig.IngressDomain)) != 0 {
 			return fmt.Errorf(InvalidDNS1123Subdomain, unstableConfig.IngressDomain)
 		}
 
