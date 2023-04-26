@@ -65,7 +65,7 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 					Environment: "test-env-a",
 				},
 			},
-			expectedError: "application cannot be updated to test-app-a-changed",
+			expectedError: "application field cannot be updated to test-app-a-changed",
 		},
 
 		{
@@ -79,7 +79,7 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 					Environment: "test-env-a-changed",
 				},
 			},
-			expectedError: "environment cannot be updated to test-env-a-changed",
+			expectedError: "environment field cannot be updated to test-env-a-changed",
 		},
 	}
 
