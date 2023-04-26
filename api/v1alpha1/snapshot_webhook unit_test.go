@@ -63,22 +63,17 @@ func TestSnapshotValidatingWebhook(t *testing.T) {
 			testData: Snapshot{
 				Spec: SnapshotSpec{
 					Application: "test-app-a-changed",
-					Components: []SnapshotComponent{
-						{
-							Name:           "test-component-a",
-							ContainerImage: "test-container-image-a",
-						},
-					},
+					Components:  originalSnapshot.Spec.Components,
 				},
 			},
-			expectedError: "application cannot be updated to test-app-a-changed",
+			expectedError: "application field cannot be updated to test-app-a-changed",
 		},
 
 		{
 			testName: "Error occurs when Spec.Components.Name is changed.",
 			testData: Snapshot{
 				Spec: SnapshotSpec{
-					Application: "test-app-a",
+					Application: originalSnapshot.Spec.Application,
 					Components: []SnapshotComponent{
 						{
 							Name:           "test-component-a-changed",

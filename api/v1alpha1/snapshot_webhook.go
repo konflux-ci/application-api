@@ -57,7 +57,7 @@ func (r *Snapshot) ValidateUpdate(old runtime.Object) error {
 	case *Snapshot:
 
 		if !reflect.DeepEqual(r.Spec.Application, old.Spec.Application) {
-			return fmt.Errorf("application cannot be updated to %+v", r.Spec.Application)
+			return fmt.Errorf("application field cannot be updated to %+v", r.Spec.Application)
 		}
 
 		if !reflect.DeepEqual(r.Spec.Components, old.Spec.Components) {
