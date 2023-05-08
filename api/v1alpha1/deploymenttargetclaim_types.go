@@ -64,7 +64,7 @@ const (
 	FinalizerBinder string = "binder.appstudio.redhat.com/finalizer"
 
 	// AnnBinderValueTrue is a true value to annotations bind-complete and bound-by-controller.
-	AnnBinderValueTrue string = "yes"
+	AnnBinderValueTrue string = "true"
 )
 
 //+kubebuilder:object:root=true
