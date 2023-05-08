@@ -1,5 +1,5 @@
 /*
-Copyright 2022.
+Copyright 2022-2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ type BindingComponentConfiguration struct {
 	// TargetPort int `json:"targetPort"`
 
 	// Replicas defines the number of replicas to use for the component
-	Replicas int `json:"replicas"`
+	Replicas *int `json:"replicas"`
 
 	// Resources defines the Compute Resources required by the component.
 	// Optional.
