@@ -17,6 +17,7 @@ package v1alpha1
 
 import (
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -115,6 +116,69 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 			newEnv: Environment{
 				ObjectMeta: v1.ObjectMeta{
 					Name: "kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: badIngressDomain,
+						},
+					},
+				},
+			},
+		}, {
+			name: "environment name mush have DNS-1123 format  (test 1)",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment-1",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: "domain",
+						},
+					},
+				},
+			},
+		}, {
+			name: "environment name mush have DNS-1123 format (test 2)",
+			err:  "invalid environment name: Kubernetes-environment, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "Kubernetes-environment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: "domain",
+						},
+					},
+				},
+			},
+		}, {
+			name: "environment name mush have DNS-1123 format  (test 3)",
+			err:  "invalid environment name: kubernetesEnvironment, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetesEnvironment",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: "domain",
+						},
+					},
+				},
+			},
+		}, {
+			name: "environment name mush have DNS-1123 format  (test 4)",
+			err:  "invalid environment name: abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’",
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: strings.Repeat("abcde", 13),
 				},
 				Spec: EnvironmentSpec{
 					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
