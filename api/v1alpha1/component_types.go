@@ -1,5 +1,5 @@
 /*
-Copyright 2021 Red Hat, Inc.
+Copyright 2021-2023 Red Hat, Inc.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -107,7 +107,7 @@ type ComponentSpec struct {
 	// The number of replicas to deploy the component with.
 	// Optional.
 	// +optional
-	Replicas int `json:"replicas,omitempty"`
+	Replicas *int `json:"replicas,omitempty"`
 
 	// The port to expose the component over.
 	// Optional.

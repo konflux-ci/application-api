@@ -489,6 +489,11 @@ func (in *ComponentSpec) DeepCopyInto(out *ComponentSpec) {
 	*out = *in
 	in.Source.DeepCopyInto(&out.Source)
 	in.Resources.DeepCopyInto(&out.Resources)
+	if in.Replicas != nil {
+		in, out := &in.Replicas, &out.Replicas
+		*out = new(int)
+		**out = **in
+	}
 	if in.Env != nil {
 		in, out := &in.Env, &out.Env
 		*out = make([]corev1.EnvVar, len(*in))
