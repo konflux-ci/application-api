@@ -61,7 +61,7 @@ var _ webhook.Validator = &Component{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *Component) ValidateCreate() error {
-	componentlog = componentlog.WithValues("controllerKind", "Component").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	componentlog := componentlog.WithValues("controllerKind", "Component").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	componentlog.Info("validating the create request")
 
 	// We use the DNS-1035 format for component names, so ensure it conforms to that specification
@@ -91,7 +91,7 @@ func (r *Component) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *Component) ValidateUpdate(old runtime.Object) error {
-	componentlog = componentlog.WithValues("controllerKind", "Component").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	componentlog := componentlog.WithValues("controllerKind", "Component").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	componentlog.Info("validating the update request")
 
 	switch old := old.(type) {

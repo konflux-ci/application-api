@@ -54,7 +54,7 @@ var _ webhook.Validator = &Environment{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
 func (r *Environment) ValidateCreate() error {
-	environmentlog = environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	environmentlog := environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	environmentlog.Info("validating the create request")
 
 	// We use the DNS-1123 format for environment names, so ensure it conforms to that specification
@@ -67,7 +67,7 @@ func (r *Environment) ValidateCreate() error {
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
 func (r *Environment) ValidateUpdate(old runtime.Object) error {
-	environmentlog = environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
+	environmentlog := environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	environmentlog.Info("validating the update request")
 
 	return r.validateIngressDomain()
