@@ -60,6 +60,9 @@ const (
 	// DTC by the provisioner whose name appear in the value.
 	AnnTargetProvisioner string = "provisioner.appstudio.redhat.com/dt-provisioner"
 
+	// Annotation to indicate the name of the provisioner that provisioned the DT.
+	AnnDynamicallyProvisioned string = "provisioner.appstudio.redhat.com/provisioned-by"
+
 	// Finalizer added by the binding controller to handle the deletion of DeploymentTargetClaim.
 	FinalizerBinder string = "binder.appstudio.redhat.com/finalizer"
 
