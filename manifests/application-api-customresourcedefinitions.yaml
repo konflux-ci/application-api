@@ -1976,9 +1976,13 @@ spec:
                     name:
                       description: Name is the name of the component.
                       type: string
+                    routeName:
+                      description: RouteName is the name of the route for the Component
+                      type: string
                   required:
                   - gitopsRepository
                   - name
+                  - routeName
                   type: object
                 type: array
               gitopsDeployments:
