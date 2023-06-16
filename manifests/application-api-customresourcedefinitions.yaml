@@ -1977,12 +1977,12 @@ spec:
                       description: Name is the name of the component.
                       type: string
                     routeName:
-                      description: RouteName is the name of the route for the Component
+                      description: GeneratedRouteName is the name of the route that
+                        was generated for the Component, if a Route was generated.
                       type: string
                   required:
                   - gitopsRepository
                   - name
-                  - routeName
                   type: object
                 type: array
               gitopsDeployments:
