@@ -132,8 +132,8 @@ type BindingComponentStatus struct {
 	// Name is the name of the component.
 	Name string `json:"name"`
 
-	// RouteName is the name of the route for the Component
-	RouteName string `json:"routeName"`
+	// GeneratedRouteName is the name of the route that was generated for the Component, if a Route was generated.
+	GeneratedRouteName string `json:"generatedRouteName,omitempty"`
 
 	// GitOpsRepository contains the Git URL, path, branch, and most recent commit id for the component
 	GitOpsRepository BindingComponentGitOpsRepository `json:"gitopsRepository"`

@@ -1933,6 +1933,10 @@ spec:
                 items:
                   description: BindingComponentStatus contains the status of the components
                   properties:
+                    generatedRouteName:
+                      description: GeneratedRouteName is the name of the route that
+                        was generated for the Component, if a Route was generated.
+                      type: string
                     gitopsRepository:
                       description: GitOpsRepository contains the Git URL, path, branch,
                         and most recent commit id for the component
@@ -1976,13 +1980,9 @@ spec:
                     name:
                       description: Name is the name of the component.
                       type: string
-                    routeName:
-                      description: RouteName is the name of the route for the Component
-                      type: string
                   required:
                   - gitopsRepository
                   - name
-                  - routeName
                   type: object
                 type: array
               gitopsDeployments:
