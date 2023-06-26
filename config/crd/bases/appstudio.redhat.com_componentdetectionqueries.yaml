@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.10.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.0
   name: componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
@@ -53,6 +52,12 @@ spec:
             description: ComponentDetectionQuerySpec defines the desired state of
               ComponentDetectionQuery
             properties:
+              generateComponentName:
+                description: If should generate the component name instead of a predicted
+                  default value The default value is false. If the value is set to
+                  true, component name will always have random characters appended
+                  Optional.
+                type: boolean
               git:
                 description: Git Source for a Component. Required.
                 properties:
