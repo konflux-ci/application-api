@@ -35,6 +35,13 @@ type ComponentDetectionQuerySpec struct {
 	// Optional.
 	// +optional
 	Secret string `json:"secret,omitempty"`
+
+	// It defines if should generate random characters at the end of the component name instead of a predicted default value
+	// The default value is false.
+	// If the value is set to true, component name will always have random characters appended
+	// Optional.
+	// +optional
+	GenerateComponentName bool `json:"generateComponentName,omitempty"`
 }
 
 // ComponentDetectionDescription holds all the information about the component being detected
