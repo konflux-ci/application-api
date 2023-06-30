@@ -119,8 +119,6 @@ spec:
                                 value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                               type: object
                           type: object
-                      required:
-                      - replicas
                       type: object
                     name:
                       description: Name is the name of the component.
