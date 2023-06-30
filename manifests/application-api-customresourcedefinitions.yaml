@@ -1733,7 +1733,7 @@ spec:
                           type: array
                         replicas:
                           description: Replicas defines the number of replicas to
-                            use for the component
+                            use for the component Optional
                           type: integer
                         resources:
                           description: Resources defines the Compute Resources required
