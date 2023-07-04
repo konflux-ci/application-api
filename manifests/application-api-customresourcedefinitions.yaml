@@ -1733,7 +1733,7 @@ spec:
                           type: array
                         replicas:
                           description: Replicas defines the number of replicas to
-                            use for the component
+                            use for the component Optional
                           type: integer
                         resources:
                           description: Resources defines the Compute Resources required
@@ -1763,8 +1763,6 @@ spec:
                                 value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/'
                               type: object
                           type: object
-                      required:
-                      - replicas
                       type: object
                     name:
                       description: Name is the name of the component.

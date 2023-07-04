@@ -79,7 +79,9 @@ type BindingComponentConfiguration struct {
 	// TargetPort int `json:"targetPort"`
 
 	// Replicas defines the number of replicas to use for the component
-	Replicas int `json:"replicas"`
+	// Optional
+	// +optional
+	Replicas *int `json:"replicas,omitempty"`
 
 	// Resources defines the Compute Resources required by the component.
 	// Optional.
