@@ -43,9 +43,10 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 	}
 
 	tests := []struct {
-		name   string
-		newEnv Environment
-		err    string
+		name     string
+		newEnv   Environment
+		err      string
+		warnings []string
 	}{
 		{
 			name: "environment ingress domain is empty when its Kubernetes",
@@ -193,12 +194,16 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			err := test.newEnv.ValidateCreate()
+			warnings, err := test.newEnv.ValidateCreate()
 
 			if test.err == "" {
 				assert.Nil(t, err)
 			} else {
 				assert.Contains(t, err.Error(), test.err)
+			}
+
+			if len(test.warnings) > 0 {
+				assert.Equal(t, test.warnings, warnings)
 			}
 		})
 	}
@@ -223,9 +228,10 @@ func TestEnvironmentUpdateValidatingWebhook(t *testing.T) {
 	}
 
 	tests := []struct {
-		name   string
-		newEnv Environment
-		err    string
+		name     string
+		newEnv   Environment
+		err      string
+		warnings []string
 	}{
 		{
 			name: "environment ingress domain is empty when its Kubernetes",
@@ -307,12 +313,16 @@ func TestEnvironmentUpdateValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			err := test.newEnv.ValidateUpdate(&orgEnv)
+			warnings, err := test.newEnv.ValidateUpdate(&orgEnv)
 
 			if test.err == "" {
 				assert.Nil(t, err)
 			} else {
 				assert.Contains(t, err.Error(), test.err)
+			}
+
+			if len(test.warnings) > 0 {
+				assert.Equal(t, test.warnings, warnings)
 			}
 		})
 	}

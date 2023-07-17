@@ -24,6 +24,7 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
 
 // log is for logging in this package.
@@ -53,31 +54,31 @@ func (r *Environment) Default() {
 var _ webhook.Validator = &Environment{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *Environment) ValidateCreate() error {
+func (r *Environment) ValidateCreate() (admission.Warnings, error) {
 	environmentlog := environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	environmentlog.Info("validating the create request")
 
 	// We use the DNS-1123 format for environment names, so ensure it conforms to that specification
 	if len(validation.IsDNS1123Label(r.Name)) != 0 {
-		return fmt.Errorf("invalid environment name: %s, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’", r.Name)
+		return nil, fmt.Errorf("invalid environment name: %s, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’", r.Name)
 	}
 
-	return r.validateIngressDomain()
+	return nil, r.validateIngressDomain()
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *Environment) ValidateUpdate(old runtime.Object) error {
+func (r *Environment) ValidateUpdate(old runtime.Object) (admission.Warnings, error) {
 	environmentlog := environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	environmentlog.Info("validating the update request")
 
-	return r.validateIngressDomain()
+	return nil, r.validateIngressDomain()
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *Environment) ValidateDelete() error {
+func (r *Environment) ValidateDelete() (admission.Warnings, error) {
 
 	// TODO(user): fill in your validation logic upon object deletion.
-	return nil
+	return nil, nil
 }
 
 // validateIngressDomain validates the ingress domain
