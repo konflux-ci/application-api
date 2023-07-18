@@ -17,10 +17,13 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/apimachinery/pkg/runtime"
+	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 )
 
 func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
@@ -80,6 +83,31 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 				},
 			},
 			expectedError: "environment field cannot be updated to test-env-a-changed",
+		},
+
+		{
+			testName: "Error occurs when an existing or updated SnapshotEnvironmentBinding has the same combination",
+			testData: SnapshotEnvironmentBinding{
+				ObjectMeta: v1.ObjectMeta{
+					Labels: map[string]string{"test-key-a": "test-value-a"},
+				},
+				Spec: SnapshotEnvironmentBindingSpec{
+					Application: "test-app-a",
+					Environment: "test-env-a",
+				},
+			},
+			existingSEBs: []SnapshotEnvironmentBinding{
+				{
+					ObjectMeta: v1.ObjectMeta{
+						Labels: map[string]string{"test-key-a": "test-value-a"},
+					},
+					Spec: SnapshotEnvironmentBindingSpec{
+						Application: "test-app-a",
+						Environment: "test-env-a",
+					},
+				},
+			},
+			expectedError: "duplicate combination of Application (test-app-a) and Environment (test-env-a)",
 		},
 	}
 
@@ -146,7 +174,34 @@ func TestSnapshotEnvironmentBindingValidateCreate(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
-			actualError := test.testData.ValidateCreate()
+
+			wh := &snapshotEnvironmentBindingWebhookHandler{}
+
+			objects := make([]runtime.Object, len(test.existingSEBs))
+			for i, seb := range test.existingSEBs {
+				objects[i] = &seb
+			}
+
+			scheme := runtime.NewScheme()
+
+			err := AddToScheme(scheme)
+			if err != nil {
+				t.Fatalf("failed to setup scheme: %v", err)
+			}
+
+			err = AddToScheme(scheme)
+			if err != nil {
+				t.Fatalf("failed to setup scheme: %v", err)
+			}
+
+			fakeClient := fake.NewClientBuilder().
+				WithScheme(scheme).
+				WithRuntimeObjects(objects...).
+				Build()
+
+			wh.Client = fakeClient
+
+			actualError := wh.ValidateCreate(context.Background(), &test.testData)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
