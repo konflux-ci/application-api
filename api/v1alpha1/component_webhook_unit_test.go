@@ -137,7 +137,7 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			err := test.newComp.ValidateCreate()
+			_, err := test.newComp.ValidateCreate()
 
 			if test.err == "" {
 				assert.Nil(t, err)
@@ -258,9 +258,9 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 						DisplayName: "My App",
 					},
 				}
-				err = test.updateComp.ValidateUpdate(&originalApplication)
+				_, err = test.updateComp.ValidateUpdate(&originalApplication)
 			} else {
-				err = test.updateComp.ValidateUpdate(&originalComponent)
+				_, err = test.updateComp.ValidateUpdate(&originalComponent)
 			}
 
 			if test.err == "" {
@@ -287,7 +287,7 @@ func TestComponentDeleteValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			err := test.newComp.ValidateDelete()
+			_, err := test.newComp.ValidateDelete()
 
 			if test.err == "" {
 				assert.Nil(t, err)

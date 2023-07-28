@@ -127,7 +127,7 @@ func TestSnapshotValidatingWebhook(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
-			actualError := test.testData.ValidateUpdate(&originalSnapshot)
+			_, actualError := test.testData.ValidateUpdate(&originalSnapshot)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)

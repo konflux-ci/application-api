@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	"fmt"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation"
@@ -53,20 +54,20 @@ func (r *Environment) Default() {
 var _ webhook.Validator = &Environment{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *Environment) ValidateCreate() error {
+func (r *Environment) ValidateCreate() (warnings admission.Warnings, err error) {
 	environmentlog = environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	environmentlog.Info("validating the create request")
 
 	// We use the DNS-1123 format for environment names, so ensure it conforms to that specification
 	if len(validation.IsDNS1123Label(r.Name)) != 0 {
-		return fmt.Errorf("invalid environment name: %s, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’", r.Name)
+		return nil, fmt.Errorf("invalid environment name: %s, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’", r.Name)
 	}
 
 	return r.validateIngressDomain()
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *Environment) ValidateUpdate(old runtime.Object) error {
+func (r *Environment) ValidateUpdate(old runtime.Object) (warnings admission.Warnings, err error) {
 	environmentlog = environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	environmentlog.Info("validating the update request")
 
@@ -74,27 +75,27 @@ func (r *Environment) ValidateUpdate(old runtime.Object) error {
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *Environment) ValidateDelete() error {
+func (r *Environment) ValidateDelete() (warnings admission.Warnings, err error) {
 
 	// TODO(user): fill in your validation logic upon object deletion.
-	return nil
+	return nil, nil
 }
 
 // validateIngressDomain validates the ingress domain
-func (r *Environment) validateIngressDomain() error {
+func (r *Environment) validateIngressDomain() (warnings admission.Warnings, err error) {
 	unstableConfig := r.Spec.UnstableConfigurationFields
 	if unstableConfig != nil {
 		// if cluster type is Kubernetes, then Ingress Domain should be set
 		if unstableConfig.ClusterType == ConfigurationClusterType_Kubernetes && unstableConfig.IngressDomain == "" {
-			return fmt.Errorf(MissingIngressDomain)
+			return nil, fmt.Errorf(MissingIngressDomain)
 		}
 
 		// if Ingress Domain is provided, we use the DNS-1123 format for ingress domain, so ensure it conforms to that specification
 		if unstableConfig.IngressDomain != "" && len(validation.IsDNS1123Subdomain(unstableConfig.IngressDomain)) != 0 {
-			return fmt.Errorf(InvalidDNS1123Subdomain, unstableConfig.IngressDomain)
+			return nil, fmt.Errorf(InvalidDNS1123Subdomain, unstableConfig.IngressDomain)
 		}
 
 	}
 
-	return nil
+	return nil, nil
 }

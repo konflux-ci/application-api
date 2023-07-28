@@ -19,6 +19,7 @@ package v1alpha1
 import (
 	"fmt"
 	"reflect"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation"
@@ -54,21 +55,21 @@ func (r *Application) Default() {
 var _ webhook.Validator = &Application{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *Application) ValidateCreate() error {
+func (r *Application) ValidateCreate() (warnings admission.Warnings, err error) {
 	applicationlog = applicationlog.WithValues("controllerKind", "Application").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	applicationlog.Info("validating the create request")
 	// We use the DNS-1035 format for application names, so ensure it conforms to that specification
 	if len(validation.IsDNS1035Label(r.Name)) != 0 {
-		return fmt.Errorf("invalid application name: %q: an application resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’,", r.Name)
+		return nil, fmt.Errorf("invalid application name: %q: an application resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’,", r.Name)
 	}
 	if r.Spec.DisplayName == "" {
-		return fmt.Errorf("display name must be provided when creating an Application")
+		return nil, fmt.Errorf("display name must be provided when creating an Application")
 	}
-	return nil
+	return nil, nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *Application) ValidateUpdate(old runtime.Object) error {
+func (r *Application) ValidateUpdate(old runtime.Object) (warnings admission.Warnings, err error) {
 	applicationlog = applicationlog.WithValues("controllerKind", "Application").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	applicationlog.Info("validating the update request")
 
@@ -76,22 +77,22 @@ func (r *Application) ValidateUpdate(old runtime.Object) error {
 	case *Application:
 
 		if !reflect.DeepEqual(r.Spec.AppModelRepository, old.Spec.AppModelRepository) {
-			return fmt.Errorf("app model repository cannot be updated to %+v", r.Spec.AppModelRepository)
+			return nil, fmt.Errorf("app model repository cannot be updated to %+v", r.Spec.AppModelRepository)
 		}
 
 		if !reflect.DeepEqual(r.Spec.GitOpsRepository, old.Spec.GitOpsRepository) {
-			return fmt.Errorf("gitops repository cannot be updated to %+v", r.Spec.GitOpsRepository)
+			return nil, fmt.Errorf("gitops repository cannot be updated to %+v", r.Spec.GitOpsRepository)
 		}
 	default:
-		return fmt.Errorf("runtime object is not of type Application")
+		return nil, fmt.Errorf("runtime object is not of type Application")
 	}
 
-	return nil
+	return nil, nil
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *Application) ValidateDelete() error {
+func (r *Application) ValidateDelete() (warnings admission.Warnings, err error) {
 
 	// TODO(user): fill in your validation logic upon object deletion.
-	return nil
+	return nil, nil
 }

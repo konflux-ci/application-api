@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 	"strings"
 
 	"k8s.io/apimachinery/pkg/runtime"
@@ -60,21 +61,21 @@ func (r *Component) Default() {
 var _ webhook.Validator = &Component{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *Component) ValidateCreate() error {
+func (r *Component) ValidateCreate() (warnings admission.Warnings, err error) {
 	componentlog = componentlog.WithValues("controllerKind", "Component").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	componentlog.Info("validating the create request")
 
 	// We use the DNS-1035 format for component names, so ensure it conforms to that specification
 	if len(validation.IsDNS1035Label(r.Name)) != 0 {
-		return fmt.Errorf(InvalidDNS1035Name, r.Name)
+		return nil, fmt.Errorf(InvalidDNS1035Name, r.Name)
 	}
 	sourceSpecified := false
 
 	if r.Spec.Source.GitSource != nil && r.Spec.Source.GitSource.URL != "" {
 		if gitsourceURL, err := url.ParseRequestURI(r.Spec.Source.GitSource.URL); err != nil {
-			return fmt.Errorf(err.Error() + InvalidSchemeGitSourceURL)
+			return nil, fmt.Errorf(err.Error() + InvalidSchemeGitSourceURL)
 		} else if SupportedGitRepo != strings.ToLower(gitsourceURL.Host) {
-			return fmt.Errorf(InvalidGithubVendorURL, gitsourceURL, SupportedGitRepo)
+			return nil, fmt.Errorf(InvalidGithubVendorURL, gitsourceURL, SupportedGitRepo)
 		}
 
 		sourceSpecified = true
@@ -83,14 +84,14 @@ func (r *Component) ValidateCreate() error {
 	}
 
 	if !sourceSpecified {
-		return errors.New(MissingGitOrImageSource)
+		return nil, errors.New(MissingGitOrImageSource)
 	}
 
-	return nil
+	return nil, nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *Component) ValidateUpdate(old runtime.Object) error {
+func (r *Component) ValidateUpdate(old runtime.Object) (warnings admission.Warnings, err error) {
 	componentlog = componentlog.WithValues("controllerKind", "Component").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	componentlog.Info("validating the update request")
 
@@ -98,26 +99,26 @@ func (r *Component) ValidateUpdate(old runtime.Object) error {
 	case *Component:
 
 		if r.Spec.ComponentName != old.Spec.ComponentName {
-			return fmt.Errorf(ComponentNameUpdateError, r.Spec.ComponentName)
+			return nil, fmt.Errorf(ComponentNameUpdateError, r.Spec.ComponentName)
 		}
 
 		if r.Spec.Application != old.Spec.Application {
-			return fmt.Errorf(ApplicationNameUpdateError, r.Spec.Application)
+			return nil, fmt.Errorf(ApplicationNameUpdateError, r.Spec.Application)
 		}
 
 		if r.Spec.Source.GitSource != nil && old.Spec.Source.GitSource != nil && !reflect.DeepEqual(*(r.Spec.Source.GitSource), *(old.Spec.Source.GitSource)) {
-			return fmt.Errorf(GitSourceUpdateError, *(r.Spec.Source.GitSource))
+			return nil, fmt.Errorf(GitSourceUpdateError, *(r.Spec.Source.GitSource))
 		}
 	default:
-		return errors.New(InvalidComponentError)
+		return nil, errors.New(InvalidComponentError)
 	}
 
-	return nil
+	return nil, nil
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *Component) ValidateDelete() error {
+func (r *Component) ValidateDelete() (warnings admission.Warnings, err error) {
 
 	// TODO(user): fill in your validation logic upon object deletion.
-	return nil
+	return nil, nil
 }

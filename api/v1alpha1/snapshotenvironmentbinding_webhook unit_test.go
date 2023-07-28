@@ -85,7 +85,7 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
-			actualError := test.testData.ValidateUpdate(&originalBinding)
+			_, actualError := test.testData.ValidateUpdate(&originalBinding)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)

@@ -112,7 +112,7 @@ func TestPromotionRunValidatingWebhook(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
-			actualError := test.testData.ValidateUpdate(&originalPromotionRun)
+			_, actualError := test.testData.ValidateUpdate(&originalPromotionRun)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)

@@ -193,7 +193,7 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			err := test.newEnv.ValidateCreate()
+			_, err := test.newEnv.ValidateCreate()
 
 			if test.err == "" {
 				assert.Nil(t, err)
@@ -307,7 +307,7 @@ func TestEnvironmentUpdateValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			err := test.newEnv.ValidateUpdate(&orgEnv)
+			_, err := test.newEnv.ValidateUpdate(&orgEnv)
 
 			if test.err == "" {
 				assert.Nil(t, err)

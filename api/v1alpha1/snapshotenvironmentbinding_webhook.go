@@ -19,6 +19,7 @@ package v1alpha1
 import (
 	"fmt"
 	"reflect"
+	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	ctrl "sigs.k8s.io/controller-runtime"
@@ -51,39 +52,39 @@ func (r *SnapshotEnvironmentBinding) Default() {
 var _ webhook.Validator = &SnapshotEnvironmentBinding{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *SnapshotEnvironmentBinding) ValidateCreate() error {
+func (r *SnapshotEnvironmentBinding) ValidateCreate() (warnings admission.Warnings, err error) {
 	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	snapshotenvironmentbindinglog.Info("validating create")
 
-	return nil
+	return nil, nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) error {
+func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) (warnings admission.Warnings, err error) {
 	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	snapshotenvironmentbindinglog.Info("validating update")
 
 	switch old := old.(type) {
 	case *SnapshotEnvironmentBinding:
 		if !reflect.DeepEqual(r.Spec.Application, old.Spec.Application) {
-			return fmt.Errorf("application field cannot be updated to %+v", r.Spec.Application)
+			return nil, fmt.Errorf("application field cannot be updated to %+v", r.Spec.Application)
 		}
 
 		if !reflect.DeepEqual(r.Spec.Environment, old.Spec.Environment) {
-			return fmt.Errorf("environment field cannot be updated to %+v", r.Spec.Environment)
+			return nil, fmt.Errorf("environment field cannot be updated to %+v", r.Spec.Environment)
 		}
 
 	default:
-		return fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
+		return nil, fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
 	}
 
-	return nil
+	return nil, nil
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *SnapshotEnvironmentBinding) ValidateDelete() error {
+func (r *SnapshotEnvironmentBinding) ValidateDelete() (warnings admission.Warnings, err error) {
 	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	snapshotenvironmentbindinglog.Info("validating delete")
 
-	return nil
+	return nil, nil
 }

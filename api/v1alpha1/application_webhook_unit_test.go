@@ -104,9 +104,9 @@ func TestApplicationValidatingWebhook(t *testing.T) {
 						Application:   "application",
 					},
 				}
-				err = test.updateApp.ValidateUpdate(&originalComponent)
+				_, err = test.updateApp.ValidateUpdate(&originalComponent)
 			} else {
-				err = test.updateApp.ValidateUpdate(&originalApplication)
+				_, err = test.updateApp.ValidateUpdate(&originalApplication)
 			}
 
 			if test.err == "" {
@@ -133,7 +133,7 @@ func TestApplicationDeleteValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			err := test.app.ValidateDelete()
+			_, err := test.app.ValidateDelete()
 
 			if test.err == "" {
 				assert.Nil(t, err)
