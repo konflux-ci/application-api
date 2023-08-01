@@ -39,7 +39,6 @@ func TestApplicationValidatingWebhook(t *testing.T) {
 		name      string
 		updateApp Application
 		err       string
-		warnings  []string
 	}{
 		{
 			name: "app model repo cannot be changed",
@@ -98,7 +97,6 @@ func TestApplicationValidatingWebhook(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
 			var err error
-			var warnings []string
 			if test.name == "not application" {
 				originalComponent := Component{
 					Spec: ComponentSpec{
@@ -106,19 +104,15 @@ func TestApplicationValidatingWebhook(t *testing.T) {
 						Application:   "application",
 					},
 				}
-				warnings, err = test.updateApp.ValidateUpdate(&originalComponent)
+				err = test.updateApp.ValidateUpdate(&originalComponent)
 			} else {
-				warnings, err = test.updateApp.ValidateUpdate(&originalApplication)
+				err = test.updateApp.ValidateUpdate(&originalApplication)
 			}
 
 			if test.err == "" {
 				assert.Nil(t, err)
 			} else {
 				assert.Contains(t, err.Error(), test.err)
-			}
-
-			if len(test.warnings) > 0 {
-				assert.Equal(t, test.warnings, warnings)
 			}
 		})
 	}
@@ -139,7 +133,7 @@ func TestApplicationDeleteValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			_, err := test.app.ValidateDelete()
+			err := test.app.ValidateDelete()
 
 			if test.err == "" {
 				assert.Nil(t, err)

@@ -26,10 +26,9 @@ import (
 func TestComponentCreateValidatingWebhook(t *testing.T) {
 
 	tests := []struct {
-		name     string
-		newComp  Component
-		err      string
-		warnings []string
+		name    string
+		newComp Component
+		err     string
 	}{
 		{
 			name: "component metadata.name is invalid",
@@ -138,16 +137,12 @@ func TestComponentCreateValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			warnings, err := test.newComp.ValidateCreate()
+			err := test.newComp.ValidateCreate()
 
 			if test.err == "" {
 				assert.Nil(t, err)
 			} else {
 				assert.Contains(t, err.Error(), test.err)
-			}
-
-			if len(test.warnings) > 0 {
-				assert.Equal(t, test.warnings, warnings)
 			}
 		})
 	}
@@ -177,7 +172,6 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 		name       string
 		updateComp Component
 		err        string
-		warnings   []string
 	}{
 		{
 			name: "component name cannot be changed",
@@ -258,26 +252,21 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 				}
 			}
 			var err error
-			var warnings []string
 			if test.name == "not component" {
 				originalApplication := Application{
 					Spec: ApplicationSpec{
 						DisplayName: "My App",
 					},
 				}
-				warnings, err = test.updateComp.ValidateUpdate(&originalApplication)
+				err = test.updateComp.ValidateUpdate(&originalApplication)
 			} else {
-				warnings, err = test.updateComp.ValidateUpdate(&originalComponent)
+				err = test.updateComp.ValidateUpdate(&originalComponent)
 			}
 
 			if test.err == "" {
 				assert.Nil(t, err)
 			} else {
 				assert.Contains(t, err.Error(), test.err)
-			}
-
-			if len(test.warnings) > 0 {
-				assert.Equal(t, test.warnings, warnings)
 			}
 		})
 	}
@@ -298,7 +287,7 @@ func TestComponentDeleteValidatingWebhook(t *testing.T) {
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
-			_, err := test.newComp.ValidateDelete()
+			err := test.newComp.ValidateDelete()
 
 			if test.err == "" {
 				assert.Nil(t, err)
