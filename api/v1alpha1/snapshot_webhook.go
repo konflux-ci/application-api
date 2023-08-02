@@ -24,7 +24,6 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
-	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
 
 // log is for logging in this package.
@@ -42,15 +41,15 @@ func (r *Snapshot) SetupWebhookWithManager(mgr ctrl.Manager) error {
 var _ webhook.Validator = &Snapshot{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *Snapshot) ValidateCreate() (admission.Warnings, error) {
+func (r *Snapshot) ValidateCreate() error {
 	snapshotlog := snapshotlog.WithValues("controllerKind", "Snapshot").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	snapshotlog.Info("validating create")
 
-	return nil, nil
+	return nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *Snapshot) ValidateUpdate(old runtime.Object) (admission.Warnings, error) {
+func (r *Snapshot) ValidateUpdate(old runtime.Object) error {
 	snapshotlog := snapshotlog.WithValues("controllerKind", "Snapshot").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	snapshotlog.Info("validating update")
 
@@ -58,24 +57,24 @@ func (r *Snapshot) ValidateUpdate(old runtime.Object) (admission.Warnings, error
 	case *Snapshot:
 
 		if !reflect.DeepEqual(r.Spec.Application, old.Spec.Application) {
-			return nil, fmt.Errorf("application field cannot be updated to %+v", r.Spec.Application)
+			return fmt.Errorf("application field cannot be updated to %+v", r.Spec.Application)
 		}
 
 		if !reflect.DeepEqual(r.Spec.Components, old.Spec.Components) {
-			return nil, fmt.Errorf("components cannot be updated to %+v", r.Spec.Components)
+			return fmt.Errorf("components cannot be updated to %+v", r.Spec.Components)
 		}
 
 	default:
-		return nil, fmt.Errorf("runtime object is not of type Snapshot")
+		return fmt.Errorf("runtime object is not of type Snapshot")
 	}
 
-	return nil, nil
+	return nil
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *Snapshot) ValidateDelete() (admission.Warnings, error) {
+func (r *Snapshot) ValidateDelete() error {
 	snapshotlog := snapshotlog.WithValues("controllerKind", "Snapshot").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	snapshotlog.Info("validating delete")
 
-	return nil, nil
+	return nil
 }
