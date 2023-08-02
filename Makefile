@@ -18,10 +18,13 @@ GOTYPES=$(wildcard api/**/*_types.go)
 model/v1alpha1:
 	@rm -f model/v1alpha1/*.go
 
-$(subst api,model,$(GOTYPES)): $(GOTYPES) model/v1alpha1
-	@ln -t model/v1alpha1 -s ../../$(subst model,api,$@)
+model/v1alpha1/groupversion_info.go: api/v1alpha1/groupversion_info.go
+	@cp api/v1alpha1/groupversion_info.go model/v1alpha1/groupversion_info.go
 
-model: $(subst api,model,$(GOTYPES))
+$(subst api,model,$(GOTYPES)): $(GOTYPES) model/v1alpha1
+	@cp $(subst model,api,$@) $@
+
+model: $(subst api,model,$(GOTYPES)) model/v1alpha1/groupversion_info.go
 
 generate: model controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
 	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./api/..."
