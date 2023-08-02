@@ -39,7 +39,6 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 		testName      string                     // Name of test
 		testData      SnapshotEnvironmentBinding // Test data to be passed to webhook function
 		expectedError string                     // Expected error message from webhook function
-		warnings      []string
 	}{
 		{
 			testName: "No error when Spec is same.",
@@ -86,16 +85,12 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
-			warnings, actualError := test.testData.ValidateUpdate(&originalBinding)
+			actualError := test.testData.ValidateUpdate(&originalBinding)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
 			} else {
 				assert.Contains(t, actualError.Error(), test.expectedError)
-			}
-
-			if len(test.warnings) > 0 {
-				assert.Equal(t, test.warnings, warnings)
 			}
 		})
 	}

@@ -24,7 +24,6 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
-	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
 
 // log is for logging in this package.
@@ -52,15 +51,15 @@ func (r *PromotionRun) Default() {
 var _ webhook.Validator = &PromotionRun{}
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *PromotionRun) ValidateCreate() (admission.Warnings, error) {
+func (r *PromotionRun) ValidateCreate() error {
 	promotionrunlog := promotionrunlog.WithValues("controllerKind", "PromotionRun").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	promotionrunlog.Info("validating create")
 
-	return nil, nil
+	return nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *PromotionRun) ValidateUpdate(old runtime.Object) (admission.Warnings, error) {
+func (r *PromotionRun) ValidateUpdate(old runtime.Object) error {
 	promotionrunlog := promotionrunlog.WithValues("controllerKind", "PromotionRun").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	promotionrunlog.Info("validating update")
 
@@ -68,20 +67,20 @@ func (r *PromotionRun) ValidateUpdate(old runtime.Object) (admission.Warnings, e
 	case *PromotionRun:
 
 		if !reflect.DeepEqual(r.Spec, old.Spec) {
-			return nil, fmt.Errorf("spec cannot be updated to %+v", r.Spec)
+			return fmt.Errorf("spec cannot be updated to %+v", r.Spec)
 		}
 
 	default:
-		return nil, fmt.Errorf("runtime object is not of type PromotionRun")
+		return fmt.Errorf("runtime object is not of type PromotionRun")
 	}
 
-	return nil, nil
+	return nil
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *PromotionRun) ValidateDelete() (admission.Warnings, error) {
+func (r *PromotionRun) ValidateDelete() error {
 	promotionrunlog := promotionrunlog.WithValues("controllerKind", "PromotionRun").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	promotionrunlog.Info("validating delete")
 
-	return nil, nil
+	return nil
 }
