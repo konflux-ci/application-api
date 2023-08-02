@@ -1,0 +1,1 @@
+../../api/v1alpha1/snapshotenvironmentbinding_types.go

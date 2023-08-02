@@ -1,0 +1,1 @@
+../../api/v1alpha1/promotionrun_types.go

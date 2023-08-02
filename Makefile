@@ -12,8 +12,19 @@ manifests: controller-gen kustomize ## Generate WebhookConfiguration, ClusterRol
 manifests-kcp:	## Generate KCP APIResourceSchema from CRDs
 	hack/generate-kcp-api.sh
 
-generate: controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
-	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./..."
+GOTYPES=$(wildcard api/**/*_types.go)
+
+.PHONY: model/v1alpha1
+model/v1alpha1:
+	@rm -f model/v1alpha1/*.go
+
+$(subst api,model,$(GOTYPES)): $(GOTYPES) model/v1alpha1
+	@ln -t model/v1alpha1 -s ../../$(subst model,api,$@)
+
+model: $(subst api,model,$(GOTYPES))
+
+generate: model controller-gen ## Generate code containing DeepCopy, DeepCopyInto, and DeepCopyObject method implementations.
+	$(CONTROLLER_GEN) object:headerFile="hack/boilerplate.go.txt" paths="./api/..."
 
 CONTROLLER_GEN = $(shell pwd)/bin/controller-gen
 controller-gen: ## Download controller-gen locally if necessary.
