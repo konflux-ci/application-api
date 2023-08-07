@@ -26,7 +26,7 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client/fake"
 )
 
-func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
+func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 
 	originalBinding := SnapshotEnvironmentBinding{
 		ObjectMeta: v1.ObjectMeta{
@@ -39,9 +39,11 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 	}
 
 	tests := []struct {
-		testName      string                     // Name of test
-		testData      SnapshotEnvironmentBinding // Test data to be passed to webhook function
-		expectedError string                     // Expected error message from webhook function
+		testName      string                       // Name of test
+		testData      SnapshotEnvironmentBinding   // Test data to be passed to webhook function
+		existingSEBs  []SnapshotEnvironmentBinding // Existing SnapshotEnvironmentBindings for the namespace
+		expectedError string                       // Expected error message from webhook function
+		warnings      []string
 	}{
 		{
 			testName: "No error when Spec is same.",
@@ -113,7 +115,32 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
-			actualError := test.testData.ValidateUpdate(&originalBinding)
+			wh := &snapshotEnvironmentBindingWebhookHandler{}
+
+			objects := make([]runtime.Object, len(test.existingSEBs))
+			for i, seb := range test.existingSEBs {
+				objects[i] = &seb
+			}
+
+			scheme := runtime.NewScheme()
+
+			err := AddToScheme(scheme)
+			if err != nil {
+				t.Fatalf("failed to setup scheme: %v", err)
+			}
+
+			err = AddToScheme(scheme)
+			if err != nil {
+				t.Fatalf("failed to setup scheme: %v", err)
+			}
+
+			fakeClient := fake.NewClientBuilder().
+				WithScheme(scheme).
+				WithRuntimeObjects(objects...).
+				Build()
+
+			wh.Client = fakeClient
+			warnings, actualError := wh.ValidateUpdate(ctx, &test.testData, &originalBinding)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
@@ -124,12 +151,13 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 	}
 }
 
-func TestSnapshotEnvironmentBindingValidateCreate(t *testing.T) {
+func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 	tests := []struct {
 		testName      string                       // Name of test
 		testData      SnapshotEnvironmentBinding   // Test data to be passed to ValidateCreate function
 		existingSEBs  []SnapshotEnvironmentBinding // Existing SnapshotEnvironmentBindings for the namespace
 		expectedError string                       // Expected error message from ValidateCreate function
+		warnings      []string
 	}{
 		{
 			testName: "No error when no existing SnapshotEnvironmentBindings with the same combination",
@@ -201,12 +229,16 @@ func TestSnapshotEnvironmentBindingValidateCreate(t *testing.T) {
 
 			wh.Client = fakeClient
 
-			actualError := wh.ValidateCreate(context.Background(), &test.testData)
+			warnings, actualError := wh.ValidateCreate(context.Background(), &test.testData)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
 			} else {
 				assert.Contains(t, actualError.Error(), test.expectedError)
+			}
+
+			if len(test.warnings) > 0 {
+				assert.Equal(t, test.warnings, warnings)
 			}
 		})
 	}
