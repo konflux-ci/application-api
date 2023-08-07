@@ -95,3 +95,64 @@ func TestSnapshotEnvironmentBindingValidatingWebhook(t *testing.T) {
 		})
 	}
 }
+
+func TestSnapshotEnvironmentBindingValidateCreate(t *testing.T) {
+	tests := []struct {
+		testName      string                       // Name of test
+		testData      SnapshotEnvironmentBinding   // Test data to be passed to ValidateCreate function
+		existingSEBs  []SnapshotEnvironmentBinding // Existing SnapshotEnvironmentBindings for the namespace
+		expectedError string                       // Expected error message from ValidateCreate function
+	}{
+		{
+			testName: "No error when no existing SnapshotEnvironmentBindings with the same combination",
+			testData: SnapshotEnvironmentBinding{
+				ObjectMeta: v1.ObjectMeta{
+					Labels: map[string]string{"test-key-b": "test-value-b"},
+				},
+				Spec: SnapshotEnvironmentBindingSpec{
+					Application: "test-app-b",
+					Environment: "test-env-b",
+				},
+			},
+			existingSEBs:  []SnapshotEnvironmentBinding{},
+			expectedError: "",
+		},
+
+		{
+			testName: "Error occurs when an existing SnapshotEnvironmentBinding has the same combination",
+			testData: SnapshotEnvironmentBinding{
+				ObjectMeta: v1.ObjectMeta{
+					Labels: map[string]string{"test-key-c": "test-value-c"},
+				},
+				Spec: SnapshotEnvironmentBindingSpec{
+					Application: "test-app-c",
+					Environment: "test-env-c",
+				},
+			},
+			existingSEBs: []SnapshotEnvironmentBinding{
+				{
+					ObjectMeta: v1.ObjectMeta{
+						Labels: map[string]string{"test-key-d": "test-value-d"},
+					},
+					Spec: SnapshotEnvironmentBindingSpec{
+						Application: "test-app-c",
+						Environment: "test-env-c",
+					},
+				},
+			},
+			expectedError: "duplicate combination of Application (test-app-c) and Environment (test-env-c)",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.testName, func(t *testing.T) {
+			actualError := test.testData.ValidateCreate()
+
+			if test.expectedError == "" {
+				assert.Nil(t, actualError)
+			} else {
+				assert.Contains(t, actualError.Error(), test.expectedError)
+			}
+		})
+	}
+}
