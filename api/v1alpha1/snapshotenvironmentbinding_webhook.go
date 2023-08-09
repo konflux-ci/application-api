@@ -26,7 +26,6 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
-	"sigs.k8s.io/controller-runtime/pkg/webhook/admission"
 )
 
 // log is for logging in this package.
@@ -65,36 +64,26 @@ type snapshotEnvironmentBindingWebhookHandler struct {
 
 var _ webhook.CustomValidator = &snapshotEnvironmentBindingWebhookHandler{}
 
-func (h *snapshotEnvironmentBindingWebhookHandler) ValidateCreate(ctx context.Context, obj runtime.Object) (admission.Warnings, error) {
+func (h *snapshotEnvironmentBindingWebhookHandler) ValidateCreate(ctx context.Context, obj runtime.Object) error {
 	binding, ok := obj.(*SnapshotEnvironmentBinding)
 	if !ok {
-		return nil, fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
+		return fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
 	}
 
 	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", binding.Name).WithValues("namespace", binding.Namespace)
 	snapshotenvironmentbindinglog.Info("validating create")
 
-	// Retrieve the list of existing SnapshotEnvironmentBindings from the namespace
-	existingSEBs := SnapshotEnvironmentBindingList{}
-
-	if err := h.Client.List(context.Background(), &existingSEBs, &client.ListOptions{Namespace: binding.Namespace}); err != nil {
-		return nil, fmt.Errorf("failed to list existing SnapshotEnvironmentBindings: %v", err)
+	if err := h.validateSEB(binding); err != nil {
+		return err
 	}
 
-	// Check if any existing SEB has the same Application/Environment combination
-	for _, existingSEB := range existingSEBs.Items {
-		if existingSEB.Spec.Application == binding.Spec.Application && existingSEB.Spec.Environment == binding.Spec.Environment {
-			return nil, fmt.Errorf("duplicate combination of Application (%s) and Environment (%s)", binding.Spec.Application, binding.Spec.Environment)
-		}
-	}
-
-	return nil, nil
+	return nil
 }
 
-func (h *snapshotEnvironmentBindingWebhookHandler) ValidateUpdate(ctx context.Context, obj, oldObj runtime.Object) (admission.Warnings, error) {
+func (h *snapshotEnvironmentBindingWebhookHandler) ValidateUpdate(ctx context.Context, obj, oldObj runtime.Object) error {
 	newBinding, ok := obj.(*SnapshotEnvironmentBinding)
 	if !ok {
-		return nil, fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
+		return fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
 	}
 
 	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", newBinding.Name).WithValues("namespace", newBinding.Namespace)
@@ -103,42 +92,51 @@ func (h *snapshotEnvironmentBindingWebhookHandler) ValidateUpdate(ctx context.Co
 	switch old := oldObj.(type) {
 	case *SnapshotEnvironmentBinding:
 		if !reflect.DeepEqual(newBinding.Spec.Application, old.Spec.Application) {
-			return nil, fmt.Errorf("application field cannot be updated to %+v", newBinding.Spec.Application)
+			return fmt.Errorf("application field cannot be updated to %+v", newBinding.Spec.Application)
 		}
 
 		if !reflect.DeepEqual(newBinding.Spec.Environment, old.Spec.Environment) {
-			return nil, fmt.Errorf("environment field cannot be updated to %+v", newBinding.Spec.Environment)
+			return fmt.Errorf("environment field cannot be updated to %+v", newBinding.Spec.Environment)
 		}
 
-		// Retrieve the list of existing SnapshotEnvironmentBindings from the namespace
-		existingSEBs := SnapshotEnvironmentBindingList{}
-
-		if err := h.Client.List(context.Background(), &existingSEBs, &client.ListOptions{Namespace: newBinding.Namespace}); err != nil {
-			return nil, fmt.Errorf("failed to list existing SnapshotEnvironmentBindings: %v", err)
-		}
-
-		// Check if any existing SEB has the same Application/Environment combination
-		for _, existingSEB := range existingSEBs.Items {
-			if old.Spec.Application == newBinding.Spec.Application && old.Spec.Environment == newBinding.Spec.Environment && existingSEB.Spec.Application == newBinding.Spec.Application && existingSEB.Spec.Environment == newBinding.Spec.Environment {
-				return nil, fmt.Errorf("duplicate combination of Application (%s) and Environment (%s)", newBinding.Spec.Application, newBinding.Spec.Environment)
-			}
+		if err := h.validateSEB(newBinding); err != nil {
+			return err
 		}
 
 	default:
 		return fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
 	}
 
-	return nil, nil
+	return nil
 
 }
 
-func (h *snapshotEnvironmentBindingWebhookHandler) ValidateDelete(ctx context.Context, obj runtime.Object) (admission.Warnings, error) {
+func (h *snapshotEnvironmentBindingWebhookHandler) ValidateDelete(ctx context.Context, obj runtime.Object) error {
 	binding, ok := obj.(*SnapshotEnvironmentBinding)
 	if !ok {
-		return nil, fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
+		return fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")
 	}
 
 	snapshotenvironmentbindinglog := snapshotenvironmentbindinglog.WithValues("controllerKind", "SnapshotEnvironmentBinding").WithValues("name", binding.Name).WithValues("namespace", binding.Namespace)
 	snapshotenvironmentbindinglog.Info("validating delete")
-	return nil, nil
+	return nil
+}
+
+func (h *snapshotEnvironmentBindingWebhookHandler) validateSEB(newBinding *SnapshotEnvironmentBinding) error {
+
+	// Retrieve the list of existing SnapshotEnvironmentBindings from the namespace
+	existingSEBs := SnapshotEnvironmentBindingList{}
+
+	if err := h.Client.List(context.Background(), &existingSEBs, &client.ListOptions{Namespace: newBinding.Namespace}); err != nil {
+		return fmt.Errorf("failed to list existing SnapshotEnvironmentBindings: %v", err)
+	}
+
+	// Check if any existing SEB has the same Application/Environment combination
+	for _, existingSEB := range existingSEBs.Items {
+		if existingSEB.Spec.Application == newBinding.Spec.Application && existingSEB.Spec.Environment == newBinding.Spec.Environment {
+			return fmt.Errorf("duplicate combination of Application (%s) and Environment (%s)", newBinding.Spec.Application, newBinding.Spec.Environment)
+		}
+	}
+
+	return nil
 }

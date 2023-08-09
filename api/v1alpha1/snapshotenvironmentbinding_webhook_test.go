@@ -129,18 +129,13 @@ func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 				t.Fatalf("failed to setup scheme: %v", err)
 			}
 
-			err = AddToScheme(scheme)
-			if err != nil {
-				t.Fatalf("failed to setup scheme: %v", err)
-			}
-
 			fakeClient := fake.NewClientBuilder().
 				WithScheme(scheme).
 				WithRuntimeObjects(objects...).
 				Build()
 
 			wh.Client = fakeClient
-			warnings, actualError := wh.ValidateUpdate(ctx, &test.testData, &originalBinding)
+			actualError := wh.ValidateUpdate(ctx, &test.testData, &originalBinding)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
@@ -217,11 +212,6 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 				t.Fatalf("failed to setup scheme: %v", err)
 			}
 
-			err = AddToScheme(scheme)
-			if err != nil {
-				t.Fatalf("failed to setup scheme: %v", err)
-			}
-
 			fakeClient := fake.NewClientBuilder().
 				WithScheme(scheme).
 				WithRuntimeObjects(objects...).
@@ -229,7 +219,7 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 
 			wh.Client = fakeClient
 
-			warnings, actualError := wh.ValidateCreate(context.Background(), &test.testData)
+			actualError := wh.ValidateCreate(context.Background(), &test.testData)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
@@ -237,9 +227,6 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 				assert.Contains(t, actualError.Error(), test.expectedError)
 			}
 
-			if len(test.warnings) > 0 {
-				assert.Equal(t, test.warnings, warnings)
-			}
 		})
 	}
 }
