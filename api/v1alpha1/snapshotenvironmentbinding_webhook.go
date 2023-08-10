@@ -74,7 +74,7 @@ func (h *snapshotEnvironmentBindingWebhookHandler) ValidateCreate(ctx context.Co
 	snapshotenvironmentbindinglog.Info("validating create")
 
 	if err := h.validateSEB(binding); err != nil {
-		return err
+		return fmt.Errorf("invalid SnapshotEnvironmentBinding: %v", err)
 	}
 
 	return nil
@@ -100,7 +100,7 @@ func (h *snapshotEnvironmentBindingWebhookHandler) ValidateUpdate(ctx context.Co
 		}
 
 		if err := h.validateSEB(newBinding); err != nil {
-			return err
+			return fmt.Errorf("invalid SnapshotEnvironmentBinding: %v", err)
 		}
 
 	default:
@@ -134,7 +134,7 @@ func (h *snapshotEnvironmentBindingWebhookHandler) validateSEB(newBinding *Snaps
 	// Check if any existing SEB has the same Application/Environment combination
 	for _, existingSEB := range existingSEBs.Items {
 		if existingSEB.Spec.Application == newBinding.Spec.Application && existingSEB.Spec.Environment == newBinding.Spec.Environment {
-			return fmt.Errorf("duplicate combination of Application (%s) and Environment (%s)", newBinding.Spec.Application, newBinding.Spec.Environment)
+			return fmt.Errorf("duplicate combination of Application (%s) and Environment (%s). Duplicated by: %s", newBinding.Spec.Application, newBinding.Spec.Environment, existingSEB.Name)
 		}
 	}
 
