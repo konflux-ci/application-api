@@ -214,23 +214,3 @@ webhooks:
     resources:
     - snapshots
   sideEffects: None
-- admissionReviewVersions:
-  - v1
-  clientConfig:
-    service:
-      name: webhook-service
-      namespace: system
-      path: /validate-appstudio-redhat-com-v1alpha1-snapshotenvironmentbinding
-  failurePolicy: Fail
-  name: vsnapshotenvironmentbinding.kb.io
-  rules:
-  - apiGroups:
-    - appstudio.redhat.com
-    apiVersions:
-    - v1alpha1
-    operations:
-    - CREATE
-    - UPDATE
-    resources:
-    - snapshotenvironmentbindings
-  sideEffects: None

@@ -110,7 +110,7 @@ var _ = BeforeSuite(func() {
 	err = (&Snapshot{}).SetupWebhookWithManager(mgr)
 	Expect(err).NotTo(HaveOccurred())
 
-	err = (&SnapshotEnvironmentBinding{}).SetupWebhookWithManager(mgr)
+	err = (&snapshotEnvironmentBindingWebhookHandler{}).SetupWebhookWithManager(mgr)
 	Expect(err).NotTo(HaveOccurred())
 
 	err = (&PromotionRun{}).SetupWebhookWithManager(mgr)
