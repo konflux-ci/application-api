@@ -17,7 +17,6 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"context"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -115,8 +114,6 @@ func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
-			wh := &snapshotEnvironmentBindingWebhookHandler{}
-
 			objects := make([]runtime.Object, len(test.existingSEBs))
 			for i, seb := range test.existingSEBs {
 				objects[i] = &seb
@@ -134,8 +131,9 @@ func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 				WithRuntimeObjects(objects...).
 				Build()
 
-			wh.Client = fakeClient
-			actualError := wh.ValidateUpdate(ctx, &test.testData, &originalBinding)
+			snapshotEnvironmentBindingClientFromManager = fakeClient
+
+			actualError := test.testData.ValidateUpdate(&originalBinding)
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
@@ -198,8 +196,6 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.testName, func(t *testing.T) {
 
-			wh := &snapshotEnvironmentBindingWebhookHandler{}
-
 			objects := make([]runtime.Object, len(test.existingSEBs))
 			for i, seb := range test.existingSEBs {
 				objects[i] = &seb
@@ -217,9 +213,9 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 				WithRuntimeObjects(objects...).
 				Build()
 
-			wh.Client = fakeClient
+			snapshotEnvironmentBindingClientFromManager = fakeClient
 
-			actualError := wh.ValidateCreate(context.Background(), &test.testData)
+			actualError := test.testData.ValidateCreate()
 
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
