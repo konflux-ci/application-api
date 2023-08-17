@@ -193,7 +193,7 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 			},
 		},
 		{
-			name: "git src cannot be changed",
+			name: "git src url cannot be changed",
 			err: fmt.Errorf(GitSourceUpdateError, GitSource{
 				URL:     "http://link1",
 				Context: "context",
@@ -207,6 +207,24 @@ func TestComponentUpdateValidatingWebhook(t *testing.T) {
 							GitSource: &GitSource{
 								URL:     "http://link1",
 								Context: "context",
+							},
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "non-url git source can be changed",
+			updateComp: Component{
+				Spec: ComponentSpec{
+					ComponentName: "component",
+					Application:   "application",
+					Source: ComponentSource{
+						ComponentSourceUnion: ComponentSourceUnion{
+							GitSource: &GitSource{
+								Context:       "new-context",
+								DevfileURL:    "https://new-devfile-url",
+								DockerfileURL: "https://new-dockerfile-url",
 							},
 						},
 					},
