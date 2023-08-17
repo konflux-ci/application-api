@@ -20,7 +20,6 @@ import (
 	"errors"
 	"fmt"
 	"net/url"
-	"reflect"
 	"strings"
 
 	"k8s.io/apimachinery/pkg/runtime"
@@ -105,7 +104,7 @@ func (r *Component) ValidateUpdate(old runtime.Object) error {
 			return fmt.Errorf(ApplicationNameUpdateError, r.Spec.Application)
 		}
 
-		if r.Spec.Source.GitSource != nil && old.Spec.Source.GitSource != nil && !reflect.DeepEqual(*(r.Spec.Source.GitSource), *(old.Spec.Source.GitSource)) {
+		if r.Spec.Source.GitSource != nil && old.Spec.Source.GitSource != nil && (r.Spec.Source.GitSource.URL != old.Spec.Source.GitSource.URL) {
 			return fmt.Errorf(GitSourceUpdateError, *(r.Spec.Source.GitSource))
 		}
 	default:
