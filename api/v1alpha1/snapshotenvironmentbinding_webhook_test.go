@@ -91,6 +91,7 @@ func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 			testData: SnapshotEnvironmentBinding{
 				ObjectMeta: v1.ObjectMeta{
 					Labels: map[string]string{"test-key-a": "test-value-a"},
+					Name:   "seb1",
 				},
 				Spec: SnapshotEnvironmentBindingSpec{
 					Application: "test-app-a",
@@ -101,6 +102,7 @@ func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 				{
 					ObjectMeta: v1.ObjectMeta{
 						Labels: map[string]string{"test-key-a": "test-value-a"},
+						Name:   "seb2",
 					},
 					Spec: SnapshotEnvironmentBindingSpec{
 						Application: "test-app-a",
@@ -109,6 +111,32 @@ func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 				},
 			},
 			expectedError: "duplicate combination of Application (test-app-a) and Environment (test-env-a)",
+		},
+		{
+			testName: "Error does not occur when an existing SnapshotEnvironmentBinding is updated",
+			testData: SnapshotEnvironmentBinding{
+				ObjectMeta: v1.ObjectMeta{
+					Labels: map[string]string{"test-key-a": "test-value-a"},
+					Name:   "seb1",
+				},
+				Spec: SnapshotEnvironmentBindingSpec{
+					Application: "test-app-a",
+					Environment: "test-env-a",
+				},
+			},
+			existingSEBs: []SnapshotEnvironmentBinding{
+				{
+					ObjectMeta: v1.ObjectMeta{
+						Labels: map[string]string{"test-key-a": "test-value-a"},
+						Name:   "seb1",
+					},
+					Spec: SnapshotEnvironmentBindingSpec{
+						Application: "test-app-a",
+						Environment: "test-env-a",
+					},
+				},
+			},
+			expectedError: "",
 		},
 	}
 
@@ -157,6 +185,7 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 			testData: SnapshotEnvironmentBinding{
 				ObjectMeta: v1.ObjectMeta{
 					Labels: map[string]string{"test-key-b": "test-value-b"},
+					Name:   "seb1",
 				},
 				Spec: SnapshotEnvironmentBindingSpec{
 					Application: "test-app-b",
@@ -172,6 +201,7 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 			testData: SnapshotEnvironmentBinding{
 				ObjectMeta: v1.ObjectMeta{
 					Labels: map[string]string{"test-key-c": "test-value-c"},
+					Name:   "seb2",
 				},
 				Spec: SnapshotEnvironmentBindingSpec{
 					Application: "test-app-c",
@@ -182,6 +212,7 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 				{
 					ObjectMeta: v1.ObjectMeta{
 						Labels: map[string]string{"test-key-d": "test-value-d"},
+						Name:   "seb1",
 					},
 					Spec: SnapshotEnvironmentBindingSpec{
 						Application: "test-app-c",
@@ -220,7 +251,9 @@ func TestSnapshotEnvironmentBindingValidateCreateWebhook(t *testing.T) {
 			if test.expectedError == "" {
 				assert.Nil(t, actualError)
 			} else {
-				assert.Contains(t, actualError.Error(), test.expectedError)
+				if assert.NotNil(t, actualError) {
+					assert.Contains(t, actualError.Error(), test.expectedError)
+				}
 			}
 
 		})
