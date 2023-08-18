@@ -116,6 +116,12 @@ func validateSEB(newBinding *SnapshotEnvironmentBinding) error {
 
 	// Check if any existing SEB has the same Application/Environment combination
 	for _, existingSEB := range existingSEBs.Items {
+
+		// Don't match the SEB on itself
+		if existingSEB.Name == newBinding.Name && existingSEB.Namespace == newBinding.Namespace {
+			continue
+		}
+
 		if existingSEB.Spec.Application == newBinding.Spec.Application && existingSEB.Spec.Environment == newBinding.Spec.Environment {
 			return fmt.Errorf("duplicate combination of Application (%s) and Environment (%s). Duplicated by: %s", newBinding.Spec.Application, newBinding.Spec.Environment, existingSEB.Name)
 		}
