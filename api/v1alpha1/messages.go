@@ -22,6 +22,7 @@ const (
 
 	InvalidSchemeGitSourceURL = ": gitsource URL must be an absolute URL starting with an 'https/http' scheme "
 	InvalidGithubVendorURL    = "gitsource URL %s must come from a supported vendor: %s"
+	InvalidAPIURL             = ": API URL must be an absolute URL starting with an 'https' scheme "
 
 	MissingIngressDomain = "ingress domain cannot be empty if cluster is of type Kubernetes"
 

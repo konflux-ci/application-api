@@ -18,6 +18,7 @@ package v1alpha1
 
 import (
 	"fmt"
+	"net/url"
 
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/util/validation"
@@ -62,7 +63,7 @@ func (r *Environment) ValidateCreate() error {
 		return fmt.Errorf("invalid environment name: %s, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’", r.Name)
 	}
 
-	return r.validateIngressDomain()
+	return r.validateEnvironment()
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
@@ -70,7 +71,7 @@ func (r *Environment) ValidateUpdate(old runtime.Object) error {
 	environmentlog := environmentlog.WithValues("controllerKind", "Environment").WithValues("name", r.Name).WithValues("namespace", r.Namespace)
 	environmentlog.Info("validating the update request")
 
-	return r.validateIngressDomain()
+	return r.validateEnvironment()
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
@@ -80,8 +81,8 @@ func (r *Environment) ValidateDelete() error {
 	return nil
 }
 
-// validateIngressDomain validates the ingress domain
-func (r *Environment) validateIngressDomain() error {
+// validateEnvironment validates the ingress domain and API URL
+func (r *Environment) validateEnvironment() error {
 	unstableConfig := r.Spec.UnstableConfigurationFields
 	if unstableConfig != nil {
 		// if cluster type is Kubernetes, then Ingress Domain should be set
@@ -94,6 +95,12 @@ func (r *Environment) validateIngressDomain() error {
 			return fmt.Errorf(InvalidDNS1123Subdomain, unstableConfig.IngressDomain)
 		}
 
+	}
+
+	if r.Spec.UnstableConfigurationFields != nil && r.Spec.UnstableConfigurationFields.KubernetesClusterCredentials.APIURL != "" {
+		if _, err := url.ParseRequestURI(r.Spec.UnstableConfigurationFields.KubernetesClusterCredentials.APIURL); err != nil {
+			return fmt.Errorf(err.Error() + InvalidAPIURL)
+		}
 	}
 
 	return nil
