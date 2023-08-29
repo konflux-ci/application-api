@@ -127,7 +127,7 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 				},
 			},
 		}, {
-			name: "environment name mush have DNS-1123 format  (test 1)",
+			name: "environment name must have DNS-1123 format  (test 1)",
 			newEnv: Environment{
 				ObjectMeta: v1.ObjectMeta{
 					Name: "kubernetes-environment-1",
@@ -142,7 +142,7 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 				},
 			},
 		}, {
-			name: "environment name mush have DNS-1123 format (test 2)",
+			name: "environment name must have DNS-1123 format (test 2)",
 			err:  "invalid environment name: Kubernetes-environment, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’",
 			newEnv: Environment{
 				ObjectMeta: v1.ObjectMeta{
@@ -158,7 +158,7 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 				},
 			},
 		}, {
-			name: "environment name mush have DNS-1123 format  (test 3)",
+			name: "environment name must have DNS-1123 format  (test 3)",
 			err:  "invalid environment name: kubernetesEnvironment, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’",
 			newEnv: Environment{
 				ObjectMeta: v1.ObjectMeta{
@@ -174,7 +174,7 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 				},
 			},
 		}, {
-			name: "environment name mush have DNS-1123 format  (test 4)",
+			name: "environment name must have DNS-1123 format  (test 4)",
 			err:  "invalid environment name: abcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcdeabcde, an environment resource name must start with a lower case alphabetical character, be under 63 characters, and can only consist of lower case alphanumeric characters or ‘-’",
 			newEnv: Environment{
 				ObjectMeta: v1.ObjectMeta{
@@ -185,6 +185,24 @@ func TestEnvironmentCreateValidatingWebhook(t *testing.T) {
 						ClusterType: ConfigurationClusterType_OpenShift,
 						KubernetesClusterCredentials: KubernetesClusterCredentials{
 							IngressDomain: badIngressDomain,
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "environment api url must start with https",
+			err:  "invalid URI for request" + InvalidAPIURL,
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment-1",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: "domain",
+							APIURL:        "api.test.com",
 						},
 					},
 				},
@@ -299,6 +317,24 @@ func TestEnvironmentUpdateValidatingWebhook(t *testing.T) {
 						ClusterType: ConfigurationClusterType_OpenShift,
 						KubernetesClusterCredentials: KubernetesClusterCredentials{
 							IngressDomain: "domain",
+						},
+					},
+				},
+			},
+		},
+		{
+			name: "environment api url must start with https",
+			err:  "invalid URI for request" + InvalidAPIURL,
+			newEnv: Environment{
+				ObjectMeta: v1.ObjectMeta{
+					Name: "kubernetes-environment-1",
+				},
+				Spec: EnvironmentSpec{
+					UnstableConfigurationFields: &UnstableEnvironmentConfiguration{
+						ClusterType: ConfigurationClusterType_OpenShift,
+						KubernetesClusterCredentials: KubernetesClusterCredentials{
+							IngressDomain: "domain",
+							APIURL:        "api.test.com",
 						},
 					},
 				},
