@@ -82,9 +82,6 @@ func (r *SnapshotEnvironmentBinding) ValidateUpdate(old runtime.Object) error {
 		if !reflect.DeepEqual(r.Spec.Environment, old.Spec.Environment) {
 			return fmt.Errorf("environment field cannot be updated to %+v", r.Spec.Environment)
 		}
-		if err := validateSEB(r); err != nil {
-			return fmt.Errorf("invalid SnapshotEnvironmentBinding: %v", err)
-		}
 
 	default:
 		return fmt.Errorf("runtime object is not of type SnapshotEnvironmentBinding")

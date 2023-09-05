@@ -85,33 +85,6 @@ func TestSnapshotEnvironmentBindingValidateUpdateWebhook(t *testing.T) {
 			},
 			expectedError: "environment field cannot be updated to test-env-a-changed",
 		},
-
-		{
-			testName: "Error occurs when an existing or updated SnapshotEnvironmentBinding has the same combination",
-			testData: SnapshotEnvironmentBinding{
-				ObjectMeta: v1.ObjectMeta{
-					Labels: map[string]string{"test-key-a": "test-value-a"},
-					Name:   "seb1",
-				},
-				Spec: SnapshotEnvironmentBindingSpec{
-					Application: "test-app-a",
-					Environment: "test-env-a",
-				},
-			},
-			existingSEBs: []SnapshotEnvironmentBinding{
-				{
-					ObjectMeta: v1.ObjectMeta{
-						Labels: map[string]string{"test-key-a": "test-value-a"},
-						Name:   "seb2",
-					},
-					Spec: SnapshotEnvironmentBindingSpec{
-						Application: "test-app-a",
-						Environment: "test-env-a",
-					},
-				},
-			},
-			expectedError: "duplicate combination of Application (test-app-a) and Environment (test-env-a)",
-		},
 		{
 			testName: "Error does not occur when an existing SnapshotEnvironmentBinding is updated",
 			testData: SnapshotEnvironmentBinding{
