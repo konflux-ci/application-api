@@ -35,7 +35,9 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Component is the Schema for the components API
+        description: Component is the Schema for the components API.    For a detailed
+          description with examples, refer to <a href="https://github.com/redhat-appstudio/book/blob/main/book/HAS/hybrid-application-service-api.md">
+          Hybrid Application Service Kube API </a>
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
