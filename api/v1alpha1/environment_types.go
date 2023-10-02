@@ -152,7 +152,7 @@ type KubernetesClusterCredentials struct {
 // Component/Application GitOps repository resources.
 type EnvironmentConfiguration struct {
 	// Env is an array of standard environment vairables
-	Env []EnvVarPair `json:"env"`
+	Env []EnvVarPair `json:"env,omitempty"`
 
 	// Target is used to reference a DeploymentTargetClaim for a target Environment.
 	// The Environment controller uses the referenced DeploymentTargetClaim to access its bounded
