@@ -134,6 +134,11 @@ type ComponentSpec struct {
 	// Optional.
 	// +optional
 	SkipGitOpsResourceGeneration bool `json:"skipGitOpsResourceGeneration,omitempty"`
+
+	// The list of components to be nudged by this components build upon a successful result.
+	// Optional.
+	// +optional
+	BuildNudgesRef []string `json:"build-nudges-ref,omitempty"`
 }
 
 // ComponentStatus defines the observed state of Component
@@ -159,6 +164,9 @@ type ComponentStatus struct {
 	// The last built commit id (SHA-1 checksum) from the latest component build.
 	// Example: 41fbdb124775323f58fd5ce93c70bb7d79c20650.
 	LastBuiltCommit string `json:"lastBuiltCommit,omitempty"`
+
+	// The list of names of Components whose builds nudge this resource (their spec.build-nudges-ref[] references this component)
+	BuildNudgedBy []string `json:"build-nudged-by,omitempty"`
 }
 
 // GitOpsStatus contains GitOps repository-specific status for the component

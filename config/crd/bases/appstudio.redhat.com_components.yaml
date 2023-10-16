@@ -59,6 +59,12 @@ spec:
                   the component belongs to. Required.
                 pattern: ^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                 type: string
+              build-nudges-ref:
+                description: The list of components to be nudged by this components
+                  build upon a successful result. Optional.
+                items:
+                  type: string
+                type: array
               componentName:
                 description: ComponentName is name of the component to be added to
                   the Application. The name must adhere to DNS-1123 validation. Required.
@@ -266,6 +272,12 @@ spec:
           status:
             description: ComponentStatus defines the observed state of Component
             properties:
+              build-nudged-by:
+                description: The list of names of Components whose builds nudge this
+                  resource (their spec.build-nudges-ref[] references this component)
+                items:
+                  type: string
+                type: array
               conditions:
                 description: Conditions is an array of the Component's status conditions
                 items:
