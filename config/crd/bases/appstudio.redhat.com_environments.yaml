@@ -59,10 +59,11 @@ spec:
                       type: object
                     type: array
                   target:
-                    description: Target is used to reference a DeploymentTargetClaim
-                      for a target Environment. The Environment controller uses the
-                      referenced DeploymentTargetClaim to access its bounded DeploymentTarget
-                      with cluster credential secret.
+                    description: 'DEPRECATED: Target should no longer be used, and
+                      replaced by TargetConfiguration.Claim. Target is used to reference
+                      a DeploymentTargetClaim for a target Environment. The Environment
+                      controller uses the referenced DeploymentTargetClaim to access
+                      its bounded DeploymentTarget with cluster credential secret.'
                     properties:
                       deploymentTargetClaim:
                         description: DeploymentTargetClaimConfig specifies the DeploymentTargetClaim
@@ -97,15 +98,104 @@ spec:
                 items:
                   type: string
                 type: array
+              target:
+                description: See comment on TargetConfiguration for details.
+                properties:
+                  claim:
+                    description: Target is used to reference a DeploymentTargetClaim
+                      for a target Environment. The Environment controller uses the
+                      referenced DeploymentTargetClaim to access its bounded DeploymentTarget
+                      with cluster credential secret.
+                    properties:
+                      deploymentTargetClaim:
+                        description: DeploymentTargetClaimConfig specifies the DeploymentTargetClaim
+                          details for a given Environment.
+                        properties:
+                          claimName:
+                            type: string
+                        required:
+                        - claimName
+                        type: object
+                    required:
+                    - deploymentTargetClaim
+                    type: object
+                  clusterType:
+                    description: ClusterType indicates whether the target environment
+                      is Kubernetes or OpenShift
+                    type: string
+                  kubernetesCredentials:
+                    description: KubernetesClusterCredentials contains cluster credentials
+                      for a target Kubernetes/OpenShift cluster.
+                    properties:
+                      allowInsecureSkipTLSVerify:
+                        description: Indicates that ArgoCD/GitOps Service should not
+                          check the TLS certificate.
+                        type: boolean
+                      apiURL:
+                        description: APIURL is a reference to a cluster API url defined
+                          within the kube config file of the cluster credentials secret.
+                        type: string
+                      clusterCredentialsSecret:
+                        description: "ClusterCredentialsSecret is a reference to the
+                          name of k8s Secret, defined within the same namespace as
+                          the Environment resource, that contains a kubeconfig. The
+                          Secret must be of type 'managed-gitops.redhat.com/managed-environment'
+                          \n See this temporary URL for details: https://github.com/redhat-appstudio/managed-gitops/tree/main/examples/m6-demo#gitopsdeploymentmanagedenvironment-resource"
+                        type: string
+                      clusterResources:
+                        description: "ClusterResources is used in conjuction with
+                          the Namespace field. If the Namespaces field is non-empty,
+                          this field will be used to determine whether Argo CD should
+                          attempt to manage cluster-scoped resources. - If Namespaces
+                          field is empty, this field is not used. - If you are familiar
+                          with Argo CD: this field is equivalent to the field of the
+                          same name in the Argo CD Cluster Secret. \n Optional, default
+                          to false."
+                        type: boolean
+                      ingressDomain:
+                        description: IngressDomain is the cluster's ingress domain.
+                          For example, in minikube it would be $(minikube ip).nip.io
+                          and in OCP it would look like apps.xyz.rhcloud.com. If clusterType
+                          == "Kubernetes", ingressDomain is mandatory and is enforced
+                          by the webhook validation
+                        type: string
+                      namespaces:
+                        description: "Namespaces allows one to indicate which Namespaces
+                          the Secret's ServiceAccount has access to. \n Optional,
+                          defaults to empty. If empty, it is assumed that the ServiceAccount
+                          has access to all Namespaces. \n The ServiceAccount that
+                          GitOps Service/Argo CD uses to deploy may not have access
+                          to all of the Namespaces on a cluster. If not specified,
+                          it is assumed that the Argo CD ServiceAccount has read/write
+                          at cluster-scope. - If you are familiar with Argo CD: this
+                          field is equivalent to the field of the same name in the
+                          Argo CD Cluster Secret."
+                        items:
+                          type: string
+                        type: array
+                      targetNamespace:
+                        description: TargetNamespace is the default destination target
+                          on the cluster for deployments. This Namespace will be used
+                          for any GitOps repository K8s resources where the `.metadata.Namespace`
+                          field is not specified.
+                        type: string
+                    required:
+                    - allowInsecureSkipTLSVerify
+                    - apiURL
+                    - clusterCredentialsSecret
+                    - targetNamespace
+                    type: object
+                type: object
               type:
                 description: 'DEPRECATED: Type is whether the Environment is a POC
                   or non-POC environment - This field is deprecated, and should not
                   be used.'
                 type: string
               unstableConfigurationFields:
-                description: 'UnstableConfigurationFields are experimental/prototype:
-                  the API has not been finalized here, and is subject to breaking
-                  changes. See comment on UnstableEnvironmentConfiguration for details.'
+                description: 'DEPRECATED: UnstableConfigurationFields was experimental/prototype:
+                  the API was not finalized here, and is subject to breaking changes.
+                  See comment on UnstableEnvironmentConfiguration for details. - This
+                  field is deprecated, and should not be used, it is replaced by EnvironmentSpec.Target'
                 properties:
                   clusterType:
                     description: ClusterType indicates whether the target environment

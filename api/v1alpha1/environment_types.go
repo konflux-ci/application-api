@@ -46,9 +46,12 @@ type EnvironmentSpec struct {
 	// the Environment.
 	Configuration EnvironmentConfiguration `json:"configuration,omitempty"`
 
-	// UnstableConfigurationFields are experimental/prototype: the API has not been finalized here, and is subject to breaking changes.
-	// See comment on UnstableEnvironmentConfiguration for details.
+	// DEPRECATED: UnstableConfigurationFields was experimental/prototype: the API was not finalized here, and is subject to breaking changes. See comment on UnstableEnvironmentConfiguration for details.
+	// - This field is deprecated, and should not be used, it is replaced by EnvironmentSpec.Target
 	UnstableConfigurationFields *UnstableEnvironmentConfiguration `json:"unstableConfigurationFields,omitempty"`
+
+	// See comment on TargetConfiguration for details.
+	Target *TargetConfiguration `json:"target,omitempty"`
 }
 
 // DEPRECATED: EnvironmentType should no longer be used, and has no replacement.
@@ -154,6 +157,7 @@ type EnvironmentConfiguration struct {
 	// Env is an array of standard environment vairables
 	Env []EnvVarPair `json:"env,omitempty"`
 
+	// DEPRECATED: Target should no longer be used, and replaced by TargetConfiguration.Claim.
 	// Target is used to reference a DeploymentTargetClaim for a target Environment.
 	// The Environment controller uses the referenced DeploymentTargetClaim to access its bounded
 	// DeploymentTarget with cluster credential secret.
@@ -194,6 +198,13 @@ func (e *Environment) GetDeploymentTargetClaimName() string {
 	return e.Spec.Configuration.Target.DeploymentTargetClaim.ClaimName
 }
 
+func (e *Environment) GetDeploymentTargetClaimNamev2() string {
+	if e.Spec.Target != nil {
+		return e.Spec.Target.Claim.DeploymentTargetClaim.ClaimName
+	}
+	return ""
+}
+
 //+kubebuilder:object:root=true
 
 // EnvironmentList contains a list of Environment
@@ -205,4 +216,27 @@ type EnvironmentList struct {
 
 func init() {
 	SchemeBuilder.Register(&Environment{}, &EnvironmentList{})
+}
+
+// TargetConfiguration contains fields that are related to configuration of the target environment:
+// - credentials for connecting to the cluster
+//
+// Note: as of this writing (Jul 2022), I expect the contents of this struct to undergo major changes, and the API should not be considered
+// complete, or even a reflection of final desired state.
+type TargetConfiguration struct {
+	// ClusterType indicates whether the target environment is Kubernetes or OpenShift
+	ClusterType ConfigurationClusterType `json:"clusterType,omitempty"`
+
+	// KubernetesClusterCredentials contains cluster credentials for a target Kubernetes/OpenShift cluster.
+	KubernetesClusterCredentials `json:"kubernetesCredentials,omitempty"`
+
+	// Target is used to reference a DeploymentTargetClaim for a target Environment.
+	// The Environment controller uses the referenced DeploymentTargetClaim to access its bounded
+	// DeploymentTarget with cluster credential secret.
+	Claim TargetClaim `json:"claim,omitempty"`
+}
+
+// TargetClaim provides the configuration for a deployment target.
+type TargetClaim struct {
+	DeploymentTargetClaim DeploymentTargetClaimConfig `json:"deploymentTargetClaim"`
 }
