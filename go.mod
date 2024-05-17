@@ -1,4 +1,4 @@
-module github.com/redhat-appstudio/application-api
+module github.com/konflux-ci/application-api
 
 go 1.19
 
