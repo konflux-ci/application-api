@@ -32,7 +32,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Application is the Schema for the applications API.  For a detailed
-          description with examples, refer to <a href="https://github.com/redhat-appstudio/book/blob/main/book/HAS/hybrid-application-service-api.md">
+          description with examples, refer to <a href="https://konflux-ci.dev/docs/reference/kube-apis/application-api/">
           Hybrid Application Service Kube API </a>
         properties:
           apiVersion:
@@ -231,7 +231,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: ComponentDetectionQuery is the Schema for the componentdetectionqueries
-          API.    For a detailed description with examples, refer to <a href="https://github.com/redhat-appstudio/book/blob/main/book/HAS/hybrid-application-service-api.md">
+          API.    For description, refer to <a href="https://konflux-ci.dev/docs/reference/kube-apis/application-api/">
           Hybrid Application Service Kube API </a>
         properties:
           apiVersion:
@@ -673,7 +673,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: Component is the Schema for the components API.    For a detailed
-          description with examples, refer to <a href="https://github.com/redhat-appstudio/book/blob/main/book/HAS/hybrid-application-service-api.md">
+          description with examples, refer to <a href="https://konflux-ci.dev/docs/reference/kube-apis/application-api/">
           Hybrid Application Service Kube API </a>
         properties:
           apiVersion:
