@@ -31,9 +31,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Application is the Schema for the applications API.  For a detailed
-          description with examples, refer to <a href="https://konflux-ci.dev/docs/reference/kube-apis/application-api/">
-          Hybrid Application Service Kube API </a>
+        description: Application is the Schema for the applications API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -116,7 +114,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -127,7 +125,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -231,8 +229,7 @@ spec:
     schema:
       openAPIV3Schema:
         description: ComponentDetectionQuery is the Schema for the componentdetectionqueries
-          API.    For description, refer to <a href="https://konflux-ci.dev/docs/reference/kube-apis/application-api/">
-          Hybrid Application Service Kube API </a>
+          API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -428,7 +425,7 @@ spec:
                                     properties:
                                       key:
                                         description: The key of the secret to select
-                                          from.  Must be a valid secret key.
+                                          from. Must be a valid secret key.
                                         type: string
                                       name:
                                         description: 'Name of the referent. More info:
@@ -563,7 +560,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -574,7 +571,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -671,9 +668,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Component is the Schema for the components API.    For description,
-          refer to <a href="https://konflux-ci.dev/docs/reference/kube-apis/application-api/">
-          Hybrid Application Service Kube API </a>
+        description: Component is the Schema for the components API.
         properties:
           apiVersion:
             description: |-
@@ -1072,7 +1067,7 @@ spec:
                           description: Selects a key of a secret in the pod's namespace
                           properties:
                             key:
-                              description: The key of the secret to select from.  Must
+                              description: The key of the secret to select from. Must
                                 be a valid secret key.
                               type: string
                             name:
@@ -1504,7 +1499,7 @@ spec:
                     lastTransitionTime:
                       description: |-
                         lastTransitionTime is the last time the condition transitioned from one status to another.
-                        This should be when the underlying condition changed.  If that is not known, then using the time when the API field changed is acceptable.
+                        This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
                     message:
@@ -1731,7 +1726,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -1742,7 +1737,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -1947,7 +1942,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -1958,7 +1953,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -2206,7 +2201,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -2217,7 +2212,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -2604,7 +2599,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -2615,7 +2610,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -2675,7 +2670,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -2686,7 +2681,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -2842,7 +2837,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -2853,7 +2848,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
@@ -3044,7 +3039,7 @@ spec:
                 items:
                   description: "Condition contains details for one aspect of the current
                     state of this API Resource. --- This struct is intended for direct
-                    use as an array at the field path .status.conditions.  For example,
+                    use as an array at the field path .status.conditions. For example,
                     type FooStatus struct{ // Represents the observations of a foo's
                     current state. // Known .status.conditions.type are: \"Available\",
                     \"Progressing\", and \"Degraded\" // +patchMergeKey=type // +patchStrategy=merge
@@ -3055,7 +3050,7 @@ spec:
                     lastTransitionTime:
                       description: lastTransitionTime is the last time the condition
                         transitioned from one status to another. This should be when
-                        the underlying condition changed.  If that is not known, then
+                        the underlying condition changed. If that is not known, then
                         using the time when the API field changed is acceptable.
                       format: date-time
                       type: string
