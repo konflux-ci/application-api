@@ -239,7 +239,6 @@ type ComponentSpec struct {
 	// !!! Will be removed when we remove old model
 	ComponentName string `json:"componentName,omitempty"`
 
-	// +kubebuilder:validation:Pattern=^[a-z0-9]([-a-z0-9]*[a-z0-9])?$
 	// Application is the name of the application resource that the component belongs to.
 	// Optional.
 	// +optional
