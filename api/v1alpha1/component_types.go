@@ -61,6 +61,10 @@ type ComponentSourceUnion struct {
 	// Git repository URL for the component.
 	// Optional.
 	// !!! Will be required when we remove old model
+	// TODO replace Optional with Required when switching to the new model.
+	// +kubebuilder:validation:Optional
+	// + kubebuilder:validation:Required
+	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="Git repository URL cannot be changed"
 	GitURL string `json:"url,omitempty"`
 
 	// Dockerfile path for all versions, unless explicitly specified for a version.
@@ -193,7 +197,7 @@ type ComponentVersion struct {
 	Context string `json:"context,omitempty"`
 
 	// Dockerfile path for the version.
-	 // Used only when sending a PR with build pipeline configuration was requested via 'spec.actions.create-pipeline-configuration-pr'.
+	// Used only when sending a PR with build pipeline configuration was requested via 'spec.actions.create-pipeline-configuration-pr'.
 	// Default: "Dockerfile".
 	// Optional.
 	DockerfileURI string `json:"dockerfileUri,omitempty"`
@@ -330,7 +334,6 @@ type ComponentSpec struct {
 	// Optional.
 	// +optional
 	DefaultBuildPipeline ComponentBuildPipeline `json:"default-build-pipeline,omitempty"`
-
 }
 
 // ComponentStatus defines the observed state of Component
@@ -436,7 +439,7 @@ type ComponentVersionStatus struct {
 //+kubebuilder:subresource:status
 
 // Component is the Schema for the components API.    For description, refer to <a href="https://konflux-ci.dev/docs/reference/kube-apis/application-api/"> Hybrid Application Service Kube API </a>
-// +kubebuilder:resource:path=components,shortName=hascmp;hc;comp
+// +kubebuilder:resource:path=components,shortName=cmp;comp
 // +kubebuilder:printcolumn:name="Age",type="date",JSONPath=".metadata.creationTimestamp"
 // +kubebuilder:printcolumn:name="Status",type="string",JSONPath=".status.conditions[-1].status"
 // +kubebuilder:printcolumn:name="Reason",type="string",JSONPath=".status.conditions[-1].reason"
