@@ -348,9 +348,6 @@ type ComponentStatus struct {
 	// !!! Will be removed when we remove old model
 	Webhook string `json:"webhook,omitempty"`
 
-	// ContainerImage stores the associated built container image for the component
-	ContainerImage string `json:"containerImage,omitempty"`
-
 	// The devfile model for the Component CR
 	// !!! Will be removed when we remove old model
 	Devfile string `json:"devfile,omitempty"`
