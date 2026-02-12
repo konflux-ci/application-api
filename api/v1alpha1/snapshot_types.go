@@ -47,6 +47,10 @@ type SnapshotComponent struct {
 	// Name is the name of the component
 	Name string `json:"name"`
 
+	// Version is the component verison.  Only required if multiple versions of the same
+	// Component are in the Snapshot
+	Version string `json:"version"`
+
 	// ContainerImage is the container image to use when deploying the component, as part of a Snapshot
 	ContainerImage string `json:"containerImage"`
 
