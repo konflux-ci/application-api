@@ -27,6 +27,9 @@ type SnapshotSpec struct {
 	// Application is a reference to the name of an Application resource within the same namespace, which defines the target application for the Snapshot (when used with a Binding).
 	Application string `json:"application"`
 
+	// ComponentGroup is a reference to the name of a ComponentGroup resource within the same namespace, which defines the target ComponentGroup for the Snapshot.
+	ComponentGroup string `json:"componentGroup"`
+
 	// DisplayName is a user-visible, user-definable name for the resource (and is not used for any functional behaviour)
 	DisplayName string `json:"displayName,omitempty"`
 
