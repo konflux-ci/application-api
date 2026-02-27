@@ -24,7 +24,7 @@ on:
 jobs:
   go:
     name: Check sources
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-24.04
     env:
       OPERATOR_SDK_VERSION: v1.14.0
     steps:
@@ -33,11 +33,11 @@ jobs:
         with:
           fetch-depth: 0
       - name: Set up Go
-        uses: actions/setup-go@v4
+        uses: actions/setup-go@v6
         with:
-          go-version-file: go.mod
+          go-version: '1.24'
       - name: Cache Operator SDK ${{ env.OPERATOR_SDK_VERSION }}
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         id: cache-operator-sdk
         with:
           path: ~/cache
@@ -55,7 +55,7 @@ jobs:
           echo "$HOME/bin" >> $GITHUB_PATH
       - name: Cache go modules
         id: cache-mod
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: ~/go/pkg/mod
           key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
@@ -85,9 +85,9 @@ jobs:
             git --no-pager diff
             exit 1
           fi
-      - uses: dominikh/staticcheck-action@v1.3.0
+      - uses: dominikh/staticcheck-action@v1.4.0
         with:
-          version: "2023.1.3"
+          version: "2025.1.1"
           install-go: false
       - name: Check manifests
         run: |
@@ -105,7 +105,7 @@ jobs:
           make test
       - name: Run Gosec Security Scanner
         run: |
-          go install github.com/securego/gosec/v2/cmd/gosec@v2.19.0
+          go install github.com/securego/gosec/v2/cmd/gosec@v2.23.0
           make gosec
           if [[ $? != 0 ]]
           then
