@@ -105,7 +105,7 @@ jobs:
           make test
       - name: Run Gosec Security Scanner
         run: |
-          go install github.com/securego/gosec/v2/cmd/gosec@v2.19.0
+          go install github.com/securego/gosec/v2/cmd/gosec@v2.23.0
           make gosec
           if [[ $? != 0 ]]
           then
