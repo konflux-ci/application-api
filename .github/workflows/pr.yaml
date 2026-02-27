@@ -16,6 +16,8 @@
 name: Validate PRs
 
 on:
+  push:
+    branches: [ main ]
   pull_request:
     branches: [ main ]
 
@@ -116,4 +118,9 @@ jobs:
           # Path to SARIF file relative to the root of the repository
           sarif_file: gosec.sarif
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.1.0
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit-tests
+          files: ./cover.out
+          fail_ci_if_error: false
