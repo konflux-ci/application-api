@@ -658,7 +658,7 @@ spec:
                               type: string
                               x-kubernetes-validations:
                               - message: Git repository URL cannot be changed
-                                rule: oldSelf == null || self == oldSelf
+                                rule: oldSelf == '' || self == oldSelf
                             versions:
                               description: |-
                                 List of all versions for this component.
@@ -934,6 +934,7 @@ spec:
                   type: object
                 description: ComponentDetected gives a list of components and the
                   info from detection
+                maxProperties: 32
                 type: object
               conditions:
                 description: Conditions is an array of the ComponentDetectionQuery's

@@ -37,6 +37,9 @@ type SnapshotSpec struct {
 	DisplayDescription string `json:"displayDescription,omitempty"`
 
 	// Components field contains the sets of components to deploy as part of this snapshot.
+	// +kubebuilder:validation:MaxItems=256
+	// +listType=map
+	// +listMapKey=name
 	Components []SnapshotComponent `json:"components,omitempty"`
 
 	// Artifacts is a placeholder section for 'artifact links' we want to maintain to other AppStudio resources.

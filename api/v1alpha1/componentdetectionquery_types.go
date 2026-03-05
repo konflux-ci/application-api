@@ -63,6 +63,7 @@ type ComponentDetectionDescription struct {
 }
 
 // ComponentDetectionMap is a map containing all the components and their detected information
+// +kubebuilder:validation:MaxProperties=32
 type ComponentDetectionMap map[string]ComponentDetectionDescription
 
 // ComponentDetectionQueryStatus defines the observed state of ComponentDetectionQuery

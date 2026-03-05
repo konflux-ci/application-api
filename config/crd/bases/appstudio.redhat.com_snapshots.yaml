@@ -134,7 +134,7 @@ spec:
                           type: string
                           x-kubernetes-validations:
                           - message: Git repository URL cannot be changed
-                            rule: oldSelf == null || self == oldSelf
+                            rule: oldSelf == '' || self == oldSelf
                         versions:
                           description: |-
                             List of all versions for this component.
@@ -394,7 +394,11 @@ spec:
                   - name
                   - version
                   type: object
+                maxItems: 256
                 type: array
+                x-kubernetes-list-map-keys:
+                - name
+                x-kubernetes-list-type: map
               displayDescription:
                 description: DisplayDescription is a user-visible, user definable
                   description for the resource (and is not used for any functional
