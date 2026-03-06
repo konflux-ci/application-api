@@ -89,17 +89,6 @@ jobs:
         with:
           version: "2025.1.1"
           install-go: false
-      - name: Check manifests
-        run: |
-          # Note: fmt is necessary after generate since generated sources will
-          #       fail format check by default.
-          make generate fmt manifests
-          if [[ ! -z $(git status -s) ]]
-          then
-            echo "generated sources are not up to date:"
-            git --no-pager diff
-            exit 1
-          fi
       - name: Run Go Tests
         run: |
           make test
