@@ -61,10 +61,6 @@ type ComponentSourceUnion struct {
 	// Git repository URL for the component.
 	// Optional.
 	// !!! Will be required when we remove old model
-	// TODO replace Optional with Required when switching to the new model.
-	// +kubebuilder:validation:Optional
-	// +kubebuilder:validation:MaxLength=2048
-	// +kubebuilder:validation:XValidation:rule="oldSelf == null || self == oldSelf",message="Git repository URL cannot be changed"
 	GitURL string `json:"url,omitempty"`
 
 	// Dockerfile path for all versions, unless explicitly specified for a version.
