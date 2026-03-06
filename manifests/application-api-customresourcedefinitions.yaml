@@ -855,11 +855,7 @@ spec:
                                 Git repository URL for the component.
                                 Optional.
                                 !!! Will be required when we remove old model
-                              maxLength: 2048
                               type: string
-                              x-kubernetes-validations:
-                              - message: Git repository URL cannot be changed
-                                rule: oldSelf == null || self == oldSelf
                             versions:
                               description: |-
                                 List of all versions for this component.
@@ -1792,11 +1788,7 @@ spec:
                       Git repository URL for the component.
                       Optional.
                       !!! Will be required when we remove old model
-                    maxLength: 2048
                     type: string
-                    x-kubernetes-validations:
-                    - message: Git repository URL cannot be changed
-                      rule: oldSelf == null || self == oldSelf
                   versions:
                     description: |-
                       List of all versions for this component.
@@ -3612,11 +3604,7 @@ spec:
                             Git repository URL for the component.
                             Optional.
                             !!! Will be required when we remove old model
-                          maxLength: 2048
                           type: string
-                          x-kubernetes-validations:
-                          - message: Git repository URL cannot be changed
-                            rule: oldSelf == null || self == oldSelf
                         versions:
                           description: |-
                             List of all versions for this component.
