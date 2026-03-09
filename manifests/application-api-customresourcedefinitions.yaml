@@ -2,7 +2,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.3
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: applications.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
@@ -204,7 +204,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.3
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: componentdetectionqueries.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
@@ -1203,7 +1203,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.3
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: components.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
@@ -3477,7 +3477,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.16.3
+    controller-gen.kubebuilder.io/version: v0.17.2
   name: snapshots.appstudio.redhat.com
 spec:
   group: appstudio.redhat.com
