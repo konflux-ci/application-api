@@ -400,9 +400,6 @@ spec:
                 description: DisplayName is a user-visible, user-definable name for
                   the resource (and is not used for any functional behaviour)
                 type: string
-            required:
-            - application
-            - componentGroup
             type: object
           status:
             description: SnapshotStatus defines the observed state of Snapshot
