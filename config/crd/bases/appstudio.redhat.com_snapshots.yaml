@@ -388,7 +388,6 @@ spec:
                   required:
                   - containerImage
                   - name
-                  - version
                   type: object
                 type: array
               displayDescription:
